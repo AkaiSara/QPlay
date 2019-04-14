@@ -1,0 +1,27 @@
+\input{package.tex}
+
+\begin{document}
+Obbligatorio: descrizione dei tipi e gerarchia, dell uso delle chiamate polimorfe, del formato di load e save, manuale della gui, indicazioni per compilare ed eseguire, ore effettive richieste .
+
+massimo 8 pagine in formato 10pt.
+    \section{Introduzione}
+    Descrizione dello scopo del qontainer applicato alla gerarchia
+
+    \section{Container<T>}
+    Double linked list per sostenere meglio i costi per la rimozione dei nodi in posizione arbitraria. Sviluppate le funzionalità di inserimento(push insert), rimozione(erase, pop), ricerca. Usato all' interno la "struttura" nodo, iteratore normale e costante. 
+
+    \section{Gerarchia dei tipi}
+    costituita da una classe base astratta AudioVisual e tre classi derivate Movies, Tv Series, Documentary. è estensibile sia in orizzontale(youtube videos) che in vertiale(telenovelas). metodi virtuali puri utilizzati all'interno, quali clone utile per lo smart pointer implementato. 
+
+    \section{GUI}
+    addottato il design pattern model-view senza controller. 
+    insert, remove-if, find-if, modify, save, load, file xml
+
+    \section{Ambiente e compiler}
+    file .pro (aggiungo la compilazione con c++11), os usato: debian 4.9 stretch, g++ versione 6.3.0, qt versione 5.5.1
+
+    \section{Ore}
+    analisi preliminare del problema,progettazione
+    modello e GUI, apprendimento libreria Qt, codifica modello e GUI, debugging, testing.
+
+\end{document}

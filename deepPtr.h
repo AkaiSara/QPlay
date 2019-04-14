@@ -7,17 +7,18 @@ class DeepPtr{ //puntatori polimorfi al tipo T
 	T* ptr;
 public:
 	DeepPtr(const T* = nullptr); //costruttore
-	DeepPtr(const DeepPtr & dp); //costruttore di copia
-	DeepPtr& operator=(const DeepPtr & dp);
+	DeepPtr(const DeepPtr &); //costruttore di copia
+	DeepPtr& operator=(const DeepPtr &);
 	~DeepPtr();
 	T& operator*() const ;
 	T* operator->() const ;
-	bool operator==(const DeepPtr& dp) const;
-	bool operator!=(const DeepPtr& dp)const;
+	bool operator==(const DeepPtr&) const;
+	bool operator!=(const DeepPtr&) const;
 };
 
 
 //----------implementazione-----------
+
 template<class T>
 DeepPtr<T>::DeepPtr(const T* p): ptr(p != nullptr ? p->clone() : nullptr) {} 
 
