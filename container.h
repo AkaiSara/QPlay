@@ -10,7 +10,7 @@ un tipo che supporti la clonazione e la distruziona polimorfa. -> virtual ~T(), 
 */ 
 #ifndef CONTAINER_H
 #define CONTAINER_H
-#include "deepPtr.h"
+#include "deepptr.h"
 
 template<class T>
 class Container{ //contenitore, double linked list
@@ -255,17 +255,17 @@ typename Container<T>::Iterator Container<T>::erase(Iterator itb, Iterator ite){
 //equivale a erase(c.begin(), c.end())
 template<class T>
 void Container<T>::clear(){
-	erase(begin(), end())
+    erase(begin(), end());
 }
 
 template<class T>
 void Container<T>::pop_back(){
-	erase(--cend())
+    erase(--cend());
 } //-> c.erase(--c.end())
 
 template<class T>
 void Container<T>::pop_front(){
-	erase(cbegin())
+    erase(cbegin());
 } //rimuove l'elemento in testa -> c.erase(c.begin())
 
 

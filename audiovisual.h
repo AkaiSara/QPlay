@@ -18,7 +18,7 @@ public:
 private: //-----campi dati-----
     std::string title;
     std::string description; //plot
-    unsigned int release_date; // data
+    unsigned int release_date; // data ----- non va bene unsigned int, cambiare
     std::chrono::minutes running_time; //durata
     std::string director;
     bool favorite; // contenuto nei preferiti

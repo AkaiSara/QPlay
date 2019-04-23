@@ -1,5 +1,5 @@
 #include "widget.h"
-#include "Model.h"
+#include "model.h"
 #include <QApplication>
 
 int main(int argc, char *argv[])

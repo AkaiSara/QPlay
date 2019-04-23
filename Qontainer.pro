@@ -16,22 +16,22 @@ QMAKE_CXXFLAGS += -std=c++11
 
 SOURCES += main.cpp\
         widget.cpp \
-    AudioVisual.cpp \
     notes.cpp \
-    Model.cpp \
-    Documentary.cpp \
-    User.cpp \
-    Movie.cpp \
-    TVSerie.cpp \
-    adddialog.cpp
+    adddialog.cpp \
+    audiovisual.cpp \
+    documentary.cpp \
+    model.cpp \
+    movie.cpp \
+    user.cpp \
+    tvserie.cpp
 
 HEADERS  += widget.h \
-    AudioVisual.h \
     container.h \
-    deepPtr.h \
-    Model.h \
-    Documentary.h \
-    User.h \
-    Movie.h \
-    TVSerie.h \
-    adddialog.h
+    adddialog.h \
+    audiovisual.h \
+    deepptr.h \
+    documentary.h \
+    model.h \
+    movie.h \
+    tvserie.h \
+    user.h

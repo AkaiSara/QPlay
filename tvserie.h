@@ -1,7 +1,7 @@
 #ifndef TVSERIE_H
 #define TVSERIE_H
 
-#include "AudioVisual.h"
+#include "audiovisual.h"
 #include <string>
 
 class TvSerie : public AudioVisual{

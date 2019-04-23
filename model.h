@@ -1,7 +1,7 @@
 #ifndef MODEL_H
 #define MODEL_H
 #include "container.h"
-#include "AudioVisual.h"
+#include "audiovisual.h"
 
 #include <iostream>
 #include <chrono>

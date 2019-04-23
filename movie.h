@@ -1,7 +1,7 @@
 #ifndef MOVIE_H
 #define MOVIE_H
 
-#include "AudioVisual.h"
+#include "audiovisual.h"
 #include <string>
 
 class Movie: public AudioVisual{

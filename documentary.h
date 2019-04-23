@@ -1,7 +1,7 @@
 #ifndef DOCUMENTARY_H
 #define DOCUMENTARY_H
 
-#include "AudioVisual.h"
+#include "audiovisual.h"
 #include <string>
 
 class Documentary: public AudioVisual{
