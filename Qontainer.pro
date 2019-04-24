@@ -15,17 +15,16 @@ CONFIG += c++11
 QMAKE_CXXFLAGS += -std=c++11
 
 SOURCES += main.cpp\
-        widget.cpp \
-    notes.cpp \
     adddialog.cpp \
     audiovisual.cpp \
     documentary.cpp \
     model.cpp \
     movie.cpp \
     user.cpp \
-    tvserie.cpp
+    tvserie.cpp \
+    view.cpp
 
-HEADERS  += widget.h \
+HEADERS  += \
     container.h \
     adddialog.h \
     audiovisual.h \
@@ -34,4 +33,5 @@ HEADERS  += widget.h \
     model.h \
     movie.h \
     tvserie.h \
-    user.h
+    user.h \
+    view.h

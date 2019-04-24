@@ -34,7 +34,7 @@ public:
     AudioVisual(std::string = "None", std::string = "No description", unsigned int = 0, std::string = "None", bool = false );
 
     //------distruttore----
-    virtual ~AudioVisual();
+    virtual ~AudioVisual() = default;
         
     //--------confronto-----
     virtual bool operator==(const AudioVisual&) const =0;

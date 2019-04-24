@@ -198,29 +198,39 @@ Container<T>::Container(unsigned int size){
 }
 
 template<class T>
-Container<T>::Container(const Container & c): first(c.first), last(c.last), size(c.size) {} //costruttore di copia
-
-
-
-
-
-
-
+Container<T>::Container(const Container & c): first(c.first), last(c.last), size(c.size) {
+    if(size == 2){
+        first->next = last;
+        last->prev = first;
+    }
+    if(size > 2){
+        Node* p = first;
+        for(auto cit= c.first->next; cit != c.last; ++cit)
+            p = insert(p->next, (*cit)->info);
+    }
+} //costruttore di copia
 
 //inserisce l'elemento t nella sequenza c prima dell'elemento puntato da it e ritorna un iteratore che punta all'elemento appena inserito
 template<class T>
 typename Container<T>::Iterator Container<T>::insert(Iterator it, T t){
-	
+    if (*it == nullptr){ //se vuota
+        *it = t;
+        return it;
+    }
+    //se non vuota
+    it->prev.next = t;
+    t.prev = it->prev;
+    it-> prev = t;
+    t.next = *it;
+    return it->prev;
 }
 
 //inseriscce n copie dell'elemento t prima dell'elemento puntato da it
 template<class T>
-void Container<T>::insert(Iterator it, unsigned int n, T t){}
-
-
-
-
-
+void Container<T>::insert(Iterator it, unsigned int n, T t){
+    for(unsigned int i=0; i<n; i++)
+        insert(it,t);
+}
 
 template<class T>
 void Container<T>::push_front(const T & t){
@@ -232,25 +242,31 @@ void Container<T>::push_back(const T & t){
 	insert(cend(), t);
 } //-> c.insert(c.end(), t)
 
-
-
-
-
-
-
 // distrugge l'elemento puntato da it e ritorna l'iteratore all'elemento successivo
 template<class T>
-typename Container<T>::Iterator Container<T>::erase(Iterator it){}
+typename Container<T>::Iterator Container<T>::erase(Iterator it){
+    if(*it == nullptr){ //se vuota
+        //eccezione, non c'è nulla da eliminare
+        return nullptr;
+    }
+    //se non vuota
+    it->prev.next = it->next;
+    it->next.prev = it->prev;
+    Node * p = *it;
+    p->next = nullptr;
+    p->prev = nullptr;
+    delete p; //altrimenti cancella l'intera lista
+}
 
 //distrugge gli elementi nell'intervallo itb - ite, incluso il primo, escluso l'ultimo e ritorna l'elemento successivo all'ultimo rimosso
 template<class T>
-typename Container<T>::Iterator Container<T>::erase(Iterator itb, Iterator ite){}
-
-
-
-
-
-
+typename Container<T>::Iterator Container<T>::erase(Iterator itb, Iterator ite){
+    while(itb != ite){
+        erase(itb);
+        itb++;
+    }
+    return ite;
+}
 
 //equivale a erase(c.begin(), c.end())
 template<class T>
@@ -268,25 +284,12 @@ void Container<T>::pop_front(){
     erase(cbegin());
 } //rimuove l'elemento in testa -> c.erase(c.begin())
 
-
-
-
-
-
-
-
 template<class T>
 Container<T>& Container<T>::operator=(const Container & c){
 	Container aux(c);
-	//swap(temp)
+    //DA FARE
 	return *this;
 }
-
-
-
-
-
-
 
 template<class T>
 Container<T>::~Container(){
