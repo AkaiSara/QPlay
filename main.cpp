@@ -1,4 +1,4 @@
-#include "view.h"
+#include "widget.h"
 #include "model.h"
 #include <QApplication>
 

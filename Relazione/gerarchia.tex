@@ -6,14 +6,17 @@ La gerarchia è così composta: una classe base astratta denominata \textit{Audi
 I campi dati sono:
 \begin{itemize}
     \item Title
-    \item Plot
+    \item Description
     \item ReleaseDate
     \item RunningTime
     \item Director
     \item Favorite
     \item Audio
-    \item Video
+    \item Video %4k, 144p, 240, 480, 360, 720
+%4k/2160p, FullHD/1080p, HD/720p, SD/480p, LD/240p
+%fps frame per secondo
     \item Pic %immagine di copertina
+% lingua originale, sottotitoli
 \end{itemize}
 I metodi sono:
 \begin{itemize}
@@ -24,7 +27,7 @@ I metodi sono:
     \item isFavorite : metodo usato per sapere se un "AudioVisual" è tra i preferiti dell'utente
     \item getTotalRunningTime : metodo che restituisce il tempo totale di un AudioVisual o sotto tipo
     \item getType : restituisce il tipo dell'oggetto d'invocazione ("tipo")
-    \item getQuality : Audio + Video
+    \item getQuality : Audio + Video % se definisco dei range diversi per ogni sottotipo allora questo metodo è virtuale puro
     \item get : genere + rating 
 \end{itemize}
 

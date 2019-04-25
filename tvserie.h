@@ -2,7 +2,6 @@
 #define TVSERIE_H
 
 #include "audiovisual.h"
-#include <string>
 
 class TvSerie : public AudioVisual{
     private:
@@ -12,16 +11,19 @@ class TvSerie : public AudioVisual{
         Genre genre; //enum Genere
         bool ended; //serie conclusa
         Rating rating; //enum Rating
-    protected:
     public:
-        //--------costruttori------
-        TvSerie(std::string, std::string, unsigned int, std::string, std::string, bool, unsigned int = 1, unsigned int = 1, std::string = "None", Genre = Unknown, bool = true, Rating = All);
+        TvSerie(std::string, std::string, unsigned int, std::chrono::minutes, std::string, bool, bool, unsigned int, unsigned int, unsigned int = 1, unsigned int = 1, std::string = "None", Genre = Unknown, bool = true, Rating = All);
 
-        //---------metodo per la copia profonda----
-        virtual TvSerie* clone() const ;
+        virtual TvSerie* clone() const override;
         
-        //------distruttore----
-        virtual ~TvSerie();
+        virtual std::chrono::minutes getTotalRunningTime() const override;
+        virtual std::string getType() const override;
+        virtual bool getQuality() const override;
+        virtual bool matureContent() const override;
+
+        virtual bool operator==(const AudioVisual&) const override;
+
+        virtual ~TvSerie() override;
 };
 
 #endif 

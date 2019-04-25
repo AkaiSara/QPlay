@@ -22,7 +22,7 @@ SOURCES += main.cpp\
     movie.cpp \
     user.cpp \
     tvserie.cpp \
-    view.cpp
+    widget.cpp
 
 HEADERS  += \
     container.h \
@@ -34,4 +34,4 @@ HEADERS  += \
     movie.h \
     tvserie.h \
     user.h \
-    view.h
+    widget.h

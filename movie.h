@@ -9,17 +9,20 @@ class Movie: public AudioVisual{
         std::string cast; 
         Genre genre; //enum Genere
         Rating rating; //enum Rating
-        bool collezione; //fa parte di una collezione di film
-    protected:
+        unsigned int collection; //fa parte di una collezione di film
     public:
-        //--------costruttori------
-        Movie(std::string, std::string, unsigned int, std::string, std::string, bool, std::string = "None", Genre = Unknown, Rating = All, bool = false);
+        Movie(std::string, std::string, unsigned int, std::chrono::minutes, std::string, bool, bool, unsigned int, unsigned int, std::string = "None", Genre = Unknown, Rating = All, unsigned int = 1);
 
-        //---------metodo per la copia profonda----
-        virtual Movie* clone() const;
+        virtual Movie* clone() const override;
 
-        //------distruttore----
-        virtual ~Movie();
+        virtual std::chrono::minutes getTotalRunningTime() const override;
+        virtual std::string getType() const override;
+        virtual bool getQuality() const override;
+        virtual bool matureContent() const override;
+
+        virtual bool operator==(const AudioVisual&) const override;
+
+        virtual ~Movie() override;
 };
 
 #endif

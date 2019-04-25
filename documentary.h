@@ -9,14 +9,18 @@ class Documentary: public AudioVisual{
         std::string narrator;
         std::string topic; //scientifico, storico, naturalistico, biografia
     public:
-        //--------costruttori------
-        Documentary(std::string, std::string, unsigned int, std::string, bool, std::string = "None", std::string = "None");
+        Documentary(std::string, std::string, unsigned int, std::chrono::minutes, std::string, bool, bool, unsigned int, unsigned int, std::string = "None", std::string = "None");
 
-        //---------metodo per la copia profonda----
-        virtual Documentary* clone() const;
+        virtual Documentary* clone() const override;
 
-        //------distruttore----
-        virtual ~Documentary();
+        virtual std::chrono::minutes getTotalRunningTime() const override;
+        virtual std::string getType() const override;
+        virtual bool getQuality() const override;
+        virtual bool matureContent() const override;
+
+        virtual bool operator==(const AudioVisual&) const override;
+
+        virtual ~Documentary() override;
 };
 
 #endif

@@ -26,7 +26,7 @@ public:
 class Model
 {
 private:
-	Container<AudioVisual> list;
+    //Container<AudioVisual> list;
 
 	//static const std::vector<std::string> types;
 public:

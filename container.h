@@ -21,6 +21,8 @@ private:
 		Node *prev, *next;
 		Node(const DeepPtr<T> &, Node* = nullptr, Node* = nullptr);//costuttore
 		~Node();
+        //operator==
+        //operator!=
 	};
 	
 public:
@@ -214,14 +216,15 @@ Container<T>::Container(const Container & c): first(c.first), last(c.last), size
 template<class T>
 typename Container<T>::Iterator Container<T>::insert(Iterator it, T t){
     if (*it == nullptr){ //se vuota
-        *it = t;
+        it = new Node(t);
         return it;
     }
     //se non vuota
-    it->prev.next = t;
-    t.prev = it->prev;
-    it-> prev = t;
-    t.next = *it;
+    Node* aux= new Node(t);
+    it->prev.next = aux;
+    aux->prev = it->prev;
+    it-> prev = aux;
+    aux->next = *it;
     return it->prev;
 }
 
