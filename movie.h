@@ -2,7 +2,6 @@
 #define MOVIE_H
 
 #include "audiovisual.h"
-#include <string>
 
 class Movie: public AudioVisual{
     private:

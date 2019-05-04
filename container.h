@@ -19,7 +19,7 @@ private:
 		public:
 		DeepPtr<T> info;
 		Node *prev, *next;
-		Node(const DeepPtr<T> &, Node* = nullptr, Node* = nullptr);//costuttore
+        Node(const DeepPtr<T> &, Node* = nullptr, Node* = nullptr); //non serve nessun valore di default per il primo parametro perchè chiama la funzione apposira in DeepPtr
 		~Node();
         //operator==
         //operator!=
@@ -69,8 +69,8 @@ private: //------campi dati contenitore-----
 
 public:
 	//---contenitore----
-	Container();
-	Container(Node* = nullptr, Node* = nullptr, unsigned int = 0); //costruttore
+    //Container();
+    Container(Node* = new Node(), Node* = nullptr, unsigned int = 0); //costruttore
 	Container(unsigned int = 0, const T & = T());
 	Container(unsigned int = 0);
 	Container(const Container &); //costruttore di copia

@@ -2,7 +2,6 @@
 #define DOCUMENTARY_H
 
 #include "audiovisual.h"
-#include <string>
 
 class Documentary: public AudioVisual{
     private:
