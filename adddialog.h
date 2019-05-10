@@ -1,16 +1,18 @@
 #ifndef ADDDIALOG_H
 #define ADDDIALOG_H
+
 #include <QDialog>
+#include "widget.h"
+#include <QHBoxLayout>
 
-
-class AddDialog : public QDialog{
+class AddDialog : public QDialog {
     Q_OBJECT
 
 private:
-    QWidget parent;
+    Widget parent;
 
 public:
-    AddDialog(QWidget * = nullptr);
+    AddDialog(Widget * = nullptr);
     void createChooseType();
     void createButtons();
 };

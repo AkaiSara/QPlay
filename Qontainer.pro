@@ -22,7 +22,8 @@ SOURCES += main.cpp\
     movie.cpp \
     user.cpp \
     tvserie.cpp \
-    widget.cpp
+    widget.cpp \
+    xmlio.cpp
 
 HEADERS  += \
     container.h \
@@ -34,4 +35,5 @@ HEADERS  += \
     movie.h \
     tvserie.h \
     user.h \
-    widget.h
+    widget.h \
+    xmlio.h

@@ -26,7 +26,7 @@ public:
 class Model
 {
 private:
-    Container<AudioVisual*> list;
+    Container<AudioVisual> list;
 public:
 };
 

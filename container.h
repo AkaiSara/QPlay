@@ -69,10 +69,10 @@ private: //------campi dati contenitore-----
 
 public:
 	//---contenitore----
-    //Container();
+    Container(); //costruttore di default
     Container(Node* = new Node(), Node* = nullptr, unsigned int = 0); //costruttore
-	Container(unsigned int = 0, const T & = T());
-	Container(unsigned int = 0);
+    Container(unsigned int=9, const T & = T());
+    Container(unsigned int=0);
 	Container(const Container &); //costruttore di copia
 	Container& operator=(const Container & c); //assegnazione
 	~Container(); //distruttore
@@ -90,8 +90,8 @@ public:
 	Const_Iterator end() const;
 	Const_Iterator cend() const;
 
-	Iterator insert(Iterator, T);
-	void insert(Iterator, unsigned int, T);
+    Iterator insert(const Iterator &, const T &);
+    void insert(Iterator, unsigned int, const T&);
 	void push_back(const T &);
 	void push_front(const T &);
 
@@ -156,12 +156,12 @@ typename Container<T>::Iterator Container<T>::Iterator::operator--(int){ //postf
 
 template<class T>
 bool Container<T>::Iterator::operator==(const Iterator & it) const {
-	return pos == it.pos;
+    return pos == it.pos;
 }
 
 template<class T>
 bool Container<T>::Iterator::operator!=(const Iterator & it) const {
-	return !(*this == it);
+    return !(*this == it);
 }
 
 template<class T>
@@ -181,7 +181,6 @@ T* Container<T>::Iterator::operator->() const {
 
 template<class T>
 Container<T>::Container(Node* f, Node* l, unsigned int s): first(f), last(l), size(s) {} //costruttore di default
-/*Container<T>::Container(): first(new Node()), past_the_end(first), size_(0)*/
 	
 //costruisce c con n copie inizializzate a t
 template<class T>
@@ -214,7 +213,7 @@ Container<T>::Container(const Container & c): first(c.first), last(c.last), size
 
 //inserisce l'elemento t nella sequenza c prima dell'elemento puntato da it e ritorna un iteratore che punta all'elemento appena inserito
 template<class T>
-typename Container<T>::Iterator Container<T>::insert(Iterator it, T t){
+typename Container<T>::Iterator Container<T>::insert(const Iterator & it, const T & t){
     if (*it == nullptr){ //se vuota
         it = new Node(t);
         return it;
@@ -230,7 +229,7 @@ typename Container<T>::Iterator Container<T>::insert(Iterator it, T t){
 
 //inseriscce n copie dell'elemento t prima dell'elemento puntato da it
 template<class T>
-void Container<T>::insert(Iterator it, unsigned int n, T t){
+void Container<T>::insert(Iterator it, unsigned int n, const T& t){
     for(unsigned int i=0; i<n; i++)
         insert(it,t);
 }
