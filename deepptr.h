@@ -6,7 +6,7 @@ template <class T>
 class DeepPtr{ //puntatori polimorfi al tipo T
 	T* ptr;
 public:
-	DeepPtr(const T* = nullptr); //costruttore
+    explicit DeepPtr(const T* = nullptr); //costruttore
 	DeepPtr(const DeepPtr &); //costruttore di copia
 	DeepPtr& operator=(const DeepPtr &);
 	~DeepPtr();

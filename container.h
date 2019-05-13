@@ -21,8 +21,8 @@ private:
 		Node *prev, *next;
         Node(const DeepPtr<T> &, Node* = nullptr, Node* = nullptr); //non serve nessun valore di default per il primo parametro perchè chiama la funzione apposira in DeepPtr
 		~Node();
-        //operator==
-        //operator!=
+        bool operator==(const Node &) const;
+        bool operator!=(const Node &) const;
 	};
 	
 public:
@@ -70,9 +70,8 @@ private: //------campi dati contenitore-----
 public:
 	//---contenitore----
     Container(); //costruttore di default
-    Container(Node* = new Node(), Node* = nullptr, unsigned int = 0); //costruttore
-    Container(unsigned int=9, const T & = T());
-    Container(unsigned int=0);
+    Container(unsigned int, const T & = T());
+    Container(unsigned int);
 	Container(const Container &); //costruttore di copia
 	Container& operator=(const Container & c); //assegnazione
 	~Container(); //distruttore
@@ -114,6 +113,9 @@ public:
 
 
 //--------implementazione-------
+
+
+
 //------------node---------
 
 template<class T>
@@ -124,7 +126,27 @@ Container<T>::Node::~Node() {
 	delete next;
 }
 
+template<class T>
+bool Container<T>::Node::operator==(const Node & n) const{
+    return (info == n.info);
+
+}
+
+template<class T>
+bool Container<T>::Node::operator!=(const Node & n) const{
+    return !(n == *this);
+}
+
+
+
+
+
 //-----------iteratore-------
+
+
+
+
+
 
 template<class T>
 Container<T>::Iterator::Iterator(Node * p) : pos(p) {} //costruttore
@@ -167,35 +189,91 @@ bool Container<T>::Iterator::operator!=(const Iterator & it) const {
 template<class T>
 T& Container<T>::Iterator::operator*() const { //dereferenziazione
 	if(pos != nullptr)
-		return pos->info; //se contiene qualcosa
+        return *(pos->info); //se contiene qualcosa
 }
 
 template<class T>
 T* Container<T>::Iterator::operator->() const {
 	if(pos != nullptr)
-		return &(pos->info); //se contiene qualcosa
+        return pos; //se contiene qualcosa
 }
+
+template<class T>
+Container<T>::Const_Iterator::Const_Iterator(Node * p) : pos(p) {} //costruttore
+
+template<class T>
+typename Container<T>::Const_Iterator& Container<T>::Const_Iterator::operator++(){ //prefisso
+    if(pos != nullptr && pos->next != nullptr)
+        pos = pos-> next;
+    return *this;
+}
+template<class T>
+typename Container<T>::Const_Iterator Container<T>::Const_Iterator::operator++(int){ //postfisso
+    Iterator aux(*this);
+    operator++(); //++(*this);
+    return aux;
+}
+template<class T>
+typename Container<T>::Const_Iterator& Container<T>::Const_Iterator::operator--(){//prefisso
+    if(pos != nullptr && pos->prev != nullptr)
+        pos = pos->prev;
+    return *this;
+}
+template<class T>
+typename Container<T>::Const_Iterator Container<T>::Const_Iterator::operator--(int){ //postfisso
+    Iterator aux(*this);
+    operator--(); //--(*this);
+    return aux;
+}
+
+template<class T>
+bool Container<T>::Const_Iterator::operator==(const Const_Iterator & it) const {
+    return pos == it.pos;
+}
+
+template<class T>
+bool Container<T>::Const_Iterator::operator!=(const Const_Iterator & it) const {
+    return !(*this == it);
+}
+
+template<class T>
+T& Container<T>::Const_Iterator::operator*() const { //dereferenziazione
+    if(pos != nullptr)
+        return pos->info; //se contiene qualcosa
+}
+
+template<class T>
+T* Container<T>::Const_Iterator::operator->() const {
+    if(pos != nullptr)
+        return &(pos->info); //se contiene qualcosa
+}
+
+
+
+
 
 //-----------container------
 
 
+
+
 template<class T>
-Container<T>::Container(Node* f, Node* l, unsigned int s): first(f), last(l), size(s) {} //costruttore di default
+Container<T>::Container() : first(nullptr), last(first), size(0) {}
 	
 //costruisce c con n copie inizializzate a t
 template<class T>
-Container<T>::Container(unsigned int size, const T & t){
+Container<T>::Container(unsigned int s, const T & t){
 	Container();
-	while(size > 0){
+    while(s > 0){
 		push_back(t);
-		size--;
+        s--;
 	}
 }
 
 //costruisce c con n elementi con valore di default -> T deve avere un costruttore di default
 template<class T>
 Container<T>::Container(unsigned int size){
-	Container(size, nullptr);
+    Container(size, T());
 }
 
 template<class T>
@@ -205,26 +283,27 @@ Container<T>::Container(const Container & c): first(c.first), last(c.last), size
         last->prev = first;
     }
     if(size > 2){
-        Node* p = first;
-        for(auto cit= c.first->next; cit != c.last; ++cit)
-            p = insert(p->next, (*cit)->info);
+        for(Container<T>::Iterator it= (c.first)->next; it != c.last; ++it){
+            push_back(*it);
+        }
     }
 } //costruttore di copia
 
 //inserisce l'elemento t nella sequenza c prima dell'elemento puntato da it e ritorna un iteratore che punta all'elemento appena inserito
 template<class T>
 typename Container<T>::Iterator Container<T>::insert(const Iterator & it, const T & t){
-    if (*it == nullptr){ //se vuota
-        it = new Node(t);
-        return it;
+    if (first == nullptr){ //se vuota
+        last = first = new Node(DeepPtr<T>(&t));
+        size = 1;
+        return Iterator(first);
     }
     //se non vuota
-    Node* aux= new Node(t);
-    it->prev.next = aux;
-    aux->prev = it->prev;
-    it-> prev = aux;
-    aux->next = *it;
-    return it->prev;
+    Node* aux= new Node(DeepPtr<T>(&t));
+    it.pos->prev->next = aux;
+    aux->prev = it.pos->prev;
+    it.pos-> prev = aux;
+    aux->next = it.pos;
+    return it.pos->prev;
 }
 
 //inseriscce n copie dell'elemento t prima dell'elemento puntato da it
@@ -236,12 +315,12 @@ void Container<T>::insert(Iterator it, unsigned int n, const T& t){
 
 template<class T>
 void Container<T>::push_front(const T & t){
-	insert(cbegin(), t);
+    insert(begin(), t);
 } //-> c.insert(c.begin(), t)
 
 template<class T>
 void Container<T>::push_back(const T & t){
-	insert(cend(), t);
+    insert(end(), t);
 } //-> c.insert(c.end(), t)
 
 // distrugge l'elemento puntato da it e ritorna l'iteratore all'elemento successivo

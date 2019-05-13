@@ -18,11 +18,12 @@ SOURCES += main.cpp\
     adddialog.cpp \
     audiovisual.cpp \
     documentary.cpp \
+    mainwidget.cpp \
+    mainwindow.cpp \
     model.cpp \
     movie.cpp \
     user.cpp \
     tvserie.cpp \
-    widget.cpp \
     xmlio.cpp
 
 HEADERS  += \
@@ -31,9 +32,10 @@ HEADERS  += \
     audiovisual.h \
     deepptr.h \
     documentary.h \
+    mainwidget.h \
+    mainwindow.h \
     model.h \
     movie.h \
     tvserie.h \
     user.h \
-    widget.h \
     xmlio.h

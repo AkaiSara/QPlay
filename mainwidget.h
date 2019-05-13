@@ -7,22 +7,22 @@
 #include <QHBoxLayout>
 #include <QLabel>
 
-class Widget : public QWidget {
-    Q_OBJECT
+class MainWidget : public QWidget {
+       Q_OBJECT
 
 private:
-    QVBoxLayout *verticalLayout;
     QHBoxLayout *internalUpperHorizontalLayout;
     QLabel *nickName;
     QLabel *proPic;
     QLabel * totalTime;
+
     QHBoxLayout *internalLowerHorizontalLayout;
     QPushButton *showAddDialog;
-    QPushButton *exit;
-    QSize sizeHint() const override;
+    QPushButton *exitBtn;
+
+    QVBoxLayout *mainLayout;
 public:
-    Widget(QWidget *parent = nullptr);
-    ~Widget() override;
+    MainWidget();
 
 private slots:
     void showDialog();

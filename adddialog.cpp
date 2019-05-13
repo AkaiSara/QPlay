@@ -1,27 +1,40 @@
 #include "adddialog.h"
 
-AddDialog::AddDialog(Widget* p): parent(p) {
-    //setNomefinestra
-    //Vlayout
-        //createChooseType(); //type
-        //sottooggetto
-        //createButtons(); //add or cancel
-    //show();
+AddDialog::AddDialog(MainWidget* p): parent(p) {
 
     setWindowTitle("Inserisci elemento");
 
-    QPushButton *ok =new QPushButton("Ok");
-    QPushButton *cancel =new QPushButton("Cancel");
-    QHBoxLayout * hbox = new QHBoxLayout;
+    //----------------[UpperRadioButtons]
+    type1 = new QRadioButton(tr("&type1"));
+    type2 = new QRadioButton(tr("type2"));
+    type3 = new QRadioButton(tr("type3"));
+    radioListBox = new QVBoxLayout; //contiene i radio buttons
+    upperRadioButtonsGroup = new QGroupBox(tr("Seleziona il tipo")); //rende esclusivi tra loro i radio buttons
 
-    hbox->addWidget(ok);
-    hbox->addWidget(cancel);
-    setLayout(hbox);
+    type1->setChecked(true); //lo metto checked per far sì che sia cliccabile un solo bottone alla volta
 
-    connect(ok, SIGNAL(clicked()), this, SLOT(accept()));
+    radioListBox->addWidget(type1);
+    radioListBox->addWidget(type2);
+    radioListBox->addWidget(type3);
+    radioListBox->addStretch(1);
+    upperRadioButtonsGroup->setLayout(radioListBox);
+    //----------------[]
+
+    //----------------[LowerButtons]
+    add =new QPushButton(tr("Aggiungi elemento"));
+    cancel =new QPushButton(tr("Cancel"));
+    lowerButtonsBox = new QHBoxLayout;
+
+    lowerButtonsBox->addWidget(add);
+    lowerButtonsBox->addWidget(cancel);
+
+    connect(add, SIGNAL(clicked()), this, SLOT(accept()));
     connect(cancel, SIGNAL(clicked()), this, SLOT(reject()));
+    //----------------[]
+
+    mainBox = new QVBoxLayout;
+    mainBox->addWidget(upperRadioButtonsGroup);
+    mainBox->addLayout(lowerButtonsBox);
+    setLayout(mainBox);
 }
 
-
-void createChooseType(){}
-void createButtons(){}
