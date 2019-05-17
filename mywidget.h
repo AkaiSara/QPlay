@@ -1,5 +1,5 @@
-#ifndef WIDGET_H
-#define WIDGET_H
+#ifndef MAINWIDGET_H
+#define MAINWIDGET_H
 
 #include <QWidget>
 #include <QPushButton>
@@ -26,6 +26,8 @@ public:
 
 private slots:
     void showDialog();
+public slots:
+    QPushButton * getExitBtn();
 };
 
 #endif // WIDGET_H

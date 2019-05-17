@@ -1,7 +1,7 @@
 #ifndef ADDDIALOG_H
 #define ADDDIALOG_H
 
-#include "mainwidget.h"
+#include "mywidget.h"
 
 #include <QDialog>
 #include <QHBoxLayout>

@@ -1,10 +1,9 @@
 #include "mainwindow.h"
-#include "adddialog.h"
 
-MainWindow::MainWindow(QMainWindow *parent): QMainWindow(parent){
+MainWindow::MainWindow(){
     setWindowTitle(tr("Finestra principale"));
-    mainWidget = new MainWidget;
-    setCentralWidget(mainWidget);
+    myWidget = new MainWidget;
+    setCentralWidget(myWidget);
 
     //----------------[Menu]
     fileMenu = menuBar()->addMenu(tr("&File"));
@@ -23,6 +22,8 @@ MainWindow::MainWindow(QMainWindow *parent): QMainWindow(parent){
     fileMenu->addAction(exitAct);
     connect(exitAct, SIGNAL(triggered()), this, SLOT(close()));
     //----------------[]
+
+    connect(myWidget->getExitBtn(), SIGNAL(clicked()), this, SLOT(close())); //quando il bottone di exit di mywidget viene cliccato chiude anche mainwindow
 }
 
 void MainWindow::openFile(){}

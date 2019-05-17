@@ -11,12 +11,12 @@ Xmlio::Xmlio(QString filepath) : filename(filepath) {}
 Container<AudioVisual> Xmlio::read() const{
     Container<AudioVisual> list;
 
-    /*QFile file(filename);
+    QFile file(filename);
     if(!file.open(QIODevice::ReadOnly)) {
         qWarning() << "Non è stato possibile aprire il file" << file.errorString();
         return  list;
-    }*/return list;
-
+    }
+    return list;
 }
 
 void Xmlio::write(const Container<AudioVisual> &) const{

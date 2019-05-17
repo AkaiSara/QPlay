@@ -195,7 +195,7 @@ T& Container<T>::Iterator::operator*() const { //dereferenziazione
 template<class T>
 T* Container<T>::Iterator::operator->() const {
 	if(pos != nullptr)
-        return pos; //se contiene qualcosa
+        return pos->info; //se contiene qualcosa
 }
 
 template<class T>
@@ -262,18 +262,18 @@ Container<T>::Container() : first(nullptr), last(first), size(0) {}
 	
 //costruisce c con n copie inizializzate a t
 template<class T>
-Container<T>::Container(unsigned int s, const T & t){
+Container<T>::Container(unsigned int n, const T & t){
 	Container();
-    while(s > 0){
+    while(n > 0){
 		push_back(t);
-        s--;
+        n--;
 	}
 }
 
 //costruisce c con n elementi con valore di default -> T deve avere un costruttore di default
 template<class T>
-Container<T>::Container(unsigned int size){
-    Container(size, T());
+Container<T>::Container(unsigned int n){
+    Container(n, T());
 }
 
 template<class T>
@@ -326,17 +326,18 @@ void Container<T>::push_back(const T & t){
 // distrugge l'elemento puntato da it e ritorna l'iteratore all'elemento successivo
 template<class T>
 typename Container<T>::Iterator Container<T>::erase(Iterator it){
-    if(*it == nullptr){ //se vuota
+    if(first == nullptr){ //se vuota
         //eccezione, non c'è nulla da eliminare
         return nullptr;
     }
     //se non vuota
-    it->prev.next = it->next;
-    it->next.prev = it->prev;
+    it.pos->prev.next = it.pos->next;
+    it.pos->next.prev = it.pos->prev;
     Node * p = *it;
     p->next = nullptr;
     p->prev = nullptr;
     delete p; //altrimenti cancella l'intera lista
+    return it;
 }
 
 //distrugge gli elementi nell'intervallo itb - ite, incluso il primo, escluso l'ultimo e ritorna l'elemento successivo all'ultimo rimosso
@@ -357,12 +358,12 @@ void Container<T>::clear(){
 
 template<class T>
 void Container<T>::pop_back(){
-    erase(--cend());
+    erase(--end());
 } //-> c.erase(--c.end())
 
 template<class T>
 void Container<T>::pop_front(){
-    erase(cbegin());
+    erase(begin());
 } //rimuove l'elemento in testa -> c.erase(c.begin())
 
 template<class T>

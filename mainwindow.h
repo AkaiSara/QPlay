@@ -1,7 +1,7 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
-#include "mainwidget.h"
+#include "mywidget.h"
 
 #include <QMainWindow>
 #include <QMenuBar>
@@ -16,9 +16,13 @@ private:
     QAction * openAct;
     QAction * saveAct;
     QAction * exitAct;
-    MainWidget *mainWidget;
+    QMenu * toolMenu;
+    QAction * addAct;
+    QAction * editAct;
+    QAction * removeAct;
+    MainWidget * myWidget;
 public:
-    MainWindow(QMainWindow *parent = nullptr);
+    MainWindow();
     QSize sizeHint() const override;
     ~MainWindow() override;
 private slots:

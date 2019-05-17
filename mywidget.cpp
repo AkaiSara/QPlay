@@ -1,4 +1,4 @@
-#include "mainwidget.h"
+#include "mywidget.h"
 #include "adddialog.h"
 
 void MainWidget::showDialog(){
@@ -6,7 +6,7 @@ void MainWidget::showDialog(){
     addDialog.exec();
 }
 
-MainWidget::MainWidget() {
+MainWidget::MainWidget(){
     //----------------[UpperBanner]
     nickName = new QLabel(tr("User"));
     proPic = new QLabel(tr("proPic"));
@@ -27,7 +27,8 @@ MainWidget::MainWidget() {
     internalLowerHorizontalLayout->addWidget(exitBtn);
 
     connect(showAddDialog, SIGNAL(clicked()), this, SLOT(showDialog()));
-    connect(exitBtn, SIGNAL(clicked()), this, SLOT(close()));
+    //connect(exitBtn, SIGNAL(clicked()), this, SLOT(close()));
+    //connect(exitBtn, SIGNAL(clicked()), this, SLOT());
     //----------------[]
 
     mainLayout = new QVBoxLayout;
@@ -36,4 +37,7 @@ MainWidget::MainWidget() {
     setLayout(mainLayout);
 }
 
+QPushButton * MainWidget::getExitBtn(){
+    return exitBtn;
+}
 
