@@ -6,6 +6,7 @@
 #include <QVBoxLayout>
 #include <QHBoxLayout>
 #include <QLabel>
+#include <QListWidget>
 
 class MainWidget : public QWidget {
        Q_OBJECT
@@ -16,6 +17,8 @@ private:
     QLabel *proPic;
     QLabel * totalTime;
 
+    QListWidget * listWidget;
+
     QHBoxLayout *internalLowerHorizontalLayout;
     QPushButton *showAddDialog;
     QPushButton *exitBtn;
@@ -23,11 +26,11 @@ private:
     QVBoxLayout *mainLayout;
 public:
     MainWidget();
+    QPushButton * getExitBtn();
 
 private slots:
     void showDialog();
-public slots:
-    QPushButton * getExitBtn();
+
 };
 
 #endif // WIDGET_H

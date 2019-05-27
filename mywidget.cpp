@@ -18,6 +18,20 @@ MainWidget::MainWidget(){
     internalUpperHorizontalLayout->addWidget(totalTime);
     //----------------[]
 
+    //----------------[]
+    listWidget = new QListWidget;
+    listWidget->setSelectionMode(QAbstractItemView::SingleSelection);
+    listWidget->setFlow(QListView::LeftToRight);
+
+
+    for(int i=1; i<10; i++){
+        QListWidgetItem * newItem = new QListWidgetItem;
+        newItem->setText(QString("ciao").append(QString::number(i)));
+        listWidget->insertItem(i, newItem);
+    }
+
+    //----------------[]
+
     //----------------[LowerButtons]
     showAddDialog = new QPushButton(tr("Show dialog"));
     exitBtn = new QPushButton(tr("Exit"));
@@ -28,11 +42,11 @@ MainWidget::MainWidget(){
 
     connect(showAddDialog, SIGNAL(clicked()), this, SLOT(showDialog()));
     //connect(exitBtn, SIGNAL(clicked()), this, SLOT(close()));
-    //connect(exitBtn, SIGNAL(clicked()), this, SLOT());
     //----------------[]
 
     mainLayout = new QVBoxLayout;
     mainLayout->addLayout(internalUpperHorizontalLayout);
+    mainLayout->addWidget(listWidget);
     mainLayout->addLayout(internalLowerHorizontalLayout);
     setLayout(mainLayout);
 }

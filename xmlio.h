@@ -3,6 +3,7 @@
 
 #include <QString>
 #include "container.h"
+#include "audiovisual.h"
 
 class Xmlio {
 private:
