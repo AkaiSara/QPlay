@@ -1,13 +1,13 @@
 #include "documentary.h"
 #include <string>
 
-Documentary::Documentary(std::string ti, std::string tr, unsigned int rd, std::chrono::minutes rt ,std::string r, bool f, bool ac, unsigned int ir, unsigned int fp, std::string n, std::string ar): AudioVisual(ti,tr,rd,rt,r,f,ac,ir,fp), narrator(n), topic(ar) {}
+Documentary::Documentary(std::string ti, std::string tr, unsigned int rd, std::string r, bool f, int rt , bool ac, unsigned int ir, unsigned int fp, std::string n, std::string ar): AudioVisual(ti,tr,rd,r,f,rt,ac,ir,fp), narrator(n), topic(ar) {}
 
 Documentary* Documentary::clone() const {
     return new Documentary(*this);
 }
 
-std::chrono::minutes Documentary::getTotalRunningTime() const{
+int Documentary::getTotalRunningTime() const{
     return running_time;
 }
 std::string Documentary::getType() const{

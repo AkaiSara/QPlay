@@ -1,13 +1,13 @@
 #include "movie.h"
 
-Movie::Movie(std::string ti, std::string tr, unsigned int rd, std::chrono::minutes rt ,std::string r, bool f, bool ac, unsigned int ir, unsigned int fp, std::string ca, Genre g, Rating ra, unsigned int co):  AudioVisual(ti,tr,rd,rt,r,f,ac,ir,fp), cast(ca), genre(g), rating(ra), collection(co) {}
+Movie::Movie(std::string ti, std::string tr, unsigned int rd, std::string r, bool f, int rt , bool ac, unsigned int ir, unsigned int fp, std::string ca, Genre g, Rating ra, unsigned int co):  AudioVisual(ti,tr,rd,r,f,rt,ac,ir,fp), cast(ca), genre(g), rating(ra), collection(co) {}
 
 Movie* Movie::clone() const {
     return new Movie(*this);
 }
 
-std::chrono::minutes Movie::getTotalRunningTime() const{
-    return (running_time * collection);
+int Movie::getTotalRunningTime() const{
+    return (running_time * static_cast<int>(collection));
 }
 std::string Movie::getType() const{
     return "Movie";
@@ -22,7 +22,11 @@ bool Movie::matureContent() const{
 }
 
 bool Movie::operator==(const AudioVisual& av) const{
-    return AudioVisual::operator==(av) && cast == static_cast<const Movie &>(av).cast && genre == static_cast<const Movie &>(av).genre && rating == static_cast<const Movie &>(av).rating && collection == static_cast<const Movie &>(av).collection ;
+    return AudioVisual::operator==(av) &&
+            cast == static_cast<const Movie &>(av).cast &&
+            genre == static_cast<const Movie &>(av).genre &&
+            rating == static_cast<const Movie &>(av).rating &&
+            collection == static_cast<const Movie &>(av).collection ;
 }
 
 Movie::~Movie() {}

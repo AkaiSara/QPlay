@@ -22,10 +22,7 @@ Container<AudioVisual> Xmlio::read() const{
     if(reader.readNextStartElement()) {
         if(reader.name() == "root") {
             while(reader.readNextStartElement()) {
-                try{list.push_back(AudioVisual::unserialize(reader));}
-                catch(std::string s) {
-                    QMessageBox box(QMessageBox::Warning, "Errore in lettura", "Qualche elemento potrebbe non essere stato letto correttamente", QMessageBox::Ok);
-                }
+
             }
         }
     }
@@ -34,7 +31,7 @@ Container<AudioVisual> Xmlio::read() const{
 }
 
 void Xmlio::write(const Container<AudioVisual> & list) const {
-     QSaveFile file(filename);
+     QFile file(filename);
 
      if(!file.open(QIODevice::WriteOnly)) {
          throw std::exception();
@@ -47,14 +44,14 @@ void Xmlio::write(const Container<AudioVisual> & list) const {
      writer.writeStartDocument();
      writer.writeComment("File di salvataggio dell'applicazione. Non modificare a mano.");
 
-     writer.writeStartElement("root");
+     writer.writeStartElement("root"); //apre un tag Root
 
      auto cit = list.begin();
      while(cit!= list.end()) {
-         (*cit)->serialize(writer);
+         //(*cit)->serialize(writer);
          ++cit;
      }
-     writer.writeEndElement();                                        // </root>
+     writer.writeEndElement(); //chiude il tag Root                                // </root>
      writer.writeEndDocument();
-     file.commit();
+     //file.commit();
 }

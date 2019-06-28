@@ -8,7 +8,10 @@
 #define AUDIOVISUAL_H
 
 #include <string>
-#include <chrono>
+#include <vector>
+
+#include <QXmlStreamReader>
+#include <QXmlStreamWriter>
 
 class AudioVisual{ 
 public:
@@ -18,18 +21,18 @@ public:
 private: //-----campi dati-----
     std::string title;
     std::string description; //plot
-    unsigned int release_date; // data ----- non va bene unsigned int, cambiare
+    unsigned int release_date; // data
     std::string director;
     bool favorite; // contenuto nei preferiti
     //immagine
 protected:
-    std::chrono::minutes running_time; //durata
+    int running_time; //durata
     bool audio_compression; //perdita di informazioni, se compresso
     unsigned int image_resolution;//video -> 4k, 144p etc in pixel
     unsigned int fps; //frame per secondo
 public:
     //--------costruttori------
-    AudioVisual(std::string = "None", std::string = "No description", unsigned int = 0, std::chrono::minutes = std::chrono::duration<std::chrono::minutes::rep, std::ratio<60,1>>(0), std::string = "None", bool = false, bool = true, unsigned int = 0, unsigned int = 0);
+    AudioVisual(std::string = "None", std::string = "No description", unsigned int = 0, std::string = "None", bool = false, int = 0, bool = true, unsigned int = 0, unsigned int = 0);
 
     //------distruttore----
     virtual ~AudioVisual() = default;
@@ -42,10 +45,13 @@ public:
     virtual AudioVisual* clone() const =0;
 
     //---------metodi virtuali puri------------
-    virtual std::chrono::minutes getTotalRunningTime() const =0;
+    virtual int getTotalRunningTime() const =0;
     virtual std::string getType() const =0;
     virtual bool getQuality() const =0;
     virtual bool matureContent() const =0;
+
+    //static AudioVisual* unserialize(QXmlStreamReader&);
+    //virtual void serialize(QXmlStreamWriter&) const = 0;
 
     bool isFavorite() const;
 };

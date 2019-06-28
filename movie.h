@@ -10,11 +10,11 @@ class Movie: public AudioVisual{
         Rating rating; //enum Rating
         unsigned int collection; //fa parte di una collezione di film
     public:
-        Movie(std::string, std::string, unsigned int, std::chrono::minutes, std::string, bool, bool, unsigned int, unsigned int, std::string = "None", Genre = Unknown, Rating = All, unsigned int = 1);
+        Movie(std::string, std::string, unsigned int, std::string, bool, int, bool, unsigned int, unsigned int, std::string = "None", Genre = Unknown, Rating = All, unsigned int = 1);
 
         virtual Movie* clone() const override;
 
-        virtual std::chrono::minutes getTotalRunningTime() const override;
+        virtual int getTotalRunningTime() const override;
         virtual std::string getType() const override;
         virtual bool getQuality() const override;
         virtual bool matureContent() const override;

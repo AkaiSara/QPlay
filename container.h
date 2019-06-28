@@ -100,16 +100,12 @@ public:
 	void pop_back();
 	void pop_front();
 
-	//search, find, seek
+    Iterator search(const T&);
+    Const_Iterator search(const T&) const;
 };
 //void merge(list<T>& x) //se le liste sono ordinate unisce le due liste
 //void reverse() // rovescia l'ordine di memorizzazione degli elementi last = first, first = last
 //void sort() // ordina la lista secondo l'ordinamento < (in modo crescente) -> posso usare la libreria algorithm
-
-//operator == != < <= > >=
-//ricerca
-//metodo find()
-
 
 
 //--------implementazione-------
@@ -277,15 +273,16 @@ Container<T>::Container(unsigned int n){
 }
 
 template<class T>
-Container<T>::Container(const Container & c): first(c.first), last(c.last), size(c.size) {
-    if(size == 2){
-        first->next = last;
-        last->prev = first;
-    }
-    if(size > 2){
-        for(Container<T>::Iterator it= (c.first)->next; it != c.last; ++it){
-            push_back(*it);
+Container<T>::Container(const Container & c): first(new Node(c.first->info)), last(nullptr), size(c.size) {
+    if(c.last == c.first) last = first;
+    else{
+        Node *aux = c.first->next, *tmp = first;
+        while(aux != nullptr){
+            tmp->next = new Node(aux->info, tmp);
+            aux = aux->next;
+            tmp = tmp->next;
         }
+        last = tmp;
     }
 } //costruttore di copia
 
@@ -303,6 +300,7 @@ typename Container<T>::Iterator Container<T>::insert(const Iterator & it, const 
     aux->prev = it.pos->prev;
     it.pos-> prev = aux;
     aux->next = it.pos;
+    size++;
     return it.pos->prev;
 }
 
@@ -337,6 +335,7 @@ typename Container<T>::Iterator Container<T>::erase(Iterator it){
     p->next = nullptr;
     p->prev = nullptr;
     delete p; //altrimenti cancella l'intera lista
+    size--;
     return it;
 }
 
@@ -368,8 +367,18 @@ void Container<T>::pop_front(){
 
 template<class T>
 Container<T>& Container<T>::operator=(const Container & c){
-	Container aux(c);
-    //DA FARE
+    if(this != &c){
+        delete first;
+        size = c.size;
+        first = new Node(c.first->info);
+        Node *aux = c.first->next, *tmp = first;
+        while(aux != nullptr){
+            tmp->next = new Node(aux->info, tmp);
+            aux = aux->next;
+            tmp = tmp->next;
+        }
+        last = tmp;
+    }
 	return *this;
 }
 
@@ -426,6 +435,21 @@ unsigned int Container<T>::getSize() const {
 template<class T>
 bool Container<T>::isEmpty() const { 
 	return (size == 0 && first == nullptr);
+}
+
+/*--------- ricerca -------*/
+template<class T>
+typename Container<T>::Iterator Container<T>::search(const T& t){
+    Iterator it = begin();
+    for(; it != end() && *it != t; it++);
+    return it;
+}
+
+template<class T>
+typename Container<T>::Const_Iterator Container<T>::search(const T& t) const{
+    Const_Iterator cit = cbegin();
+    for(; cit != cend() && *cit != t; cit++);
+    return cit;
 }
 
 

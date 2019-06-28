@@ -8,6 +8,10 @@
 #include <QVBoxLayout>
 #include <QRadioButton>
 #include <QGroupBox>
+#include <QButtonGroup>
+#include <QLineEdit>
+#include <QTextEdit>
+#include <QCheckBox>
 
 class AddDialog : public QDialog {
     Q_OBJECT
@@ -15,11 +19,24 @@ class AddDialog : public QDialog {
 private:
     MainWidget *parent;
 
-    QRadioButton * type1;
-    QRadioButton * type2;
-    QRadioButton * type3;
+    QRadioButton * doc;
+    QRadioButton * mov;
+    QRadioButton * tvs;
     QVBoxLayout * radioListBox;
     QGroupBox * upperRadioButtonsGroup;
+    QButtonGroup * buttonsGroup;
+
+    QLineEdit * title;
+    QTextEdit * descr;
+    QLineEdit * date;
+    //dir
+    QCheckBox * fav;
+    QLabel * favLabel;
+    //img
+    QLineEdit * rt;
+    QCheckBox * ac;
+    QLineEdit * imgres;
+    QLineEdit * frameps;
 
     QPushButton * add;
     QPushButton * cancel;

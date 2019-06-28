@@ -33,7 +33,7 @@ MainWidget::MainWidget(){
     //----------------[]
 
     //----------------[LowerButtons]
-    showAddDialog = new QPushButton(tr("Show dialog"));
+    showAddDialog = new QPushButton(tr("Add an item"));
     exitBtn = new QPushButton(tr("Exit"));
 
     internalLowerHorizontalLayout = new QHBoxLayout;
