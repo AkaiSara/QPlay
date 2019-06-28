@@ -16,10 +16,12 @@ private:
     QAction * openAct;
     QAction * saveAct;
     QAction * exitAct;
+
     QMenu * toolMenu;
     QAction * addAct;
     QAction * editAct;
     QAction * removeAct;
+
     MainWidget * myWidget;
 public:
     MainWindow();

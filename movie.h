@@ -8,9 +8,8 @@ class Movie: public AudioVisual{
         std::string cast; 
         Genre genre; //enum Genere
         Rating rating; //enum Rating
-        unsigned int collection; //fa parte di una collezione di film
     public:
-        Movie(std::string, std::string, unsigned int, std::string, bool, int, bool, unsigned int, unsigned int, std::string = "None", Genre = Unknown, Rating = All, unsigned int = 1);
+        Movie(std::string, std::string, unsigned int, std::string, bool, int, bool, unsigned int, unsigned int, std::string = "None", Genre = Unknown, Rating = All);
 
         virtual Movie* clone() const override;
 

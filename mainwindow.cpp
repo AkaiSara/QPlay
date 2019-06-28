@@ -2,6 +2,7 @@
 
 MainWindow::MainWindow(){
     setWindowTitle(tr("Finestra principale"));
+    //setWindowIcon(QIcon(":/icon.svg"));
     myWidget = new MainWidget;
     setCentralWidget(myWidget);
 

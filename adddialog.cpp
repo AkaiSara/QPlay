@@ -1,6 +1,97 @@
 #include "adddialog.h"
 
+#include <QSize>
+
+void AddDialog::showDocWidget(){
+    cast->hide();
+    tvSeason->hide();
+    tvEpisode->hide();
+    tvEnded->hide();
+    genre->hide();
+    rating->hide();
+
+    docNarr->show();
+    docTopic->show();
+
+    hBox->addWidget(docNarr);
+    hBox->addWidget(docTopic);
+}
+
+void AddDialog::showMovWidget(){
+    docNarr->hide();
+    docTopic->hide();
+    tvSeason->hide();
+    tvEpisode->hide();
+    tvEnded->hide();
+
+    cast->show();
+    genre->show();
+    rating->show();
+
+    QVBoxLayout * aux = new QVBoxLayout;
+    aux->addWidget(genre);
+    aux->addWidget(rating);
+    hBox->addWidget(cast);
+    hBox->addLayout(aux);
+}
+
+void AddDialog::showTvSWidget(){
+    docNarr->hide();
+    docTopic->hide();
+
+    tvSeason->show();
+    tvEpisode->show();
+    cast->show();
+    tvEnded->show();
+    genre->show();
+    rating->show();
+
+    QVBoxLayout * aux1 = new QVBoxLayout();
+    aux1->addWidget(tvSeason);
+    aux1->addWidget(tvEpisode);
+    aux1->addWidget(tvEnded);
+
+    QVBoxLayout * aux2 = new QVBoxLayout();
+    aux2->addWidget(genre);
+    aux2->addWidget(rating);
+
+    hBox->addLayout(aux1);
+    hBox->addLayout(aux2);
+    hBox->addWidget(cast);
+}
+
 AddDialog::AddDialog(MainWidget* p): parent(p) {
+    QStringList listOfGenre;
+    listOfGenre << "Unknown" << "Action" << "Adventure" << "Animation" << "Comedy" << "Crime" << "Drama" << "Fantasy" ;
+
+    QStringList listOfRating;
+    listOfRating << "All" << "VM18" << "VM14";
+
+    QIntValidator * positVal = new QIntValidator();
+    positVal->setBottom(0);
+    hBox = new QHBoxLayout;
+
+    docNarr = new QLineEdit();
+    docNarr ->setPlaceholderText("Narrator");
+    docTopic = new QLineEdit();
+    docTopic->setPlaceholderText(tr("Main topic"));
+
+    cast = new QTextEdit();
+    cast->setPlaceholderText(tr("Cast"));
+    genre = new QComboBox();
+    genre->addItems(listOfGenre);
+    rating = new QComboBox();
+    rating->addItems(listOfRating);
+
+    tvSeason = new QLineEdit();
+    tvSeason->setValidator(positVal);
+    tvSeason->setPlaceholderText(QString("Season"));
+
+    tvEpisode = new QLineEdit();
+    tvEpisode->setValidator(positVal);
+    tvEpisode->setPlaceholderText(QString("Episode"));
+
+    tvEnded = new QCheckBox(tr("This serie is ended"));
 
     setWindowTitle("Inserisci elemento");
 
@@ -8,15 +99,12 @@ AddDialog::AddDialog(MainWidget* p): parent(p) {
     doc = new QRadioButton(tr("Documentary"));
     mov = new QRadioButton(tr("Movie"));
     tvs = new QRadioButton(tr("tvSerie"));
-    radioListBox = new QVBoxLayout; //contiene i radio buttons
-    buttonsGroup = new QButtonGroup();
-    upperRadioButtonsGroup = new QGroupBox(tr("Seleziona il tipo")); //rende esclusivi tra loro i radio buttons
+    QVBoxLayout * radioListBox = new QVBoxLayout; //contiene i radio buttons
+    //rende esclusivi tra loro i radio buttons
+    QGroupBox * upperRadioButtonsGroup = new QGroupBox(tr("Seleziona il tipo"));
 
     doc->setChecked(true); //lo metto checked per far sì che sia cliccabile un solo bottone alla volta
-
-    buttonsGroup->addButton(doc);
-    buttonsGroup->addButton(mov);
-    buttonsGroup->addButton(tvs);
+    showDocWidget();
 
     radioListBox->addWidget(doc);
     radioListBox->addWidget(mov);
@@ -24,7 +112,9 @@ AddDialog::AddDialog(MainWidget* p): parent(p) {
     radioListBox->addStretch(1);
     upperRadioButtonsGroup->setLayout(radioListBox);
 
-    connect(buttonsGroup, SIGNAL(buttonClicked()), this, SLOT());
+    connect(doc, SIGNAL(clicked()), this, SLOT(showDocWidget()));
+    connect(mov, SIGNAL(clicked()), this, SLOT(showMovWidget()));
+    connect(tvs, SIGNAL(clicked()), this, SLOT(showTvSWidget()));
     //----------------[]
 
     //----------------[Central]
@@ -32,20 +122,16 @@ AddDialog::AddDialog(MainWidget* p): parent(p) {
     title->setPlaceholderText(QString("Title"));
 
     date= new QLineEdit();
-    date->setValidator(new QIntValidator());
+    date->setValidator(positVal);
     date->setPlaceholderText(QString("Release year"));
     //dir
 
-    fav = new QCheckBox();
-    favLabel = new QLabel("Favorite: ");
-    QHBoxLayout * favBox = new QHBoxLayout;
-    favBox->addWidget(favLabel);
-    favBox->addWidget(fav);
+    fav = new QCheckBox("Favorite");
 
     QHBoxLayout * titleBox = new QHBoxLayout;
     titleBox->addWidget(title);
     titleBox->addWidget(date);
-    titleBox->addLayout(favBox);
+    titleBox->addWidget(fav);
 
     descr = new QTextEdit();
     descr->setPlaceholderText(QString("Description"));
@@ -53,9 +139,7 @@ AddDialog::AddDialog(MainWidget* p): parent(p) {
     //img
 
     rt = new QLineEdit();
-    QIntValidator * val = new QIntValidator();
-    val->setBottom(0);
-    rt->setValidator(val);
+    rt->setValidator(positVal);
     rt->setPlaceholderText(QString("Running time"));
 
     ac = new QCheckBox("Audio compression");
@@ -64,7 +148,7 @@ AddDialog::AddDialog(MainWidget* p): parent(p) {
     imgres->setPlaceholderText(QString("Image resolution"));
 
     frameps = new QLineEdit();
-    frameps->setValidator(new QIntValidator());
+    frameps->setValidator(positVal);
     frameps->setPlaceholderText(QString("Fps"));
 
     QVBoxLayout * specBox = new QVBoxLayout();
@@ -85,7 +169,7 @@ AddDialog::AddDialog(MainWidget* p): parent(p) {
     //----------------[LowerButtons]
     add =new QPushButton(tr("Aggiungi elemento"));
     cancel =new QPushButton(tr("Cancel"));
-    lowerButtonsBox = new QHBoxLayout;
+    QHBoxLayout * lowerButtonsBox = new QHBoxLayout;
 
     lowerButtonsBox->addWidget(add);
     lowerButtonsBox->addWidget(cancel);
@@ -97,6 +181,9 @@ AddDialog::AddDialog(MainWidget* p): parent(p) {
     mainBox = new QVBoxLayout;
     mainBox->addWidget(upperRadioButtonsGroup);
     mainBox->addLayout(mainLayout);
+    mainBox->addStretch(1);
+    mainBox->addSpacing(15);
+    mainBox->addLayout(hBox);
     mainBox->addLayout(lowerButtonsBox);
     setLayout(mainBox);
 }

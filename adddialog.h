@@ -13,6 +13,7 @@
 #include <QTextEdit>
 #include <QCheckBox>
 
+
 class AddDialog : public QDialog {
     Q_OBJECT
 
@@ -22,9 +23,6 @@ private:
     QRadioButton * doc;
     QRadioButton * mov;
     QRadioButton * tvs;
-    QVBoxLayout * radioListBox;
-    QGroupBox * upperRadioButtonsGroup;
-    QButtonGroup * buttonsGroup;
 
     QLineEdit * title;
     QTextEdit * descr;
@@ -38,13 +36,32 @@ private:
     QLineEdit * imgres;
     QLineEdit * frameps;
 
+    QLineEdit * docNarr;
+    QLineEdit * docTopic;
+
+    QTextEdit * cast;
+    QComboBox * genre;
+    QComboBox * rating;
+
+    QLineEdit * movColl;
+
+    QLineEdit * tvSeason;
+    QLineEdit * tvEpisode;
+    QCheckBox * tvEnded;
+
     QPushButton * add;
     QPushButton * cancel;
-    QHBoxLayout * lowerButtonsBox;
 
+    QHBoxLayout * hBox;
     QVBoxLayout * mainBox;
 public:
     AddDialog(MainWidget * = nullptr);
+
+private slots:
+    void showDocWidget();
+    void showMovWidget();
+    void showTvSWidget();
+
 };
 
 #endif // ADDDIALOG_H

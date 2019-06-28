@@ -7,6 +7,7 @@
 #include <QHBoxLayout>
 #include <QLabel>
 #include <QListWidget>
+#include <QComboBox>
 
 class MainWidget : public QWidget {
        Q_OBJECT
@@ -17,6 +18,7 @@ private:
     QLabel *proPic;
     QLabel * totalTime;
 
+    QLineEdit* searchbar;
     QListWidget * listWidget;
 
     QHBoxLayout *internalLowerHorizontalLayout;
