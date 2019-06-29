@@ -22,3 +22,29 @@ bool AudioVisual::operator!=(const AudioVisual& av) const{
 bool AudioVisual::isFavorite() const{
     return favorite;
 }
+
+std::string AudioVisual::getTitle() const{
+    return title;
+}
+
+std::string AudioVisual::getDescription() const{
+    return description;
+}
+unsigned int AudioVisual::getRelease_date() const{
+    return release_date;
+}
+std::string AudioVisual::getDirector() const{
+    return director;
+}
+int AudioVisual::getRunning_time() const{
+return running_time;
+}
+bool AudioVisual::isAudioComp() const{
+    return audio_compression;
+}
+unsigned int AudioVisual::getImage_resolution() const{
+    return image_resolution;
+}
+unsigned int AudioVisual::getFps() const{
+    return fps;
+}

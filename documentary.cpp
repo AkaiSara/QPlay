@@ -27,3 +27,11 @@ bool Documentary::operator==(const AudioVisual& av) const{
 }
 
 Documentary::~Documentary() {}
+
+
+std::string Documentary::getNarrator() const{
+    return narrator;
+}
+std::string Documentary::getTopic() const{
+    return topic;
+}

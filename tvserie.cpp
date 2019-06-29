@@ -33,3 +33,24 @@ bool TvSerie::operator==(const AudioVisual& av) const{
 }
 
 TvSerie::~TvSerie() {}
+
+
+std::string TvSerie::getCast() const{
+    return cast;
+}
+AudioVisual::Genre TvSerie::getGenre() const{
+    return genre;
+}
+AudioVisual::Rating TvSerie::getRating() const{
+    return rating;
+}
+
+bool TvSerie::isEnded() const{
+    return ended;
+}
+unsigned int TvSerie::getSeason() const{
+    return season;
+}
+unsigned int TvSerie::getEpisode() const{
+    return episode;
+}

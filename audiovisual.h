@@ -53,7 +53,16 @@ public:
     //static AudioVisual* unserialize(QXmlStreamReader&);
     //virtual void serialize(QXmlStreamWriter&) const = 0;
 
+    //getter & setter
     bool isFavorite() const;
+    std::string getTitle() const;
+    std::string getDescription() const;
+    unsigned int getRelease_date() const;
+    std::string getDirector() const;
+    int getRunning_time() const;
+    bool isAudioComp() const;
+    unsigned int getImage_resolution() const;
+    unsigned int getFps() const;
 };
 
 #endif //AUDIOVISUAL_H

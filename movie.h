@@ -21,6 +21,10 @@ class Movie: public AudioVisual{
         virtual bool operator==(const AudioVisual&) const override;
 
         virtual ~Movie() override;
+
+        std::string getCast() const;
+        Genre getGenre() const;
+        Rating getRating() const;
 };
 
 #endif

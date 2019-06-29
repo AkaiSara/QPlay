@@ -24,6 +24,15 @@ class TvSerie : public AudioVisual{
         virtual bool operator==(const AudioVisual&) const override;
 
         virtual ~TvSerie() override;
+
+        //getter e setter
+        std::string getCast() const;
+        Genre getGenre() const;
+        Rating getRating() const;
+        bool isEnded() const;
+        unsigned int getSeason() const;
+        unsigned int getEpisode() const;
+
 };
 
 #endif 

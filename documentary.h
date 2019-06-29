@@ -20,6 +20,10 @@ class Documentary: public AudioVisual{
         virtual bool operator==(const AudioVisual&) const override;
 
         virtual ~Documentary() override;
+
+        //getter n setter
+        std::string getNarrator() const;
+        std::string getTopic() const;
 };
 
 #endif

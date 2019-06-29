@@ -9,7 +9,7 @@ class Xmlio {
 private:
     QString filename;
 public:
-    Xmlio(QString);
+    Xmlio(const QString &);
     Container<AudioVisual> read() const;
     void write(const Container<AudioVisual> &) const;
 };

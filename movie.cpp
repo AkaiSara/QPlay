@@ -29,3 +29,13 @@ bool Movie::operator==(const AudioVisual& av) const{
 }
 
 Movie::~Movie() {}
+
+std::string Movie::getCast() const{
+    return cast;
+}
+AudioVisual::Genre Movie::getGenre() const{
+    return genre;
+}
+AudioVisual::Rating Movie::getRating() const{
+    return rating;
+}

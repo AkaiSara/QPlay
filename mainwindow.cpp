@@ -27,8 +27,26 @@ MainWindow::MainWindow(){
     connect(myWidget->getExitBtn(), SIGNAL(clicked()), this, SLOT(close())); //quando il bottone di exit di mywidget viene cliccato chiude anche mainwindow
 }
 
-void MainWindow::openFile(){}
-void MainWindow::saveFile(){}
+void MainWindow::openFile(){
+    QFileDialog choose;
+
+    choose.setFileMode(QFileDialog::ExistingFile);
+    choose.setWindowTitle("Load Lineup");
+    choose.setNameFilter("XML file (*.xml)");
+
+    /*if (choose.exec())
+        model->load(choose.selectedFiles()[0].toStdString());*/
+}
+void MainWindow::saveFile(){
+    QFileDialog choose;
+
+    choose.setFileMode(QFileDialog::AnyFile);
+    choose.setWindowTitle("Save Lineup");
+    choose.setNameFilter("XML file (*.xml)");
+
+    /*if (choose.exec())
+        model->save(choose.selectedFiles()[0].toStdString());*/
+}
 
 QSize MainWindow::sizeHint() const{
     return QSize(450,350);
