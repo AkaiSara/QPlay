@@ -235,7 +235,7 @@ bool Container<T>::Const_Iterator::operator!=(const Const_Iterator & it) const {
 template<class T>
 T& Container<T>::Const_Iterator::operator*() const { //dereferenziazione
     if(pos != nullptr)
-        return pos->info; //se contiene qualcosa
+        return *(pos->info); //se contiene qualcosa
 }
 
 template<class T>
