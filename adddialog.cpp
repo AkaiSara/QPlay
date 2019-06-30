@@ -91,7 +91,7 @@ AddDialog::AddDialog(MainWidget* p): parent(p) {
     tvEpisode->setValidator(positVal);
     tvEpisode->setPlaceholderText(QString("Episode"));
 
-    tvEnded = new QCheckBox(tr("This serie is ended"));
+    tvEnded = new QCheckBox(tr("This serie has ended"));
 
     setWindowTitle("Inserisci elemento");
 
@@ -99,11 +99,10 @@ AddDialog::AddDialog(MainWidget* p): parent(p) {
     doc = new QRadioButton(tr("Documentary"));
     mov = new QRadioButton(tr("Movie"));
     tvs = new QRadioButton(tr("tvSerie"));
-    QVBoxLayout * radioListBox = new QVBoxLayout; //contiene i radio buttons
-    //rende esclusivi tra loro i radio buttons
+    QVBoxLayout * radioListBox = new QVBoxLayout;
     QGroupBox * upperRadioButtonsGroup = new QGroupBox(tr("Seleziona il tipo"));
 
-    doc->setChecked(true); //lo metto checked per far sì che sia cliccabile un solo bottone alla volta
+    doc->setChecked(true);
     showDocWidget();
 
     radioListBox->addWidget(doc);
