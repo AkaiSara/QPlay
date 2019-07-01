@@ -1,7 +1,4 @@
 #include "xmlio.h"
-#include "documentary.h"
-#include "movie.h"
-#include "tvserie.h"
 
 #include <QFile>
 #include <QSaveFile>

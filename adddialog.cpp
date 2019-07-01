@@ -1,5 +1,5 @@
 #include "adddialog.h"
-
+#include "audiovisual.h"
 #include <QSize>
 
 void AddDialog::showDocWidget(bool show){
@@ -26,7 +26,13 @@ AddDialog::AddDialog(MainWidget* p): parent(p) {
     listOfGenre << "Unknown" << "Action" << "Adventure" << "Animation" << "Comedy" << "Crime" << "Drama" << "Fantasy" ;
 
     QStringList listOfRating;
-    listOfRating << "All" << "VM18" << "VM14";
+    //listOfRating = QList<QString>::fromVector(QVector<QString>::fromStdVector(AudioVisual::Rating));
+    //listOfRating << "All" << "VM18" << "VM14";
+    /*foreach (std::string str, AudioVisual::Rating) {
+        listOfRating.append(QString::fromStdString(str));
+    }*/
+    for(auto it =  AudioVisual::Rating.begin() ; it != AudioVisual::Rating.end(); ++it)
+        listOfRating << QString::fromStdString(*it);
 
     QIntValidator * positVal = new QIntValidator();
     positVal->setBottom(0);
@@ -153,8 +159,8 @@ AddDialog::AddDialog(MainWidget* p): parent(p) {
     //----------------[LowerButtons]
     add =new QPushButton(tr("Aggiungi elemento"));
     cancel =new QPushButton(tr("Cancel"));
-    QHBoxLayout * lowerButtonsBox = new QHBoxLayout;
 
+    QHBoxLayout * lowerButtonsBox = new QHBoxLayout;
     lowerButtonsBox->addWidget(add);
     lowerButtonsBox->addWidget(cancel);
 

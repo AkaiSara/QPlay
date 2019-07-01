@@ -1,5 +1,4 @@
 #include "documentary.h"
-#include <string>
 
 Documentary::Documentary(std::string ti, std::string tr, unsigned int rd, std::string r, bool f, int rt , bool ac, unsigned int ir, unsigned int fp, std::string n, std::string ar): AudioVisual(ti,tr,rd,r,f,rt,ac,ir,fp), narrator(n), topic(ar) {}
 

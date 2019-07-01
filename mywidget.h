@@ -1,5 +1,5 @@
-#ifndef MAINWIDGET_H
-#define MAINWIDGET_H
+#ifndef MYWIDGET_H
+#define MYWIDGET_H
 
 #include <QWidget>
 #include <QPushButton>
@@ -8,6 +8,7 @@
 #include <QLabel>
 #include <QListWidget>
 #include <QComboBox>
+
 
 class MainWidget : public QWidget {
        Q_OBJECT
@@ -35,4 +36,4 @@ private slots:
 
 };
 
-#endif // WIDGET_H
+#endif // MYWIDGET_H

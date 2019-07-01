@@ -14,6 +14,8 @@
 #include <QCheckBox>
 #include <QWidget>
 
+//#include<QtWidgets>
+
 
 class AddDialog : public QDialog {
     Q_OBJECT

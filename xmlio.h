@@ -3,7 +3,9 @@
 
 #include <QString>
 #include "container.h"
-#include "audiovisual.h"
+#include "documentary.h"
+#include "movie.h"
+#include "tvserie.h"
 
 class Xmlio {
 private:
