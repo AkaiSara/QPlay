@@ -7,9 +7,9 @@
 
 class Xmlio {
 private:
-    QString filename;
+    std::string filename;
 public:
-    Xmlio(const QString &);
+    Xmlio(const std::string &);
     Container<AudioVisual> read() const;
     void write(const Container<AudioVisual> &) const;
 };

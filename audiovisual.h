@@ -15,8 +15,8 @@
 
 class AudioVisual{ 
 public:
-    enum Rating{VM14, VM18, All};
-    enum Genre{Action, Adventure, Animation, Comedy, Crime, Drama, Fantasy, Food, Game_Show, Horror, Mystery, Reality, Romance, Science_fiction, Soap, Sport, Talk_show, Thriller, Travel, Unknown, Western};
+    const std::vector<std::string> Rating = {"VM14", "VM18", "All"};
+    const std::vector<std::string> Genre = {"Action", "Adventure", "Animation", "Comedy", "Crime", "Drama", "Fantasy", "Food", "Game show", "Horror", "Mystery", "Reality", "Romance", "Science fiction", "Soap", "Sport", "Talk show", "Thriller", "Travel", "Unknown", "Western"};
 
 private: //-----campi dati-----
     std::string title;

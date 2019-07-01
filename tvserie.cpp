@@ -1,7 +1,7 @@
 #include "tvserie.h"
 #include <string>
 
-TvSerie::TvSerie(std::string ti, std::string tr, unsigned int rd, std::string r, bool f, int rt, bool ac, unsigned int ir, unsigned int fp, unsigned int st, unsigned int ep, std::string ca, Genre g, bool ic, Rating ra): AudioVisual(ti,tr,rd,r,f,rt,ac,ir,fp), season(st), episode(ep), cast(ca), genre(g), ended(ic), rating(ra) {}
+TvSerie::TvSerie(std::string ti, std::string tr, unsigned int rd, std::string r, bool f, int rt, bool ac, unsigned int ir, unsigned int fp, unsigned int st, unsigned int ep, std::string ca, std::string g, bool ic, std::string ra): AudioVisual(ti,tr,rd,r,f,rt,ac,ir,fp), season(st), episode(ep), cast(ca), genre(g), ended(ic), rating(ra) {}
 
 TvSerie* TvSerie::clone() const {
     return new TvSerie(*this);
@@ -19,7 +19,7 @@ bool TvSerie::getQuality() const{
 }
 
 bool TvSerie::matureContent() const{
-    return (rating == VM18? true : false) && (genre == Crime || genre == Horror ? true : false);
+    return (rating == "VM18"? true : false) && (genre == "Crime" || genre == "Horror" ? true : false);
 }
 
 bool TvSerie::operator==(const AudioVisual& av) const{
@@ -38,10 +38,10 @@ TvSerie::~TvSerie() {}
 std::string TvSerie::getCast() const{
     return cast;
 }
-AudioVisual::Genre TvSerie::getGenre() const{
+std::string TvSerie::getGenre() const{
     return genre;
 }
-AudioVisual::Rating TvSerie::getRating() const{
+std::string TvSerie::getRating() const{
     return rating;
 }
 

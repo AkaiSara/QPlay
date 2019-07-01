@@ -8,11 +8,11 @@ class TvSerie : public AudioVisual{
         unsigned int season;
         unsigned int episode;
         std::string cast;
-        Genre genre; //enum Genere
+        std::string genre; //enum Genere
         bool ended; //serie conclusa
-        Rating rating; //enum Rating
+        std::string rating; //enum Rating
     public:
-        TvSerie(std::string, std::string, unsigned int, std::string, bool, int, bool, unsigned int, unsigned int, unsigned int = 1, unsigned int = 1, std::string = "None", Genre = Unknown, bool = true, Rating = All);
+        TvSerie(std::string, std::string, unsigned int, std::string, bool, int, bool, unsigned int, unsigned int, unsigned int = 1, unsigned int = 1, std::string = "None", std::string = "Unknown", bool = true, std::string = "All");
 
         virtual TvSerie* clone() const override;
         
@@ -27,8 +27,8 @@ class TvSerie : public AudioVisual{
 
         //getter e setter
         std::string getCast() const;
-        Genre getGenre() const;
-        Rating getRating() const;
+        std::string getGenre() const;
+        std::string getRating() const;
         bool isEnded() const;
         unsigned int getSeason() const;
         unsigned int getEpisode() const;

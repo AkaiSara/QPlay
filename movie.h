@@ -6,10 +6,10 @@
 class Movie: public AudioVisual{
     private:
         std::string cast; 
-        Genre genre; //enum Genere
-        Rating rating; //enum Rating
+        std::string  genre; //enum Genere
+        std::string  rating; //enum Rating
     public:
-        Movie(std::string, std::string, unsigned int, std::string, bool, int, bool, unsigned int, unsigned int, std::string = "None", Genre = Unknown, Rating = All);
+        Movie(std::string, std::string, unsigned int, std::string, bool, int, bool, unsigned int, unsigned int, std::string = "None", std::string  = "Unknown", std::string  = "All");
 
         virtual Movie* clone() const override;
 
@@ -23,8 +23,8 @@ class Movie: public AudioVisual{
         virtual ~Movie() override;
 
         std::string getCast() const;
-        Genre getGenre() const;
-        Rating getRating() const;
+        std::string getGenre() const;
+        std::string getRating() const;
 };
 
 #endif

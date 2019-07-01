@@ -10,12 +10,12 @@
 #include <QDebug>
 #include <QMessageBox>
 
-Xmlio::Xmlio(const QString & filepath) : filename(filepath) {}
+Xmlio::Xmlio(const std::string & filepath) : filename(filepath) {}
 
 Container<AudioVisual> Xmlio::read() const{
     Container<AudioVisual> list;
 
-    QFile file(filename);
+    QFile file(QString::fromStdString(filename));
 
     if(!file.open(QIODevice::ReadOnly)) {
         QMessageBox box(QMessageBox::Warning, "Errore di apertura", "Non è stato possibile aprire il file", QMessageBox::Ok);
@@ -135,7 +135,7 @@ Container<AudioVisual> Xmlio::read() const{
 }
 
 void Xmlio::write(const Container<AudioVisual> & list) const {
-    QSaveFile file(filename);
+    QSaveFile file(QString::fromStdString(filename));
 
     if(!file.open(QIODevice::WriteOnly)) {
         throw std::exception();
