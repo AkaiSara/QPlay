@@ -12,6 +12,7 @@
 #include <QLineEdit>
 #include <QTextEdit>
 #include <QCheckBox>
+#include <QWidget>
 
 
 class AddDialog : public QDialog {
@@ -43,7 +44,7 @@ private:
     QComboBox * genre;
     QComboBox * rating;
 
-    QLineEdit * movColl;
+    QLineEdit * movColl; ////////////////// INUTILIZZATO
 
     QLineEdit * tvSeason;
     QLineEdit * tvEpisode;
@@ -52,15 +53,18 @@ private:
     QPushButton * add;
     QPushButton * cancel;
 
-    QHBoxLayout * hBox;
+    QWidget * docMenu;
+    QWidget * movMenu;
+    QWidget * tvSMenu;
+
     QVBoxLayout * mainBox;
 public:
     AddDialog(MainWidget * = nullptr);
 
 private slots:
-    void showDocWidget();
-    void showMovWidget();
-    void showTvSWidget();
+    void showDocWidget(bool);
+    void showMovWidget(bool);
+    void showTvSWidget(bool);
 
 };
 
