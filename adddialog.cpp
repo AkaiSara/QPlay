@@ -11,7 +11,14 @@ void AddDialog::showMovWidget(bool show){
 }
 
 void AddDialog::showTvSWidget(bool show){
-    show ? tvSMenu->show() : tvSMenu->hide();
+    if (show) {
+        tvSMenu->show();
+        movMenu->show();
+    }
+    else {
+        tvSMenu->hide();
+        movMenu->hide();
+    }
 }
 
 AddDialog::AddDialog(MainWidget* p): parent(p) {
@@ -134,19 +141,17 @@ AddDialog::AddDialog(MainWidget* p): parent(p) {
     movMenu = new QWidget;
     movMenu->setLayout(movLayout);
 
-    QVBoxLayout * aux1 = new QVBoxLayout();
-    aux1->addWidget(tvSeason);
-    aux1->addWidget(tvEpisode);
-    aux1->addWidget(tvEnded);
-    //QVBoxLayout * aux2 = new QVBoxLayout();
-    //aux2->addWidget(genre);
-    //aux2->addWidget(rating);
-    QHBoxLayout * tvSLayout = new QHBoxLayout;
-    tvSLayout->addLayout(aux1);
-    tvSLayout->addLayout(aux);  // <- (era aux2) non funziona, utilizzando già aux in movLayout, aux non appare in tvSLayout - aux2 ruba i widget ad aux
-    tvSLayout->addWidget(cast); // ruba cast al movLayout
+    QVBoxLayout * tvSLayout = new QVBoxLayout;
+    tvSLayout->addWidget(tvSeason);
+    tvSLayout->addWidget(tvEpisode);
+    tvSLayout->addWidget(tvEnded);
     tvSMenu = new QWidget;
     tvSMenu->setLayout(tvSLayout);
+
+    QHBoxLayout * secondLayout = new QHBoxLayout;
+    secondLayout->addWidget(docMenu);
+    secondLayout->addWidget(movMenu);
+    secondLayout->addWidget(tvSMenu);
 
     //----------------[LowerButtons]
     add =new QPushButton(tr("Aggiungi elemento"));
@@ -172,9 +177,7 @@ AddDialog::AddDialog(MainWidget* p): parent(p) {
     mainBox->addLayout(mainLayout);
     mainBox->addStretch(1);
     mainBox->addSpacing(15);
-    mainBox->addWidget(docMenu);
-    mainBox->addWidget(movMenu);
-    mainBox->addWidget(tvSMenu);
+    mainBox->addLayout(secondLayout);
     mainBox->addLayout(lowerButtonsBox);
     setLayout(mainBox);
 }
