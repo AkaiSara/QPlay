@@ -1,6 +1,9 @@
 #ifndef DEEPPTR_H
 #define DEEPPTR_H
-#include "audiovisual.h"
+
+#include "documentary.h"
+#include "movie.h"
+#include "tvserie.h"
 
 template <class T>
 class DeepPtr{ //puntatori polimorfi al tipo T

@@ -15,8 +15,8 @@
 
 class AudioVisual{ 
 public:
-    static std::vector<std::string> Rating;
-    static std::vector<std::string> Genre;
+    const std::vector<std::string> Rating = {"VM14", "VM18", "All"};
+    const std::vector<std::string> Genre = {"Action", "Adventure", "Animation", "Comedy", "Crime", "Drama", "Fantasy", "Food", "Game show", "Horror", "Mystery", "Reality", "Romance", "Science fiction", "Soap", "Sport", "Talk show", "Thriller", "Travel", "Unknown", "Western"};
 
 private: //-----campi dati-----
     std::string title;
@@ -64,8 +64,8 @@ public:
     unsigned int getImage_resolution() const;
     unsigned int getFps() const;
 };
-std::vector<std::string> AudioVisual::Rating = {"VM14", "VM18", "All"};
+//std::vector<std::string> AudioVisual::Rating
 
-std::vector<std::string> AudioVisual::Genre = {"Action", "Adventure", "Animation", "Comedy", "Crime", "Drama", "Fantasy", "Food", "Game show", "Horror", "Mystery", "Reality", "Romance", "Science fiction", "Soap", "Sport", "Talk show", "Thriller", "Travel", "Unknown", "Western"};
+//std::vector<std::string> AudioVisual::Genre
 
 #endif //AUDIOVISUAL_H

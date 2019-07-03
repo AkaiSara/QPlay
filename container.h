@@ -24,6 +24,7 @@ private:
         bool operator==(const Node &) const;
         bool operator!=(const Node &) const;
 	};
+    static Node* copy(Node* f, Node*& l);
 	
 public:
 	class Iterator{ //template annidato associato
@@ -103,13 +104,8 @@ public:
     Iterator search(const T&);
     Const_Iterator search(const T&) const;
 };
-//void merge(list<T>& x) //se le liste sono ordinate unisce le due liste
-//void reverse() // rovescia l'ordine di memorizzazione degli elementi last = first, first = last
-//void sort() // ordina la lista secondo l'ordinamento < (in modo crescente) -> posso usare la libreria algorithm
-
 
 //--------implementazione-------
-
 
 
 //------------node---------
@@ -250,7 +246,19 @@ T* Container<T>::Const_Iterator::operator->() const {
 
 //-----------container------
 
-
+template<class T>
+typename Container<T>::Node* Container<T>::copy(Node* f, Node*& l){
+    if(!f)
+        return l = nullptr;
+    Node * tmp = new Node(f->info), * p = tmp;
+    while(f->next){
+        p->next = new Node(f->next->info, p);
+        f = f->next;
+        p = p->next;
+    }
+    l = p;
+    return  tmp;
+}
 
 
 template<class T>
@@ -273,18 +281,24 @@ Container<T>::Container(unsigned int n){
 }
 
 template<class T>
-Container<T>::Container(const Container & c): first(new Node(c.first->info)), last(nullptr), size(c.size) {
-    if(c.last == c.first) last = first;
-    else{
-        Node *aux = c.first->next, *tmp = first;
-        while(aux != nullptr){
-            tmp->next = new Node(aux->info, tmp);
-            aux = aux->next;
-            tmp = tmp->next;
-        }
-        last = tmp;
-    }
+Container<T>::Container(const Container & c): first(nullptr), last(nullptr), size(c.size) {
+    first = copy(c.first, last);
 } //costruttore di copia
+
+template<class T>
+Container<T>& Container<T>::operator=(const Container & c){
+    if(this != &c){
+        if (first != nullptr) delete first;
+        size = c.size;
+        first = copy(c.first, last);
+    }
+    return *this;
+}
+
+template<class T>
+Container<T>::~Container(){
+    delete first; //chiama ~nodo, quindi la cancella tutta
+}
 
 //inserisce l'elemento t nella sequenza c prima dell'elemento puntato da it e ritorna un iteratore che punta all'elemento appena inserito
 template<class T>
@@ -295,11 +309,11 @@ typename Container<T>::Iterator Container<T>::insert(const Iterator & it, const 
         return Iterator(first);
     }
     //se non vuota
-    Node* aux= new Node(DeepPtr<T>(&t));
-    it.pos->prev->next = aux;
-    aux->prev = it.pos->prev;
-    it.pos-> prev = aux;
-    aux->next = it.pos;
+    Node* aux = new Node(DeepPtr<T>(&t), it.pos->prev , it.pos);
+
+    (it.pos != first) ? it.pos->prev->next = aux : first = aux;
+    (it.pos != last) ? it.pos-> prev = aux : last = aux;
+
     size++;
     return it.pos->prev;
 }
@@ -329,14 +343,16 @@ typename Container<T>::Iterator Container<T>::erase(Iterator it){
         return nullptr;
     }
     //se non vuota
-    it.pos->prev.next = it.pos->next;
-    it.pos->next.prev = it.pos->prev;
-    Node * p = *it;
-    p->next = nullptr;
-    p->prev = nullptr;
-    delete p; //altrimenti cancella l'intera lista
+    Node * p = it.pos->next != nullptr ? it.pos->next : nullptr;
+    if(first != last) {
+        first != it.pos ? it.pos->prev->next = p : first = p;
+        last != it.pos ? it.pos->next->prev = it.pos->prev: last = it.pos->prev;
+
+        it.pos->next = it.pos->prev = nullptr;
+    }
+    delete it.pos;
     size--;
-    return it;
+    return Iterator(p);
 }
 
 //distrugge gli elementi nell'intervallo itb - ite, incluso il primo, escluso l'ultimo e ritorna l'elemento successivo all'ultimo rimosso
@@ -364,28 +380,6 @@ template<class T>
 void Container<T>::pop_front(){
     erase(begin());
 } //rimuove l'elemento in testa -> c.erase(c.begin())
-
-template<class T>
-Container<T>& Container<T>::operator=(const Container & c){
-    if(this != &c){
-        delete first;
-        size = c.size;
-        first = new Node(c.first->info);
-        Node *aux = c.first->next, *tmp = first;
-        while(aux != nullptr){
-            tmp->next = new Node(aux->info, tmp);
-            aux = aux->next;
-            tmp = tmp->next;
-        }
-        last = tmp;
-    }
-	return *this;
-}
-
-template<class T>
-Container<T>::~Container(){
-	delete first; //chiama ~nodo, quindi la cancella tutta
-}
 
 template<class T>
 T& Container<T>::front()const {

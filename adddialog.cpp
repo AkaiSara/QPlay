@@ -1,5 +1,5 @@
 #include "adddialog.h"
-#include "audiovisual.h"
+
 #include <QSize>
 
 void AddDialog::showDocWidget(bool show){
@@ -31,8 +31,8 @@ AddDialog::AddDialog(MainWidget* p): parent(p) {
     /*foreach (std::string str, AudioVisual::Rating) {
         listOfRating.append(QString::fromStdString(str));
     }*/
-    for(auto it =  AudioVisual::Rating.begin() ; it != AudioVisual::Rating.end(); ++it)
-        listOfRating << QString::fromStdString(*it);
+    //for(auto it =  AudioVisual::Rating.begin() ; it != AudioVisual::Rating.end(); ++it)
+      //  listOfRating << QString::fromStdString(*it);
 
     QIntValidator * positVal = new QIntValidator();
     positVal->setBottom(0);
