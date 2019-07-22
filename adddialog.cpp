@@ -1,7 +1,5 @@
 #include "adddialog.h"
 
-#include <QSize>
-
 void AddDialog::showDocWidget(bool show){
     show ? docMenu->show() : docMenu->hide();
 }
@@ -21,7 +19,23 @@ void AddDialog::showTvSWidget(bool show){
     }
 }
 
-AddDialog::AddDialog(MainWidget* p): parent(p) {
+
+void AddDialog::addItem() {/*
+    AudioVisual * i = nullptr;
+    if (doc->isChecked())
+        i = new Documentary(title->text().toStdString(), descr->toPlainText().toStdString(), date->text().toUInt(), director->text().toStdString(), fav->isChecked(), rt->text().toInt(), ac->isChecked(), imgres->text().toUInt(), frameps->text().toUInt(), docNarr->text().toStdString(), docTopic->text().toStdString());
+
+    if (mov->isChecked())
+        i = new Movie(title->text().toStdString(), descr->toPlainText().toStdString(), date->text().toUInt(), director->text().toStdString(), fav->isChecked(), rt->text().toInt(), ac->isChecked(), imgres->text().toUInt(), frameps->text().toUInt(), cast->toPlainText().toStdString(), genre->currentText().toStdString(), rating->currentText().toStdString());
+
+    if (tvs->isChecked())
+        i = new TvSerie(title->text().toStdString(), descr->toPlainText().toStdString(), date->text().toUInt(), director->text().toStdString(), fav->isChecked(), rt->text().toInt(), ac->  isChecked(), imgres->text().toUInt(), frameps->text().toUInt(), tvSeason->text().toUInt(), tvEpisode->text().toUInt(), cast->toPlainText().toStdString(), genre->currentText().toStdString(), tvEnded->isChecked(), rating->currentText().toStdString());
+
+    //model->add(*i);*/
+}
+
+
+AddDialog::AddDialog() {
     QStringList listOfGenre;
     listOfGenre << "Unknown" << "Action" << "Adventure" << "Animation" << "Comedy" << "Crime" << "Drama" << "Fantasy" ;
 
@@ -51,9 +65,6 @@ AddDialog::AddDialog(MainWidget* p): parent(p) {
     QGroupBox * typeSelGroupBox = new   QGroupBox(tr("Seleziona il tipo"));
     typeSelGroupBox->setLayout(typeSelectorBox);
 
-    connect(doc, SIGNAL(toggled(bool)), this, SLOT(showDocWidget(bool)));
-    connect(mov, SIGNAL(toggled(bool)), this, SLOT(showMovWidget(bool)));
-    connect(tvs, SIGNAL(toggled(bool)), this, SLOT(showTvSWidget(bool)));
     //----------------[]
 
     //----------------[Central]
@@ -64,13 +75,15 @@ AddDialog::AddDialog(MainWidget* p): parent(p) {
     date->setValidator(positVal);
     date->setPlaceholderText(QString("Release year"));
 
-    //dir
+    director = new QLineEdit();
+    director->setPlaceholderText(QString("Director"));
 
     fav = new QCheckBox("Favorite");
 
     QHBoxLayout * titleBox = new QHBoxLayout;
     titleBox->addWidget(title);
     titleBox->addWidget(date);
+    titleBox->addWidget(director);
     titleBox->addWidget(fav);
 
     descr = new QTextEdit();
@@ -164,8 +177,6 @@ AddDialog::AddDialog(MainWidget* p): parent(p) {
     lowerButtonsBox->addWidget(add);
     lowerButtonsBox->addWidget(cancel);
 
-    connect(add, SIGNAL(clicked()), this, SLOT(accept()));
-    connect(cancel, SIGNAL(clicked()), this, SLOT(reject()));
     //----------------[]
 
     doc->setChecked(true);
@@ -183,5 +194,18 @@ AddDialog::AddDialog(MainWidget* p): parent(p) {
     mainBox->addLayout(menuLayout);
     mainBox->addLayout(lowerButtonsBox);
     setLayout(mainBox);
+
+    //----------------[Connect]
+    connect(this, SIGNAL(accepted()), this, SLOT(addItem()));
+
+    connect(doc, SIGNAL(toggled(bool)), this, SLOT(showDocWidget(bool)));
+    connect(mov, SIGNAL(toggled(bool)), this, SLOT(showMovWidget(bool)));
+    connect(tvs, SIGNAL(toggled(bool)), this, SLOT(showTvSWidget(bool)));
+
+    connect(add, SIGNAL(clicked()), this, SLOT(accept()));
+    connect(cancel, SIGNAL(clicked()), this, SLOT(reject()));
+
+    //----------------[]
+
 }
 

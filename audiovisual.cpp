@@ -1,5 +1,9 @@
 #include "audiovisual.h"
 
+const std::vector<std::string> AudioVisual::Rating = {"VM14", "VM18", "All"};
+
+const std::vector<std::string> AudioVisual::Genre = {"Action", "Adventure", "Animation", "Comedy", "Crime", "Drama", "Fantasy", "Food", "Game show", "Horror", "Mystery", "Reality", "Romance", "Science fiction", "Soap", "Sport", "Talk show", "Thriller", "Travel", "Unknown", "Western"};
+
 AudioVisual::AudioVisual(std::string ti, std::string tr, unsigned int rd, std::string r, bool f, int rt, bool ac, unsigned int ir, unsigned int fp): title(ti), description(tr), release_date(rd), director(r), favorite(f), running_time(rt), audio_compression(ac), image_resolution(ir), fps(fp) {}
 
 bool AudioVisual::operator==(const AudioVisual& av) const{

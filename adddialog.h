@@ -1,8 +1,6 @@
 #ifndef ADDDIALOG_H
 #define ADDDIALOG_H
 
-#include "mywidget.h"
-
 #include <QDialog>
 #include <QHBoxLayout>
 #include <QVBoxLayout>
@@ -13,6 +11,10 @@
 #include <QTextEdit>
 #include <QCheckBox>
 #include <QWidget>
+#include <QSize>
+#include <QLabel>
+#include <QComboBox>
+#include <QPushButton>
 
 //#include<QtWidgets>
 
@@ -21,8 +23,6 @@ class AddDialog : public QDialog {
     Q_OBJECT
 
 private:
-    MainWidget *parent;
-
     QRadioButton * doc;
     QRadioButton * mov;
     QRadioButton * tvs;
@@ -30,7 +30,7 @@ private:
     QLineEdit * title;
     QTextEdit * descr;
     QLineEdit * date;
-    //dir
+    QLineEdit * director;
     QCheckBox * fav;
     QLabel * favLabel;
     //img
@@ -59,13 +59,13 @@ private:
 
     QVBoxLayout * mainBox;
 public:
-    AddDialog(MainWidget * = nullptr);
+    AddDialog();
 
 private slots:
     void showDocWidget(bool);
     void showMovWidget(bool);
     void showTvSWidget(bool);
-
+    void addItem();
 };
 
 #endif // ADDDIALOG_H

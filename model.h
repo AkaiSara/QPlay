@@ -10,6 +10,7 @@ public:
     Model() = default;
     void save(const std::string &) const;
     void load(const std::string &);
+    void add(const AudioVisual&);
     /* addAV, remove AV*/
 };
 

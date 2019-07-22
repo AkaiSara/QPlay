@@ -1,8 +1,8 @@
 #include "mywidget.h"
-#include "adddialog.h"
+//#include "adddialog.h"
 
 void MainWidget::showDialog(){
-    AddDialog addDialog(this);
+    AddDialog addDialog;
     addDialog.exec();
 }
 

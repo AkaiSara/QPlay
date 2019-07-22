@@ -9,6 +9,8 @@
 #include <QListWidget>
 #include <QComboBox>
 
+#include "adddialog.h"
+
 
 class MainWidget : public QWidget {
        Q_OBJECT
