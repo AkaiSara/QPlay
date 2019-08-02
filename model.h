@@ -5,7 +5,7 @@
 class Model
 {
 private:
-    Container<AudioVisual> list;
+    Container<DeepPtr<AudioVisual>> list;
 public:
     Model() = default;
     void save(const std::string &) const;

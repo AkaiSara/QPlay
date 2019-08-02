@@ -9,8 +9,8 @@
 
 Xmlio::Xmlio(const std::string & filepath) : filename(filepath) {}
 
-Container<AudioVisual> Xmlio::read() const{
-    Container<AudioVisual> list;
+Container<DeepPtr<AudioVisual>> Xmlio::read() const{
+    Container<DeepPtr<AudioVisual>> list;
 
     QFile file(QString::fromStdString(filename));
 
@@ -50,7 +50,7 @@ Container<AudioVisual> Xmlio::read() const{
                     input.readNextStartElement();
                     std::string argomento = input.readElementText().toStdString();
                     input.readNextStartElement();
-                    list.push_back(Documentary(titolo, descrizione, anno, direttore, preferiti, durata, compressione, risoluzione, frame, narratore, argomento));
+                    list.push_back(DeepPtr<AudioVisual>(new Documentary(titolo, descrizione, anno, direttore, preferiti, durata, compressione, risoluzione, frame, narratore, argomento)));
                     input.readNextStartElement();
 
                 }else if (input.name() == "Movie") {
@@ -82,7 +82,7 @@ Container<AudioVisual> Xmlio::read() const{
                     std::string rating = input.readElementText().toStdString();
                     input.readNextStartElement();
 
-                    list.push_back(Movie(titolo, descrizione, anno, direttore, preferiti, durata, compressione, risoluzione, frame, cast, genere, rating));
+                    list.push_back(DeepPtr<AudioVisual>(new Movie(titolo, descrizione, anno, direttore, preferiti, durata, compressione, risoluzione, frame, cast, genere, rating)));
                     input.readNextStartElement();
 
                 }else if (input.name() == "TvSerie") {
@@ -120,7 +120,7 @@ Container<AudioVisual> Xmlio::read() const{
                     std::string rating = input.readElementText().toStdString();
                     input.readNextStartElement();
 
-                    list.push_back(TvSerie(titolo, descrizione, anno, direttore, preferiti, durata, compressione, risoluzione, frame, stagioni, episodi, cast, genere, finita, rating));
+                    list.push_back(DeepPtr<AudioVisual>(new TvSerie(titolo, descrizione, anno, direttore, preferiti, durata, compressione, risoluzione, frame, stagioni, episodi, cast, genere, finita, rating)));
                     input.readNextStartElement();
 
                 }
@@ -131,7 +131,7 @@ Container<AudioVisual> Xmlio::read() const{
     return list;
 }
 
-void Xmlio::write(const Container<AudioVisual> & list) const {
+void Xmlio::write(const Container<DeepPtr<AudioVisual>> & list) const {
     QSaveFile file(QString::fromStdString(filename));
 
     if(!file.open(QIODevice::WriteOnly)) {
@@ -146,8 +146,8 @@ void Xmlio::write(const Container<AudioVisual> & list) const {
     output.writeStartElement("root"); //apre un tag Root
     if(!list.isEmpty())
         for(auto cit = list.cbegin(); cit != list.cend(); ++cit){
-            if(dynamic_cast<Documentary*>(&(*cit))){
-                const Documentary & doc = static_cast<Documentary &>(*cit);
+            if(dynamic_cast<Documentary*>(&(**cit))){
+                const Documentary & doc = static_cast<Documentary &>(**cit);
                 output.writeStartElement("Documentary");
                 output.writeStartElement("Title");
                 output.writeCharacters(QString::fromStdString(doc.getTitle()));
@@ -186,8 +186,8 @@ void Xmlio::write(const Container<AudioVisual> & list) const {
 
                 output.writeEndElement();
             }
-            else if(dynamic_cast<Movie*>(&(*cit))){
-                const Movie & mov = static_cast<Movie &>(*cit);
+            else if(dynamic_cast<Movie*>(&(**cit))){
+                const Movie & mov = static_cast<Movie &>(**cit);
                 output.writeStartElement("Movie");
 
                 output.writeStartElement("Title");
@@ -230,8 +230,8 @@ void Xmlio::write(const Container<AudioVisual> & list) const {
 
                 output.writeEndElement();
             }
-            else if(dynamic_cast<TvSerie*>(&(*cit))){
-                const TvSerie & tvs = static_cast<TvSerie &>(*cit);
+            else if(dynamic_cast<TvSerie*>(&(**cit))){
+                const TvSerie & tvs = static_cast<TvSerie &>(**cit);
                 output.writeStartElement("TvSerie");
 
                 output.writeStartElement("Title");

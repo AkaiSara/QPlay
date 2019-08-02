@@ -10,9 +10,6 @@
 #include <string>
 #include <vector>
 
-#include <QXmlStreamReader>
-#include <QXmlStreamWriter>
-
 class AudioVisual{ 
 public:
     static const std::vector<std::string> Rating;
@@ -49,9 +46,6 @@ public:
     virtual std::string getType() const =0;
     virtual bool getQuality() const =0;
     virtual bool matureContent() const =0;
-
-    //static AudioVisual* unserialize(QXmlStreamReader&);
-    //virtual void serialize(QXmlStreamWriter&) const = 0;
 
     //getter & setter
     bool isFavorite() const;

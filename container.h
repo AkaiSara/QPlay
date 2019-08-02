@@ -92,8 +92,8 @@ public:
 	void push_front(const T &);
 
 	void clear();
-	T pop_back();
-	T pop_front();
+    void pop_back();
+    void pop_front();
 
     Iterator search(const T&);
     Const_Iterator search(const T&) const;
@@ -323,7 +323,7 @@ void Container<T>::clear(){
 } 
 
 template<class T>
-T Container<T>::pop_back(){
+void Container<T>::pop_back(){
     if(first == nullptr)
         throw Exception("aouifncodsn");
     /* Node * p = last;
@@ -337,22 +337,19 @@ T Container<T>::pop_back(){
     size--;
     return i; */
     Node * p = last;
-    T i = p->info;
     last = last->prev;
     if(last) 
         last->next = nullptr;
     else 
         first = nullptr;
     delete p;
-    return i;
 } 
 
 template<class T>
-T Container<T>::pop_front(){
+void Container<T>::pop_front(){
     if(first == nullptr)
         throw Exception("zxdb");
     Node * p = first;
-    T i = p->info;
     first = first->next;
     if(first) 
         first->prev = nullptr;
@@ -360,7 +357,6 @@ T Container<T>::pop_front(){
         last = nullptr;
     p->next = nullptr;
     delete p;
-    return i;
 }
 template<class T>
 T& Container<T>::front() const {

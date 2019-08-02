@@ -18,6 +18,7 @@ SOURCES += main.cpp\
     adddialog.cpp \
     audiovisual.cpp \
     documentary.cpp \
+    exception.cpp \
     mainwindow.cpp \
     model.cpp \
     movie.cpp \
@@ -31,6 +32,7 @@ HEADERS  += \
     audiovisual.h \
     deepptr.h \
     documentary.h \
+    exception.h \
     mainwindow.h \
     model.h \
     movie.h \

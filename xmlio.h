@@ -3,14 +3,15 @@
 
 #include <QString>
 #include "container.h"
+#include "deepptr.h"
 
 class Xmlio {
 private:
     std::string filename;
 public:
     Xmlio(const std::string &);
-    Container<AudioVisual> read() const;
-    void write(const Container<AudioVisual> &) const;
+    Container<DeepPtr<AudioVisual>> read() const;
+    void write(const Container<DeepPtr<AudioVisual>> &) const;
 };
 
 #endif // XMLIO_H
