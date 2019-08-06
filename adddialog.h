@@ -16,8 +16,10 @@
 #include <QComboBox>
 #include <QPushButton>
 
-//#include<QtWidgets>
-
+#include "documentary.h"
+#include "movie.h"
+#include "tvserie.h"
+#include "model.h"
 
 class AddDialog : public QDialog {
     Q_OBJECT
@@ -58,8 +60,13 @@ private:
     QWidget * tvsMenu;
 
     QVBoxLayout * mainBox;
+
+    QWidget * parent;
 public:
-    AddDialog();
+    AddDialog(QWidget * = nullptr);
+
+signals:
+    void created(AudioVisual *);
 
 private slots:
     void showDocWidget(bool);

@@ -1,21 +1,45 @@
 #include "mywidget.h"
-//#include "adddialog.h"
 
 void MainWidget::showDialog(){
-    AddDialog addDialog;
-    addDialog.exec();
+    addDialog->exec();
 }
 
-MainWidget::MainWidget(){
-    //----------------[UpperBanner]
+void MainWidget::update(Container<DeepPtr<AudioVisual>> list){
+    while(listBoxLayout->count() != 0){
+        auto item = listBoxLayout->takeAt(0);
+        delete item->widget();
+        delete item;
+    }
+    for(auto it = list.begin(); it != list.end(); ++it){
+        AudioVisualItem * item = new AudioVisualItem(*it);
+        listBoxLayout->addWidget(item);
+        //connect delete
+        //connect edit
+        listWidget.push_back(item);
+
+        QFrame *line = new QFrame();
+        line->setFrameShape(QFrame::VLine);
+        line->setFrameShadow(QFrame::Sunken);
+        listBoxLayout->addWidget(line);
+
+        listBoxLayout->addStretch(1);
+    }
+}
+
+
+MainWidget::MainWidget(QWidget * p) : parent(p){
+    addDialog = new AddDialog(this);
+
+    //----------------[UserProfile]
     nickName = new QLabel(tr("User"));
     proPic = new QLabel(tr("proPic"));
     totalTime = new QLabel(tr("totalTime"));
 
-    internalUpperHorizontalLayout = new QHBoxLayout;
-    internalUpperHorizontalLayout->addWidget(nickName);
-    internalUpperHorizontalLayout->addWidget(proPic);
-    internalUpperHorizontalLayout->addWidget(totalTime);
+    QHBoxLayout *userLayout;
+    userLayout = new QHBoxLayout;
+    userLayout->addWidget(nickName);
+    userLayout->addWidget(proPic);
+    userLayout->addWidget(totalTime);
     //----------------[]
 
     //----------------[SearchBar]
@@ -24,6 +48,8 @@ MainWidget::MainWidget(){
 
     QComboBox* searchAttribute = new QComboBox();
     searchAttribute->addItem(QString("Title"));
+    searchAttribute->addItem(QString("Type"));
+    searchAttribute->addItem(QString("Favorite"));
     searchAttribute->addItem(QString("Release year"));
 
     QPushButton* clearSearchButton = new QPushButton(tr("Cancel"));
@@ -33,46 +59,58 @@ MainWidget::MainWidget(){
     searchLayout->addWidget(searchbar);
     searchLayout->addWidget(searchAttribute);
     searchLayout->addWidget(clearSearchButton);
+    //----------------[]
 
+    //----------------[CentralList]
+    scrollArea = new QScrollArea();
+    QWidget * auxWidget = new QWidget();
+    listBoxLayout = new QHBoxLayout;
+
+    scrollArea->setWidgetResizable(true);
+    auxWidget->setLayout(listBoxLayout);
+    scrollArea->setWidget(auxWidget);
+
+    //----------------[]
+
+    //----------------[ButtonsControl]
+    showAddDialog = new QPushButton(tr("Add an item"));
+    showAddDialog->setToolTip(tr("Open an add dialog and add a new item"));
+    clearListBtn = new QPushButton(tr("Clear"));
+    clearListBtn->setToolTip(tr("Delete all item"));
+    exitBtn = new QPushButton(tr("Exit"));
+
+    QHBoxLayout *BtnLayout;
+    BtnLayout = new QHBoxLayout;
+    BtnLayout->addWidget(showAddDialog);
+    BtnLayout->addWidget(clearListBtn);
+    BtnLayout->addWidget(exitBtn);
+    //----------------[]
+
+
+    //----------------[]
+
+    QVBoxLayout *mainLayout = new QVBoxLayout;
+    mainLayout->addLayout(userLayout);
+    mainLayout->addLayout(searchLayout);
+    mainLayout->addWidget(scrollArea);
+    mainLayout->addLayout(BtnLayout);
+    setLayout(mainLayout);
+    //----------------[]
+
+    //----------------[Connect]
     //connect(searchbar, SIGNAL(textChanged(const QString&)), this, SLOT(textFilterChanged()));
     //connect(searchAttribute, SIGNAL(currentTextChanged(const QString&)), this, SLOT(textFilterChanged()));
     connect(clearSearchButton, SIGNAL(clicked()), searchbar, SLOT(clear()));
-    //----------------[]
-
-    //----------------[Central]
-    listWidget = new QListWidget;
-    listWidget->setSelectionMode(QAbstractItemView::SingleSelection);
-    listWidget->setFlow(QListView::LeftToRight);
-
-    /*for(int i=1; i<10; i++){
-        QListWidgetItem * newItem = new QListWidgetItem;
-        newItem->setText(QString("ciao").append(QString::number(i)));
-        listWidget->insertItem(i, newItem);
-    }*/
-
-    //----------------[]
-
-    //----------------[LowerButtons]
-    showAddDialog = new QPushButton(tr("Add an item"));
-    showAddDialog->setToolTip(tr("Open an add dialog"));
-    exitBtn = new QPushButton(tr("Exit"));
-
-    internalLowerHorizontalLayout = new QHBoxLayout;
-    internalLowerHorizontalLayout->addWidget(showAddDialog);
-    internalLowerHorizontalLayout->addWidget(exitBtn);
 
     connect(showAddDialog, SIGNAL(clicked()), this, SLOT(showDialog()));
+    connect(clearListBtn, SIGNAL(clicked()), parent, SLOT(clearList()));
+    connect(exitBtn, SIGNAL(clicked()), parent, SLOT(close()));
+
+    //connect(addDialog, SIGNAL(created(Audiovisual *)), parent, SLOT(addItem(AudioVisual *)));
+
+    connect(this, SIGNAL(itemFromDialog(AudioVisual *)), parent, SLOT(addItem(AudioVisual *)));
+    connect(parent, SIGNAL(listChanged(Container<DeepPtr<AudioVisual>>)), this, SLOT(update(Container<DeepPtr<AudioVisual>>)));
     //----------------[]
-
-    mainLayout = new QVBoxLayout;
-    mainLayout->addLayout(internalUpperHorizontalLayout);
-    mainLayout->addLayout(searchLayout);
-    mainLayout->addWidget(listWidget);
-    mainLayout->addLayout(internalLowerHorizontalLayout);
-    setLayout(mainLayout);
 }
 
-QPushButton * MainWidget::getExitBtn(){
-    return exitBtn;
-}
 

@@ -20,7 +20,7 @@ void AddDialog::showTvSWidget(bool show){
 }
 
 
-void AddDialog::addItem() {/*
+void AddDialog::addItem() {
     AudioVisual * i = nullptr;
     if (doc->isChecked())
         i = new Documentary(title->text().toStdString(), descr->toPlainText().toStdString(), date->text().toUInt(), director->text().toStdString(), fav->isChecked(), rt->text().toInt(), ac->isChecked(), imgres->text().toUInt(), frameps->text().toUInt(), docNarr->text().toStdString(), docTopic->text().toStdString());
@@ -31,22 +31,25 @@ void AddDialog::addItem() {/*
     if (tvs->isChecked())
         i = new TvSerie(title->text().toStdString(), descr->toPlainText().toStdString(), date->text().toUInt(), director->text().toStdString(), fav->isChecked(), rt->text().toInt(), ac->  isChecked(), imgres->text().toUInt(), frameps->text().toUInt(), tvSeason->text().toUInt(), tvEpisode->text().toUInt(), cast->toPlainText().toStdString(), genre->currentText().toStdString(), tvEnded->isChecked(), rating->currentText().toStdString());
 
-    //model->add(*i);*/
+    emit created(i);
 }
 
 
-AddDialog::AddDialog() {
+AddDialog::AddDialog(QWidget * p) :parent(p) {
+    setMaximumSize(QSize(500,420));
+    setMinimumSize(QSize(450,400));
+
     QStringList listOfGenre;
-    listOfGenre << "Unknown" << "Action" << "Adventure" << "Animation" << "Comedy" << "Crime" << "Drama" << "Fantasy" ;
+    foreach (std::string str, AudioVisual::Genre) {
+        listOfGenre.append(QString::fromStdString(str));
+    }
 
     QStringList listOfRating;
-    //listOfRating = QList<QString>::fromVector(QVector<QString>::fromStdVector(AudioVisual::Rating));
-    //listOfRating << "All" << "VM18" << "VM14";
-    /*foreach (std::string str, AudioVisual::Rating) {
+    foreach (std::string str, AudioVisual::Rating) {
         listOfRating.append(QString::fromStdString(str));
-    }*/
-    //for(auto it =  AudioVisual::Rating.begin() ; it != AudioVisual::Rating.end(); ++it)
-      //  listOfRating << QString::fromStdString(*it);
+    }
+    /*for(auto it =  AudioVisual::Rating.begin() ; it != AudioVisual::Rating.end(); ++it)
+        listOfRating << QString::fromStdString(*it);*/
 
     QIntValidator * positVal = new QIntValidator();
     positVal->setBottom(0);
@@ -56,7 +59,7 @@ AddDialog::AddDialog() {
     mov = new QRadioButton(tr("Movie"));
     tvs = new QRadioButton(tr("tvSerie"));
 
-    QVBoxLayout * typeSelectorBox = new QVBoxLayout;
+    QHBoxLayout * typeSelectorBox = new QHBoxLayout;
     typeSelectorBox->addWidget(doc);
     typeSelectorBox->addWidget(mov);
     typeSelectorBox->addWidget(tvs);
@@ -205,7 +208,9 @@ AddDialog::AddDialog() {
     connect(add, SIGNAL(clicked()), this, SLOT(accept()));
     connect(cancel, SIGNAL(clicked()), this, SLOT(reject()));
 
-    //----------------[]
+    connect(this, SIGNAL(created(AudioVisual *)), parent, SIGNAL(itemFromDialog(AudioVisual *)));
 
+    //----------------[]
 }
+
 

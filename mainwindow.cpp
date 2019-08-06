@@ -1,9 +1,22 @@
 #include "mainwindow.h"
 
-MainWindow::MainWindow(){
+void MainWindow::clearList(){
+    model->clearAll();
+    emit listChanged(model->getList());
+}
+
+void MainWindow::addItem(AudioVisual * i){
+    model->add(*i);
+    emit listChanged(model->getList());
+}
+
+
+MainWindow::MainWindow(): model(new Model()){
+    setMaximumSize(QSize(600,600));
+
     setWindowTitle(tr("Finestra principale"));
     //setWindowIcon(QIcon(":/icon.svg"));
-    myWidget = new MainWidget;
+    myWidget = new MainWidget(this);
     setCentralWidget(myWidget);
 
     //----------------[Menu]
@@ -19,12 +32,11 @@ MainWindow::MainWindow(){
 
     fileMenu->addSeparator();
 
-    exitAct = new QAction(tr("&Exit"), this);
+    exitAct = new QAction(tr("E&xit"), this);
     fileMenu->addAction(exitAct);
     connect(exitAct, SIGNAL(triggered()), this, SLOT(close()));
-    //----------------[]
 
-    connect(myWidget->getExitBtn(), SIGNAL(clicked()), this, SLOT(close())); //quando il bottone di exit di mywidget viene cliccato chiude anche mainwindow
+    //----------------[]
 }
 
 void MainWindow::openFile(){
@@ -34,8 +46,9 @@ void MainWindow::openFile(){
     choose.setWindowTitle("Load Lineup");
     choose.setNameFilter("XML file (*.xml)");
 
-    /*if (choose.exec())
-        model->load(choose.selectedFiles()[0].toStdString());*/
+    if (choose.exec())
+        model->load(choose.selectedFiles()[0].toStdString());
+    //list changed
 }
 void MainWindow::saveFile(){
     QFileDialog choose;
@@ -44,8 +57,8 @@ void MainWindow::saveFile(){
     choose.setWindowTitle("Save Lineup");
     choose.setNameFilter("XML file (*.xml)");
 
-    /*if (choose.exec())
-        model->save(choose.selectedFiles()[0].toStdString());*/
+    if (choose.exec())
+        model->save(choose.selectedFiles()[0].toStdString());
 }
 
 QSize MainWindow::sizeHint() const{
