@@ -17,7 +17,7 @@ public:
     void load(const std::string &);
 
     void add(const AudioVisual&);
-    void remove();
+    void remove(DeepPtr<AudioVisual>);
     void clearAll();
     Container<DeepPtr<AudioVisual>> getList();
 };

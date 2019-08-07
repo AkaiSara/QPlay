@@ -1,10 +1,6 @@
 #ifndef DEEPPTR_H
 #define DEEPPTR_H
 
-#include "documentary.h"
-#include "movie.h"
-#include "tvserie.h"
-
 template <class T>
 class DeepPtr{ //puntatori polimorfi al tipo T
 	T* ptr;
@@ -54,7 +50,11 @@ T* DeepPtr<T>::operator->() const { //accesso a membro
 
 template<class T>
 bool DeepPtr<T>::operator==(const DeepPtr& dp) const { //uguaglianza
-	return ptr == dp.ptr;
+    if (ptr == nullptr || dp.ptr == nullptr)
+        return false;
+    if (ptr == dp.ptr)
+        return true;
+    return *(ptr) == *(dp.ptr);
 }
 
 template<class T>

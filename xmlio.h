@@ -4,6 +4,7 @@
 #include <QString>
 #include "container.h"
 #include "deepptr.h"
+#include "audiovisual.h"
 
 class Xmlio {
 private:

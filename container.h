@@ -94,6 +94,7 @@ public:
 	void clear();
     void pop_back();
     void pop_front();
+    void erase(T&);
 
     Iterator search(const T&);
     Const_Iterator search(const T&) const;
@@ -358,6 +359,36 @@ void Container<T>::pop_front(){
     p->next = nullptr;
     delete p;
 }
+
+template<class T>
+void Container<T>::erase(T& info){
+    if(first == nullptr)
+        throw Exception("Empty container");
+
+    if(info == first->info){
+        pop_front();
+        return ;
+    }
+
+    Node* aux = first;
+    while(aux != nullptr && aux->info != info){
+        aux = aux->next;
+    }
+
+    if(aux == last){
+        pop_back();
+        return;
+    }
+
+    if(aux != nullptr){
+        aux->prev->next = aux->next;
+        aux->next->prev = aux->prev;
+        aux->next = nullptr;
+        delete aux;
+        size--;
+    }
+}
+
 template<class T>
 T& Container<T>::front() const {
 	return *(first->info);

@@ -10,6 +10,17 @@ void MainWindow::addItem(AudioVisual * i){
     emit listChanged(model->getList());
 }
 
+void MainWindow::deleteItem(DeepPtr<AudioVisual> a){
+    model->remove(a);
+    emit listChanged(model->getList());
+}
+
+void MainWindow::editItem(DeepPtr<AudioVisual> a){
+    DeepPtr<AudioVisual> aux(a); //faccio una copia di a
+    model->remove(a);
+    model->add(*aux); //scorretto perchè non modifica le info dei campi dati
+    emit listChanged(model->getList());
+}
 
 MainWindow::MainWindow(): model(new Model()){
     setMaximumSize(QSize(600,600));
@@ -48,7 +59,8 @@ void MainWindow::openFile(){
 
     if (choose.exec())
         model->load(choose.selectedFiles()[0].toStdString());
-    //list changed
+
+    emit listChanged(model->getList());
 }
 void MainWindow::saveFile(){
     QFileDialog choose;

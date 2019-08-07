@@ -1,34 +1,45 @@
 #include "mywidget.h"
+#include <QMessageBox>
 
 void MainWidget::showDialog(){
-    addDialog->exec();
+    AddDialog addDialog(this);
+    addDialog.exec();
 }
 
 void MainWidget::update(Container<DeepPtr<AudioVisual>> list){
-    while(listBoxLayout->count() != 0){
+    listWidget.clear();
+
+    while(listBoxLayout->count() != 0){ //cancello cosa c'è attualmente nel layout
         auto item = listBoxLayout->takeAt(0);
         delete item->widget();
         delete item;
     }
-    for(auto it = list.begin(); it != list.end(); ++it){
-        AudioVisualItem * item = new AudioVisualItem(*it);
+
+    for(auto it = list.begin(); it != list.end(); ++it){ //riempio il layout vuoto
+        AudioVisualItem * item = new AudioVisualItem(*it, this);
         listBoxLayout->addWidget(item);
-        //connect delete
+        connect(item, SIGNAL(deleteItem(DeepPtr<AudioVisual>)), this, SIGNAL(removeItem(DeepPtr<AudioVisual>)));
+        //connect(item, &AudioVisualItem::deleteItem, this, [this](DeepPtr<AudioVisual> a) {emit removeItem(a);});
         //connect edit
         listWidget.push_back(item);
 
-        QFrame *line = new QFrame();
+        QFrame *line = new QFrame(); //riga di separazione tra gli elementi
         line->setFrameShape(QFrame::VLine);
         line->setFrameShadow(QFrame::Sunken);
         listBoxLayout->addWidget(line);
 
         listBoxLayout->addStretch(1);
     }
+    if(list.isEmpty()){
+        QMessageBox msgBox;
+        msgBox.setText("vuota");
+        msgBox.exec();
+    }
+
 }
 
 
 MainWidget::MainWidget(QWidget * p) : parent(p){
-    addDialog = new AddDialog(this);
 
     //----------------[UserProfile]
     nickName = new QLabel(tr("User"));
@@ -84,17 +95,18 @@ MainWidget::MainWidget(QWidget * p) : parent(p){
     BtnLayout->addWidget(showAddDialog);
     BtnLayout->addWidget(clearListBtn);
     BtnLayout->addWidget(exitBtn);
-    //----------------[]
-
 
     //----------------[]
 
+
+    //----------------[MainLayout]
     QVBoxLayout *mainLayout = new QVBoxLayout;
     mainLayout->addLayout(userLayout);
     mainLayout->addLayout(searchLayout);
     mainLayout->addWidget(scrollArea);
     mainLayout->addLayout(BtnLayout);
     setLayout(mainLayout);
+
     //----------------[]
 
     //----------------[Connect]
@@ -106,9 +118,10 @@ MainWidget::MainWidget(QWidget * p) : parent(p){
     connect(clearListBtn, SIGNAL(clicked()), parent, SLOT(clearList()));
     connect(exitBtn, SIGNAL(clicked()), parent, SLOT(close()));
 
-    //connect(addDialog, SIGNAL(created(Audiovisual *)), parent, SLOT(addItem(AudioVisual *)));
-
     connect(this, SIGNAL(itemFromDialog(AudioVisual *)), parent, SLOT(addItem(AudioVisual *)));
+
+    connect(this, SIGNAL(removeItem(DeepPtr<AudioVisual>)), parent, SLOT(deleteItem(DeepPtr<AudioVisual>)));
+
     connect(parent, SIGNAL(listChanged(Container<DeepPtr<AudioVisual>>)), this, SLOT(update(Container<DeepPtr<AudioVisual>>)));
     //----------------[]
 }

@@ -5,6 +5,7 @@
 #include <QPushButton>
 #include "audiovisual.h"
 #include "deepptr.h"
+#include "displaywidget.h"
 
 class AudioVisualItem : public QWidget {
     Q_OBJECT
@@ -15,13 +16,16 @@ private:
     QPushButton * deleteBtn;
     QWidget * parent;
 
-protected:
-    //void mousePressEvent(QMouseEvent *event) override;
+    DisplayWidget * displayWidget;
+
+    void mouseDoubleClickEvent(QMouseEvent *event) override;
 
 public:
     AudioVisualItem(DeepPtr<AudioVisual> , QWidget * = nullptr);
 
 signals:
+    void modifyItem(DeepPtr<AudioVisual>);
+    void deleteItem(DeepPtr<AudioVisual>);
 
 public slots:
 

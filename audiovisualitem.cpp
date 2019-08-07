@@ -4,6 +4,7 @@
 #include <QLabel>
 
 AudioVisualItem::AudioVisualItem(DeepPtr<AudioVisual> a, QWidget * p) :avPtr(a), parent(p) {
+    displayWidget = new DisplayWidget(avPtr, this);
     //setMaximumSize(QSize(150,300));
 
     //----------------[immagine]
@@ -51,14 +52,15 @@ AudioVisualItem::AudioVisualItem(DeepPtr<AudioVisual> a, QWidget * p) :avPtr(a),
     //----------------[]
 
     //----------------[Connect]
+    connect(deleteBtn, &QPushButton::clicked, this, [this]() {emit deleteItem(avPtr); });
+    //connect(this, SIGNAL(deleteItem(DeepPtr<AudioVisual>)), parent, SIGNAL(removeItem(DeepPtr<AudioVisual>)));
 
+    connect(editBtn, &QPushButton::clicked, this, [this]() {emit modifyItem(avPtr); });
     //----------------[]
 
 }
 
-
-/*
-void AVWidget::mousePressEvent(QMouseEvent *event) {
-    showWidget->show();
-    QWidget::mousePressEvent(event);
-}*/
+void AudioVisualItem::mouseDoubleClickEvent(QMouseEvent *event){
+    displayWidget->show();
+    QWidget::mouseDoubleClickEvent(event);
+}

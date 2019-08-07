@@ -16,7 +16,7 @@ void Model::save(const std::string & path) const {
 
 void Model::load(const std::string & path) {
     Xmlio loadPath = Xmlio(path);
-    loadPath.read();
+    list = loadPath.read();
 }
 
 void Model::add(const AudioVisual & a) {
@@ -32,8 +32,12 @@ void Model::add(const AudioVisual & a) {
     }*/
 }
 
-void Model::remove(){ //da modificare, pop non va bene
-    list.pop_back();
+void Model::remove(DeepPtr<AudioVisual> a){
+    list.erase(a);
+    QMessageBox msgBox;
+    msgBox.setText("Eliminato con successo.");
+    msgBox.exec();
+    //delete &a fa crashare
 }
 
 void Model::clearAll(){

@@ -32,7 +32,6 @@ private:
     QPushButton *clearListBtn;
     QPushButton *exitBtn;
 
-    AddDialog * addDialog;
     QWidget * parent;
 
 public:
@@ -40,6 +39,7 @@ public:
 
 signals:
     void itemFromDialog(AudioVisual*);
+    void removeItem(DeepPtr<AudioVisual>);
 
 private slots:
     void showDialog();

@@ -39,8 +39,8 @@ private slots:
 
     void clearList();
     void addItem(AudioVisual*);
-
-    //void scorri();
+    void deleteItem(DeepPtr<AudioVisual>);
+    void editItem(DeepPtr<AudioVisual>);
 };
 
 #endif // MAINWINDOW_H

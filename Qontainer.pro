@@ -17,6 +17,8 @@ QMAKE_CXXFLAGS += -std=c++11
 SOURCES += main.cpp\
     adddialog.cpp \
     audiovisual.cpp \
+    audiovisualitem.cpp \
+    displaywidget.cpp \
     documentary.cpp \
     exception.cpp \
     mainwindow.cpp \
@@ -27,10 +29,12 @@ SOURCES += main.cpp\
     xmlio.cpp
 
 HEADERS  += \
+    audiovisualitem.h \
     container.h \
     adddialog.h \
     audiovisual.h \
     deepptr.h \
+    displaywidget.h \
     documentary.h \
     exception.h \
     mainwindow.h \
