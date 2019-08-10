@@ -4,46 +4,46 @@
 DisplayWidget::DisplayWidget(DeepPtr<AudioVisual> a, QWidget * p) :avPtr(a), parent(p) {
     QVBoxLayout * mainLayout = new QVBoxLayout;
     QFrame *line;
-
+    setWindowTitle("Item details");
 
     //----------------[Prima parte]
-    titolo = new QLabel("Titolo: " + QString::fromStdString(avPtr->getTitle()));
-    tipo = new QLabel("Tipo: " + QString::fromStdString(avPtr->getType()));
-    anno = new QLabel("Anno: " + QString::number(avPtr->getRelease_date()));
-    dir = new QLabel("Direttore: " + QString::fromStdString(avPtr->getDirector()));
-    QString favString = (avPtr->isFavorite())? "Si" : "No";
-    fav = new QLabel("Preferiti: " + favString);
-    tempo = new QLabel("Durata: " + QString::number(avPtr->getRunning_time()));
+    title = new QLabel("Title: " + QString::fromStdString(avPtr->getTitle()));
+    type = new QLabel("Type: " + QString::fromStdString(avPtr->getType()));
+    year = new QLabel("Year: " + QString::number(avPtr->getRelease_date()));
+    dir = new QLabel("Director: " + QString::fromStdString(avPtr->getDirector()));
+    QString favString = (avPtr->isFavorite())? "Yes" : "No";
+    fav = new QLabel("Favorites: " + favString);
+    time = new QLabel("Duration: " + QString::number(avPtr->getRunning_time()));
     //img = new QLabel(QString::fromStdString(avPtr->())); qhbox info | img oppure img | info
 
     //----------------[]
 
     //----------------[Seconda parte]
-    descr = new QLabel("Descrizione: " + QString::fromStdString(avPtr->getDescription()));
+    descr = new QLabel("Description: " + QString::fromStdString(avPtr->getDescription()));
     descr->setWordWrap(true);
 
     //----------------[]
 
     //----------------[Terza parte]
-    fps = new QLabel("FPS: " + QString::number(avPtr->getFps()));
-    ris = new QLabel("Risoluzione immagine: " + QString::number(avPtr->getImage_resolution()));
-    QString audioString = (avPtr->isAudioComp())? "Si" : "No";
-    audio = new QLabel("Compressione audio: " + audioString);
+    frame = new QLabel("Frame rate: " + QString::number(avPtr->getFps()));
+    res = new QLabel("Image resolution: " + QString::number(avPtr->getImage_resolution()));
+    QString audioString = (avPtr->isAudioComp())? "Yes" : "No";
+    audio = new QLabel("Audio compression: " + audioString);
 
     QHBoxLayout * tec = new QHBoxLayout;
-    tec->addWidget(ris);
+    tec->addWidget(res);
     tec->addWidget(audio);
-    tec->addWidget(fps);
+    tec->addWidget(frame);
 
     //----------------[]
 
     //----------------[Costruzione parziale del mainLayout]
-    mainLayout->addWidget(titolo);
-    mainLayout->addWidget(tipo);
-    mainLayout->addWidget(anno);
+    mainLayout->addWidget(title);
+    mainLayout->addWidget(type);
+    mainLayout->addWidget(year);
     mainLayout->addWidget(dir);
     mainLayout->addWidget(fav);
-    mainLayout->addWidget(tempo);
+    mainLayout->addWidget(time);
 
     line = new QFrame(); //spaziatore
     line->setFrameShape(QFrame::HLine);
@@ -73,10 +73,10 @@ DisplayWidget::DisplayWidget(DeepPtr<AudioVisual> a, QWidget * p) :avPtr(a), par
 
     if(dynamic_cast<Documentary *>(&(*avPtr)) != nullptr){
         Documentary * aux = static_cast<Documentary *>(&(*avPtr));
-        narratore = new QLabel("Narratore: " + QString::fromStdString(aux->getNarrator()));
+        narrator = new QLabel("Narrator: " + QString::fromStdString(aux->getNarrator()));
         topic = new QLabel("Topic: " + QString::fromStdString(aux->getTopic()));
 
-        docLayout->addWidget(narratore);
+        docLayout->addWidget(narrator);
         docLayout->addWidget(topic);
         mainLayout->addLayout(docLayout);
     }
@@ -85,11 +85,11 @@ DisplayWidget::DisplayWidget(DeepPtr<AudioVisual> a, QWidget * p) :avPtr(a), par
         cast = new QLabel("Cast: " + QString::fromStdString(aux->getCast()));
         cast->setWordWrap(true);
         rating = new QLabel("Rating: " + QString::fromStdString(aux->getRating()));
-        genere = new QLabel("Genere: " + QString::fromStdString(aux->getGenre()));
+        genre = new QLabel("Genre: " + QString::fromStdString(aux->getGenre()));
 
         movLayout->addWidget(cast);
         movLayout->addWidget(rating);
-        movLayout->addWidget(genere);
+        movLayout->addWidget(genre);
         mainLayout->addLayout(movLayout);
     }
     if(dynamic_cast<TvSerie *>(&(*avPtr)) != nullptr){
@@ -97,16 +97,16 @@ DisplayWidget::DisplayWidget(DeepPtr<AudioVisual> a, QWidget * p) :avPtr(a), par
         cast = new QLabel("Cast: " + QString::fromStdString(aux->getCast()));
         cast->setWordWrap(true);
         rating = new QLabel("Rating: " + QString::fromStdString(aux->getRating()));
-        genere = new QLabel("Genere: " + QString::fromStdString(aux->getGenre()));
-        ep = new QLabel("Episodi: " + QString::number(aux->getEpisode()));
-        st = new QLabel("Stagioni: " + QString::number(aux->getSeason()));
-        QString endString = (aux->isEnded())? "Si" : "No";
-        end = new QLabel("Terminata?: " + endString);
+        genre = new QLabel("Genre: " + QString::fromStdString(aux->getGenre()));
+        ep = new QLabel("Episodes: " + QString::number(aux->getEpisode()));
+        st = new QLabel("Seasons: " + QString::number(aux->getSeason()));
+        QString endString = (aux->isEnded())? "Yes" : "No";
+        end = new QLabel("Ended: " + endString);
 
         QHBoxLayout * tmp1 = new QHBoxLayout;
         tmp1->addWidget(cast);
         tmp1->addWidget(rating);
-        tmp1->addWidget(genere);
+        tmp1->addWidget(genre);
         tvsLayout->addLayout(tmp1);
 
         QHBoxLayout * tmp2 = new QHBoxLayout;

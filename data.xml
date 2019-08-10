@@ -15,21 +15,4 @@
         <Genre>Food</Genre>
         <Rating>All</Rating>
     </Movie>
-    <TvSerie>
-        <Title>ofwsuboeou</Title>
-        <Description>oubsaebnovb </Description>
-        <ReleaseDate>7</ReleaseDate>
-        <Director>ojbj</Director>
-        <Favorite>false</Favorite>
-        <RunningTime>2</RunningTime>
-        <AudioCompression>true</AudioCompression>
-        <ImageResolution>0</ImageResolution>
-        <FPS>5</FPS>
-        <Season>8</Season>
-        <Episode>5</Episode>
-        <Cast>22ofsbedv</Cast>
-        <Genre>Action</Genre>
-        <Ended>true</Ended>
-        <Rating>VM14</Rating>
-    </TvSerie>
 </root>

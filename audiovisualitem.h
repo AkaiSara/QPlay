@@ -15,17 +15,20 @@ private:
     QPushButton * editBtn;
     QPushButton * deleteBtn;
     QWidget * parent;
+    QFrame * line;
 
     DisplayWidget * displayWidget;
 
     void mouseDoubleClickEvent(QMouseEvent *event) override;
 
 public:
-    AudioVisualItem(DeepPtr<AudioVisual> , QWidget * = nullptr);
+    AudioVisualItem(DeepPtr<AudioVisual> , QWidget * = nullptr, QFrame * = nullptr);
+    DeepPtr<AudioVisual> getAvPtr() const;
+    void setLine(bool);
 
 signals:
-    void modifyItem(DeepPtr<AudioVisual>);
-    void deleteItem(DeepPtr<AudioVisual>);
+    void editAnItem(DeepPtr<AudioVisual>);
+    void deleteAnItem(DeepPtr<AudioVisual>);
 
 public slots:
 

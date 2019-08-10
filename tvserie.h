@@ -12,7 +12,11 @@ class TvSerie : public AudioVisual{
         bool ended; //serie conclusa
         std::string rating; //enum Rating
     public:
-        TvSerie(std::string, std::string, unsigned int, std::string, bool, int, bool, unsigned int, unsigned int, unsigned int = 1, unsigned int = 1, std::string = "None", std::string = "Unknown", bool = true, std::string = "All");
+        TvSerie(std::string, std::string, unsigned int, std::string, bool, int, bool, unsigned int, unsigned int, unsigned int, unsigned int, std::string, std::string, bool, std::string);
+
+        virtual bool operator==(const AudioVisual&) const override;
+
+        virtual ~TvSerie() override;
 
         virtual TvSerie* clone() const override;
         
@@ -20,10 +24,6 @@ class TvSerie : public AudioVisual{
         virtual std::string getType() const override;
         virtual bool getQuality() const override;
         virtual bool matureContent() const override;
-
-        virtual bool operator==(const AudioVisual&) const override;
-
-        virtual ~TvSerie() override;
 
         //getter e setter
         std::string getCast() const;
@@ -33,6 +33,12 @@ class TvSerie : public AudioVisual{
         unsigned int getSeason() const;
         unsigned int getEpisode() const;
 
+        void setCast(std::string);
+        void setRating(std::string);
+        void setGenre(std::string);
+        void setEnded(bool);
+        void setSeason(unsigned int);
+        void setEpisode(unsigned int);
 };
 
 #endif 

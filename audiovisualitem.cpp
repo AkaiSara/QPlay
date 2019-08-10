@@ -3,7 +3,15 @@
 #include <QVBoxLayout>
 #include <QLabel>
 
-AudioVisualItem::AudioVisualItem(DeepPtr<AudioVisual> a, QWidget * p) :avPtr(a), parent(p) {
+void AudioVisualItem::setLine(bool b){
+    b? line->show() : line->hide();
+}
+
+DeepPtr<AudioVisual> AudioVisualItem::getAvPtr() const{
+    return avPtr;
+}
+
+AudioVisualItem::AudioVisualItem(DeepPtr<AudioVisual> a, QWidget * p, QFrame * fr) :avPtr(a), parent(p), line(fr){
     displayWidget = new DisplayWidget(avPtr, this);
     //setMaximumSize(QSize(150,300));
 
@@ -52,10 +60,8 @@ AudioVisualItem::AudioVisualItem(DeepPtr<AudioVisual> a, QWidget * p) :avPtr(a),
     //----------------[]
 
     //----------------[Connect]
-    connect(deleteBtn, &QPushButton::clicked, this, [this]() {emit deleteItem(avPtr); });
-    //connect(this, SIGNAL(deleteItem(DeepPtr<AudioVisual>)), parent, SIGNAL(removeItem(DeepPtr<AudioVisual>)));
-
-    connect(editBtn, &QPushButton::clicked, this, [this]() {emit modifyItem(avPtr); });
+    connect(deleteBtn, &QPushButton::clicked, this, [this]() {emit deleteAnItem(avPtr); });
+    connect(editBtn, &QPushButton::clicked, this, [this]() {emit editAnItem(avPtr); });
     //----------------[]
 
 }

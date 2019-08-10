@@ -18,25 +18,25 @@ class DisplayWidget : public QWidget
 private:
     DeepPtr<AudioVisual> avPtr;
 
-    QLabel * titolo;
-    QLabel * tipo;
-    QLabel * anno;
+    QLabel * title;
+    QLabel * type;
+    QLabel * year;
     QLabel * dir;
     QLabel * fav;
-    QLabel * tempo;
+    QLabel * time;
     QLabel * img;
 
     QLabel * descr;
 
-    QLabel * fps;
-    QLabel * ris;
+    QLabel * frame;
+    QLabel * res;
     QLabel * audio;
 
-    QLabel * narratore;
+    QLabel * narrator;
     QLabel * topic;
     QLabel * cast;
     QLabel * rating;
-    QLabel * genere;
+    QLabel * genre;
     QLabel * ep;
     QLabel * st;
     QLabel * end;

@@ -1,10 +1,12 @@
 #include "audiovisual.h"
 
-const std::vector<std::string> AudioVisual::Rating = {"VM14", "VM18", "All"};
+const std::vector<std::string> AudioVisual::Rating = {"All", "VM14", "VM18"};
 
-const std::vector<std::string> AudioVisual::Genre = {"Action", "Adventure", "Animation", "Comedy", "Crime", "Drama", "Fantasy", "Food", "Game show", "Horror", "Mystery", "Reality", "Romance", "Science fiction", "Soap", "Sport", "Talk show", "Thriller", "Travel", "Unknown", "Western"};
+const std::vector<std::string> AudioVisual::Genre = {"Unknown", "Action", "Adventure", "Animation", "Comedy", "Crime", "Drama", "Fantasy", "Food", "Game show", "Horror", "Mystery", "Reality", "Romance", "Science fiction", "Soap", "Sport", "Talk show", "Thriller", "Travel", "Western"};
 
 AudioVisual::AudioVisual(std::string ti, std::string tr, unsigned int rd, std::string r, bool f, int rt, bool ac, unsigned int ir, unsigned int fp): title(ti), description(tr), release_date(rd), director(r), favorite(f), running_time(rt), audio_compression(ac), image_resolution(ir), fps(fp) {}
+
+AudioVisual::~AudioVisual(){}
 
 bool AudioVisual::operator==(const AudioVisual& av) const{
     return getType() == av.getType() &&
@@ -21,6 +23,8 @@ bool AudioVisual::operator==(const AudioVisual& av) const{
 bool AudioVisual::operator!=(const AudioVisual& av) const{
     return !(*this == av);
 }
+
+/* ------ Getter & Setter ------ */
 
 bool AudioVisual::isFavorite() const{
     return favorite;
@@ -50,4 +54,32 @@ unsigned int AudioVisual::getImage_resolution() const{
 }
 unsigned int AudioVisual::getFps() const{
     return fps;
+}
+
+void AudioVisual::setFavorite(const bool & f){
+    favorite = f;
+}
+void AudioVisual::setTitle(const std::string & t){
+    title = t;
+}
+void AudioVisual::setDescription(std::string d){
+    description = d;
+}
+void AudioVisual::setRelease_date(unsigned int d){
+    release_date = d;
+}
+void AudioVisual::setDirector(std::string d){
+    director = d;
+}
+void AudioVisual::setRunning_time(int t){
+    running_time = t;
+}
+void AudioVisual::setAudioComp(bool a){
+    audio_compression = a;
+}
+void AudioVisual::setImage_resolution(unsigned int r){
+    image_resolution = r;
+}
+void AudioVisual::setFps(unsigned int f){
+    fps = f;
 }

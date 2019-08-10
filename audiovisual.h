@@ -9,6 +9,8 @@
 
 #include <string>
 #include <vector>
+#include <iostream>
+using std::ostream;
 
 class AudioVisual{ 
 public:
@@ -29,10 +31,10 @@ protected:
     unsigned int fps; //frame per secondo
 public:
     //--------costruttori------
-    AudioVisual(std::string = "None", std::string = "No description", unsigned int = 0, std::string = "None", bool = false, int = 0, bool = true, unsigned int = 0, unsigned int = 0);
+    AudioVisual(std::string, std::string, unsigned int, std::string, bool, int, bool, unsigned int, unsigned int);
 
     //------distruttore----
-    virtual ~AudioVisual() = default;
+    virtual ~AudioVisual();
         
     //--------confronto-----
     virtual bool operator==(const AudioVisual&) const;
@@ -57,6 +59,17 @@ public:
     bool isAudioComp() const;
     unsigned int getImage_resolution() const;
     unsigned int getFps() const;
+
+    void setFavorite(const bool &);
+    void setTitle(const std::string &);
+    void setDescription(std::string);
+    void setRelease_date(unsigned int);
+    void setDirector(std::string);
+    void setRunning_time(int);
+    void setAudioComp(bool);
+    void setImage_resolution(unsigned int);
+    void setFps(unsigned int);
 };
+
 
 #endif //AUDIOVISUAL_H

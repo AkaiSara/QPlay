@@ -18,6 +18,7 @@ public:
 
     void add(const AudioVisual&);
     void remove(DeepPtr<AudioVisual>);
+    void edit(DeepPtr<AudioVisual>, DeepPtr<AudioVisual>);
     void clearAll();
     Container<DeepPtr<AudioVisual>> getList();
 };

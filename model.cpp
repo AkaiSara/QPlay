@@ -25,11 +25,6 @@ void Model::add(const AudioVisual & a) {
     QMessageBox msgBox;
     msgBox.setText("Aggiunto con successo.");
     msgBox.exec();
-    /*if(!list.isEmpty()){
-        QMessageBox msgBox;
-        msgBox.setText("c'è qualcosa");
-        msgBox.exec();
-    }*/
 }
 
 void Model::remove(DeepPtr<AudioVisual> a){
@@ -38,6 +33,10 @@ void Model::remove(DeepPtr<AudioVisual> a){
     msgBox.setText("Eliminato con successo.");
     msgBox.exec();
     //delete &a fa crashare
+}
+
+void Model::edit(DeepPtr<AudioVisual> a, DeepPtr<AudioVisual> b){
+    list.swapInfo(a, b); //devo passare il nodo da modificare e la roba da assegnarci
 }
 
 void Model::clearAll(){

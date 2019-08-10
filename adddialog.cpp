@@ -20,16 +20,16 @@ void AddDialog::showTvSWidget(bool show){
 }
 
 
-void AddDialog::addItem() {
+void AddDialog::addNewItem() {
     AudioVisual * i = nullptr;
     if (doc->isChecked())
-        i = new Documentary(title->text().toStdString(), descr->toPlainText().toStdString(), date->text().toUInt(), director->text().toStdString(), fav->isChecked(), rt->text().toInt(), ac->isChecked(), imgres->text().toUInt(), frameps->text().toUInt(), docNarr->text().toStdString(), docTopic->text().toStdString());
+        i = new Documentary(title->text().toStdString(), descr->toPlainText().toStdString(), date->text().toUInt(), director->text().toStdString(), fav->isChecked(), rt->text().toInt(), ac->isChecked(), imgres->text().toUInt(), frameRate->text().toUInt(), docNarr->text().toStdString(), docTopic->text().toStdString());
 
     if (mov->isChecked())
-        i = new Movie(title->text().toStdString(), descr->toPlainText().toStdString(), date->text().toUInt(), director->text().toStdString(), fav->isChecked(), rt->text().toInt(), ac->isChecked(), imgres->text().toUInt(), frameps->text().toUInt(), cast->toPlainText().toStdString(), genre->currentText().toStdString(), rating->currentText().toStdString());
+        i = new Movie(title->text().toStdString(), descr->toPlainText().toStdString(), date->text().toUInt(), director->text().toStdString(), fav->isChecked(), rt->text().toInt(), ac->isChecked(), imgres->text().toUInt(), frameRate->text().toUInt(), cast->toPlainText().toStdString(), genre->currentText().toStdString(), rating->currentText().toStdString());
 
     if (tvs->isChecked())
-        i = new TvSerie(title->text().toStdString(), descr->toPlainText().toStdString(), date->text().toUInt(), director->text().toStdString(), fav->isChecked(), rt->text().toInt(), ac->  isChecked(), imgres->text().toUInt(), frameps->text().toUInt(), tvSeason->text().toUInt(), tvEpisode->text().toUInt(), cast->toPlainText().toStdString(), genre->currentText().toStdString(), tvEnded->isChecked(), rating->currentText().toStdString());
+        i = new TvSerie(title->text().toStdString(), descr->toPlainText().toStdString(), date->text().toUInt(), director->text().toStdString(), fav->isChecked(), rt->text().toInt(), ac->  isChecked(), imgres->text().toUInt(), frameRate->text().toUInt(), tvSeason->text().toUInt(), tvEpisode->text().toUInt(), cast->toPlainText().toStdString(), genre->currentText().toStdString(), tvEnded->isChecked(), rating->currentText().toStdString());
 
     emit created(i);
 }
@@ -49,7 +49,7 @@ AddDialog::AddDialog(QWidget * p) :parent(p) {
         listOfRating.append(QString::fromStdString(str));
     }
     /*for(auto it =  AudioVisual::Rating.begin() ; it != AudioVisual::Rating.end(); ++it)
-        listOfRating << QString::fromStdString(*it);*/
+        listOfRating << QString::fromStdString(*it); cristoddio che mi toglie i commenti*/
 
     QIntValidator * positVal = new QIntValidator();
     positVal->setBottom(0);
@@ -57,7 +57,7 @@ AddDialog::AddDialog(QWidget * p) :parent(p) {
     //----------------[UpperRadioButtons]
     doc = new QRadioButton(tr("Documentary"));
     mov = new QRadioButton(tr("Movie"));
-    tvs = new QRadioButton(tr("tvSerie"));
+    tvs = new QRadioButton(tr("TV Serie"));
 
     QHBoxLayout * typeSelectorBox = new QHBoxLayout;
     typeSelectorBox->addWidget(doc);
@@ -65,7 +65,7 @@ AddDialog::AddDialog(QWidget * p) :parent(p) {
     typeSelectorBox->addWidget(tvs);
     typeSelectorBox->addStretch(1);
 
-    QGroupBox * typeSelGroupBox = new   QGroupBox(tr("Seleziona il tipo"));
+    QGroupBox * typeSelGroupBox = new   QGroupBox(tr("Select type"));
     typeSelGroupBox->setLayout(typeSelectorBox);
 
     //----------------[]
@@ -103,15 +103,15 @@ AddDialog::AddDialog(QWidget * p) :parent(p) {
     imgres= new QLineEdit();
     imgres->setPlaceholderText(QString("Image resolution"));
 
-    frameps = new QLineEdit();
-    frameps->setValidator(positVal);
-    frameps->setPlaceholderText(QString("Fps"));
+    frameRate = new QLineEdit();
+    frameRate->setValidator(positVal);
+    frameRate->setPlaceholderText(QString("Frame rate"));
 
     QVBoxLayout * specBox = new QVBoxLayout();
     specBox->addWidget(rt);
     specBox->addWidget(ac);
     specBox->addWidget(imgres);
-    specBox->addWidget(frameps);
+    specBox->addWidget(frameRate);
 
     QHBoxLayout * descrBox = new QHBoxLayout;
     descrBox->addWidget(descr);
@@ -173,7 +173,7 @@ AddDialog::AddDialog(QWidget * p) :parent(p) {
     //----------------[]
 
     //----------------[LowerButtons]
-    add =new QPushButton(tr("Aggiungi elemento"));
+    add =new QPushButton(tr("Add"));
     cancel =new QPushButton(tr("Cancel"));
 
     QHBoxLayout * lowerButtonsBox = new QHBoxLayout;
@@ -187,7 +187,7 @@ AddDialog::AddDialog(QWidget * p) :parent(p) {
     showMovWidget(false);
     showTvSWidget(false);
 
-    setWindowTitle("Inserisci elemento");
+    setWindowTitle("Add a new item");
 
     mainBox = new QVBoxLayout;
     mainBox->addWidget(typeSelGroupBox);
@@ -199,7 +199,7 @@ AddDialog::AddDialog(QWidget * p) :parent(p) {
     setLayout(mainBox);
 
     //----------------[Connect]
-    connect(this, SIGNAL(accepted()), this, SLOT(addItem()));
+    connect(this, SIGNAL(accepted()), this, SLOT(addNewItem()));
 
     connect(doc, SIGNAL(toggled(bool)), this, SLOT(showDocWidget(bool)));
     connect(mov, SIGNAL(toggled(bool)), this, SLOT(showMovWidget(bool)));
@@ -208,7 +208,7 @@ AddDialog::AddDialog(QWidget * p) :parent(p) {
     connect(add, SIGNAL(clicked()), this, SLOT(accept()));
     connect(cancel, SIGNAL(clicked()), this, SLOT(reject()));
 
-    connect(this, SIGNAL(created(AudioVisual *)), parent, SIGNAL(itemFromDialog(AudioVisual *)));
+    connect(this, SIGNAL(created(AudioVisual *)), parent, SLOT(addItem(AudioVisual *)));
 
     //----------------[]
 }

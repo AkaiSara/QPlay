@@ -15,7 +15,7 @@ un tipo che supporti la clonazione e la distruziona polimorfa. -> virtual ~T(), 
 template<class T>
 class Container{ //contenitore, double linked list
 private:
-	class Node{
+    class Node{
 		public:
 		T info;
 		Node *prev, *next;
@@ -96,8 +96,10 @@ public:
     void pop_front();
     void erase(T&);
 
-    Iterator search(const T&);
-    Const_Iterator search(const T&) const;
+    void swapInfo(T&, T&);
+
+    T& search(const T&);
+    T& search(const T&) const;
 };
 
 //--------implementazione-------
@@ -125,7 +127,11 @@ bool Container<T>::Node::operator!=(const Node & n) const{
     return !(n == *this);
 }
 
-
+template<class T>
+void Container<T>::swapInfo(T& a, T& b){
+    //delete a;
+    //a.info = b.info;
+}
 
 
 
@@ -320,13 +326,14 @@ void Container<T>::push_back(const T & t){
 template<class T>
 void Container<T>::clear(){
     delete first;
+    size = 0;
     first = last = nullptr;
 } 
 
 template<class T>
 void Container<T>::pop_back(){
     if(first == nullptr)
-        throw Exception("aouifncodsn");
+        throw Exception("Empty container");
     /* Node * p = last;
     T i = p->info;
     if(first != last){
@@ -349,7 +356,7 @@ void Container<T>::pop_back(){
 template<class T>
 void Container<T>::pop_front(){
     if(first == nullptr)
-        throw Exception("zxdb");
+        throw Exception("Empty container");
     Node * p = first;
     first = first->next;
     if(first) 
@@ -389,14 +396,15 @@ void Container<T>::erase(T& info){
     }
 }
 
+
 template<class T>
 T& Container<T>::front() const {
-	return *(first->info);
+    return first->info;
 }
 
 template<class T>
 T& Container<T>::back() const {
-	return *(last->info);
+    return last->info;
 }
 
 template<class T>
@@ -441,14 +449,14 @@ bool Container<T>::isEmpty() const {
 
 /*--------- ricerca -------*/
 template<class T>
-typename Container<T>::Iterator Container<T>::search(const T& t){
+T& Container<T>::search(const T& t){
     Iterator it = begin();
     for(; it != end() && *it != t; it++);
     return it;
 }
 
 template<class T>
-typename Container<T>::Const_Iterator Container<T>::search(const T& t) const{
+T& Container<T>::search(const T& t) const{
     Const_Iterator cit = cbegin();
     for(; cit != cend() && *cit != t; cit++);
     return cit;

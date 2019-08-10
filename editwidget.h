@@ -1,7 +1,8 @@
-#ifndef ADDDIALOG_H
-#define ADDDIALOG_H
+#ifndef EDITWIDGET_H
+#define EDITWIDGET_H
 
 #include <QDialog>
+#include <QWidget>
 #include <QHBoxLayout>
 #include <QVBoxLayout>
 #include <QRadioButton>
@@ -19,14 +20,16 @@
 #include "documentary.h"
 #include "movie.h"
 #include "tvserie.h"
+#include "deepptr.h"
 
-class AddDialog : public QDialog {
+class EditWidget : public QDialog
+{
     Q_OBJECT
 
 private:
-    QRadioButton * doc;
+    /*QRadioButton * doc; //li teniamo sti cosi?
     QRadioButton * mov;
-    QRadioButton * tvs;
+    QRadioButton * tvs;*/
 
     QLineEdit * title;
     QTextEdit * descr;
@@ -51,7 +54,7 @@ private:
     QLineEdit * tvEpisode;
     QCheckBox * tvEnded;
 
-    QPushButton * add;
+    QPushButton * edit;
     QPushButton * cancel;
 
     QWidget * docMenu;
@@ -60,18 +63,21 @@ private:
 
     QVBoxLayout * mainBox;
 
+    DeepPtr<AudioVisual> edited;
+    DeepPtr<AudioVisual> avPtr;
     QWidget * parent;
 public:
-    AddDialog(QWidget * = nullptr);
+    explicit EditWidget(DeepPtr<AudioVisual> , QWidget * = nullptr);
+    DeepPtr<AudioVisual> getEdited();
 
 signals:
-    void created(AudioVisual *);
+    //void edited(DeepPtr<AudioVisual>);
 
 private slots:
-    void showDocWidget(bool);
-    void showMovWidget(bool);
-    void showTvSWidget(bool);
-    void addNewItem();
+    //void showDocWidget(bool);
+    //void showMovWidget(bool);
+    //void showTvSWidget(bool);
+    void modifyItem();
 };
 
-#endif // ADDDIALOG_H
+#endif // EDITWIDGET_H

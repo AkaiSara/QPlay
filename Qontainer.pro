@@ -20,11 +20,11 @@ SOURCES += main.cpp\
     audiovisualitem.cpp \
     displaywidget.cpp \
     documentary.cpp \
+    editwidget.cpp \
     exception.cpp \
     mainwindow.cpp \
     model.cpp \
     movie.cpp \
-    mywidget.cpp \
     tvserie.cpp \
     xmlio.cpp
 
@@ -36,10 +36,10 @@ HEADERS  += \
     deepptr.h \
     displaywidget.h \
     documentary.h \
+    editwidget.h \
     exception.h \
     mainwindow.h \
     model.h \
     movie.h \
-    mywidget.h \
     tvserie.h \
     xmlio.h
