@@ -3,6 +3,7 @@
 void MainWindow::showSearchDetail(const QString & attr){
     if(attr == "Favorite"){
         searchCheckBox->show();
+        searchCheckBox->setDown(false);
         searchbar->hide();
     }
     else{
@@ -68,35 +69,65 @@ void MainWindow::update(){
         listBoxLayout->addStretch(1);
     }
      //questo messaggio verrà cancellato prima dell ultimo commit, mi serviva per debuggare
-        //QMessageBox msgBox;
-        //msgBox.setText("fatto update");
-        //msgBox.exec();
+        QMessageBox msgBox;
+        msgBox.setText("fatto update");
+        msgBox.exec();
 }
 
 void MainWindow::search(){
+    listSearchResult.clear();
     QString attributo = searchAttribute->currentText();
-    QString valore = searchbar->text();
-    bool check = searchCheckBox->isChecked();
+
+    bool check = false;
+    QString valore;
+    if(attributo == "Favorite")
+        check = searchCheckBox->isChecked();
+    else
+        valore = searchbar->text();
 
     for(auto it = listWidget.begin(); it != listWidget.end(); ++it){
         if(attributo == "Title"){
-            if( QString::fromStdString( (*it)->getAvPtr()->getTitle()) != valore){
+            if(QString::compare(QString::fromStdString( (*it)->getAvPtr()->getTitle()), valore, Qt::CaseInsensitive) == 0){
+                listSearchResult.push_back(*it);
+            }
+            else{
                 (*it)->hide();
                 (*it)->setLine(false);
             }
         }
+
         if(attributo == "Release year"){
-            if( QString::number((*it)->getAvPtr()->getRelease_date()) != valore){
+            if(QString::number((*it)->getAvPtr()->getRelease_date()) == valore){
+                listSearchResult.push_back(*it);
+            }
+            else{
                 (*it)->hide();
                 (*it)->setLine(false);
             }
         }
+
         if(attributo == "Favorite"){
-            if( (!check && (*it)->getAvPtr()->isFavorite()) || (check && (!(*it)->getAvPtr()->isFavorite()))){
+            if( (check && (*it)->getAvPtr()->isFavorite()) || (!check && (!(*it)->getAvPtr()->isFavorite()))){
+                listSearchResult.push_back(*it);
+            }
+            else{
                 (*it)->hide();
                 (*it)->setLine(false);
             }
         }
+    }
+
+    while(listBoxLayout->count() != 0){ //cancello cosa c'è attualmente nel layout
+        auto item = listBoxLayout->takeAt(0);
+        delete item;
+    }
+
+    for(auto it = listSearchResult.begin(); it != listSearchResult.end(); ++it){
+        listBoxLayout->addWidget(*it);
+        listBoxLayout->addWidget((*it)->getLine());
+        if(*it == listSearchResult.back()) //se il nodo corrente non è l'ultimo
+            (*it)->setLine(false);
+        listBoxLayout->addStretch(1);
     }
 }
 
@@ -152,9 +183,12 @@ MainWindow::MainWindow(): model(new Model()){
 
     QHBoxLayout* searchLayout = new QHBoxLayout();
     searchLayout->addWidget(searchbar);
+    searchLayout->addWidget(searchCheckBox);
     searchLayout->addWidget(searchAttribute);
     searchLayout->addWidget(searchButton);
     searchLayout->addWidget(clearSearchButton);
+
+    showSearchDetail(searchAttribute->currentText());
     //----------------[]
 
     //----------------[CentralList]
@@ -202,7 +236,7 @@ MainWindow::MainWindow(): model(new Model()){
     connect(exitAct, SIGNAL(triggered()), this, SLOT(close()));
 
     //connect(searchbar, SIGNAL(textChanged(const QString&)), this, SLOT(textFilterChanged()));
-    connect(searchbar, SIGNAL(textChanged(const QString&)), this, SLOT(showSearchDetail(const QString&)));
+    connect(searchAttribute, SIGNAL(currentTextChanged(const QString&)), this, SLOT(showSearchDetail(const QString&)));
     connect(searchAttribute, SIGNAL(currentTextChanged(const QString&)), this, SLOT(update()));
     connect(clearSearchButton, SIGNAL(clicked()), searchbar, SLOT(clear()));
     connect(clearSearchButton, SIGNAL(clicked()), this, SLOT(update()));
