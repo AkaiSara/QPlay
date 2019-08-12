@@ -30,7 +30,9 @@ void MainWindow::deleteItem(DeepPtr<AudioVisual> a){
 void MainWindow::editItem(DeepPtr<AudioVisual> a){
     editWidget = new EditWidget(a, this);
     editWidget->exec();
-    addItem(&(*a));
+
+    model->edit(a,editWidget->getEdited());
+
     emit listChanged();
 }
 
@@ -43,6 +45,7 @@ void MainWindow::openAddDialog(){
 
 void MainWindow::update(){
     listWidget.clear();
+    int time = 0;
 
     while(listBoxLayout->count() != 0){ //cancello cosa c'è attualmente nel layout
         auto item = listBoxLayout->takeAt(0);
@@ -67,7 +70,12 @@ void MainWindow::update(){
             item->setLine(false);
 
         listBoxLayout->addStretch(1);
+
+        time += (*it)->getTotalRunningTime();
     }
+
+    int min = time % 60, hour = time % (60 *24), day = time / (60 * 24);
+    totalTime->setText("Total time: " + (day != 0? QString::number(day) + "d " : "") + (hour != 0? QString::number(hour) + "h " : "") + QString::number(min) + "min");
      //questo messaggio verrà cancellato prima dell ultimo commit, mi serviva per debuggare
         QMessageBox msgBox;
         msgBox.setText("fatto update");
@@ -156,7 +164,7 @@ MainWindow::MainWindow(): model(new Model()){
     //----------------[UserProfile]
     nickName = new QLabel(tr("User"));
     proPic = new QLabel(tr("proPic"));
-    totalTime = new QLabel(tr("totalTime"));
+    totalTime = new QLabel(tr("Total time: 0min"));
 
     QHBoxLayout *userLayout;
     userLayout = new QHBoxLayout;

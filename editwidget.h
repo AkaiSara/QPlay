@@ -71,7 +71,6 @@ public:
     DeepPtr<AudioVisual> getEdited();
 
 signals:
-    //void edited(DeepPtr<AudioVisual>);
 
 private slots:
     //void showDocWidget(bool);

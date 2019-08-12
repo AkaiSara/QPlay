@@ -7,6 +7,10 @@ void AudioVisualItem::setLine(bool b){
     b? line->show() : line->hide();
 }
 
+QFrame * AudioVisualItem::getLine() const{
+    return line;
+}
+
 DeepPtr<AudioVisual> AudioVisualItem::getAvPtr() const{
     return avPtr;
 }

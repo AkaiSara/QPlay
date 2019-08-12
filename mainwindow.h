@@ -36,6 +36,7 @@ private:
     QLineEdit * searchbar;
     QComboBox * searchAttribute;
     QCheckBox * searchCheckBox;
+    QList<AudioVisualItem *> listSearchResult;
 
     QScrollArea * scrollArea;
     QList<AudioVisualItem *> listWidget;

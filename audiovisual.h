@@ -9,8 +9,6 @@
 
 #include <string>
 #include <vector>
-#include <iostream>
-using std::ostream;
 
 class AudioVisual{ 
 public:
@@ -60,15 +58,15 @@ public:
     unsigned int getImage_resolution() const;
     unsigned int getFps() const;
 
-    void setFavorite(const bool &);
+    void setFavorite(const bool);
     void setTitle(const std::string &);
-    void setDescription(std::string);
-    void setRelease_date(unsigned int);
-    void setDirector(std::string);
-    void setRunning_time(int);
-    void setAudioComp(bool);
-    void setImage_resolution(unsigned int);
-    void setFps(unsigned int);
+    void setDescription(const std::string &);
+    void setRelease_date(const unsigned int);
+    void setDirector(const std::string &);
+    void setRunning_time(const int);
+    void setAudioComp(const bool);
+    void setImage_resolution(const unsigned int);
+    void setFps(const unsigned int);
 };
 
 

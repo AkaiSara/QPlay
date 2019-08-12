@@ -96,7 +96,7 @@ public:
     void pop_front();
     void erase(T&);
 
-    void swapInfo(T&, T&);
+    void swapInfo(const T&, const T&);
 
     T& search(const T&);
     T& search(const T&) const;
@@ -126,13 +126,6 @@ template<class T>
 bool Container<T>::Node::operator!=(const Node & n) const{
     return !(n == *this);
 }
-
-template<class T>
-void Container<T>::swapInfo(T& a, T& b){
-    //delete a;
-    //a.info = b.info;
-}
-
 
 
 //-----------iteratore-------
@@ -393,6 +386,39 @@ void Container<T>::erase(T& info){
         aux->next = nullptr;
         delete aux;
         size--;
+    }
+}
+
+template<class T>
+void Container<T>::swapInfo(const T& a,const T& b){ //a è la info da sostituire, b è la info aggiornata
+    if(first == nullptr)
+        throw Exception("Empty container");
+
+    if(a == first->info){ //se è il primo nodo lo sostituisco con b
+        pop_front();
+        push_front(b);
+        return ;
+    }
+
+    Node* aux = first; //è il puntatore che mi serve per scorrere la lista, diventerà il puntatore al nodo contenente a
+    while(aux != nullptr && aux->info != a){ //scorro in avanti fino a trovare il nodo corretto
+        aux = aux->next;
+    }
+
+    if(aux == last){ //se è l'ultimo lo sostituisco con b
+        pop_back();
+        push_back(b);
+        return;
+    }
+
+    if(aux != nullptr){ //se il nodo è in mezzo alla lista
+        Node * tmp = new Node(b, aux->prev, aux->next);
+
+        aux->prev->next = tmp; //il precedente di a punta a b
+        aux->next->prev = tmp; //il successivo di a punta a b
+
+        aux->next = nullptr; //stacco a dal next altrimenti mi cancella la lista
+        delete aux; //cancellato a
     }
 }
 

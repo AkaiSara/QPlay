@@ -25,6 +25,7 @@ public:
     AudioVisualItem(DeepPtr<AudioVisual> , QWidget * = nullptr, QFrame * = nullptr);
     DeepPtr<AudioVisual> getAvPtr() const;
     void setLine(bool);
+    QFrame * getLine() const;
 
 signals:
     void editAnItem(DeepPtr<AudioVisual>);

@@ -1,42 +1,37 @@
 #include "editwidget.h"
 
 void EditWidget::modifyItem(){
-    DeepPtr<AudioVisual > i = avPtr;
-    //(*avPtr).setTitle(title->text().toStdString());
-    i->setTitle(title->text().toStdString());
-    i->setDescription(descr->toPlainText().toStdString());
-    i->setRelease_date(date->text().toUInt());
-    i->setDirector(director->text().toStdString());
-    i->setFavorite(fav->isChecked());
-    i->setRunning_time(rt->text().toInt());
-    i->setAudioComp(ac->isChecked());
-    i->setImage_resolution(imgres->text().toUInt());
-    i->setFps(frameRate->text().toUInt());
-/*
-    if (dynamic_cast<Documentary *>(i) != nullptr){
-        Documentary * i = static_cast<Documentary *>(&(*avPtr));
-        i->setNarrator(docNarr->text().toStdString());
-        i->setTopic(docTopic->text().toStdString());
+    edited = avPtr;
+    edited->setTitle(title->text().toStdString());
+    edited->setDescription(descr->toPlainText().toStdString());
+    edited->setRelease_date(date->text().toUInt());
+    edited->setDirector(director->text().toStdString());
+    edited->setFavorite(fav->isChecked());
+    edited->setRunning_time(rt->text().toInt());
+    edited->setAudioComp(ac->isChecked());
+    edited->setImage_resolution(imgres->text().toUInt());
+    edited->setFps(frameRate->text().toUInt());
+
+    if (dynamic_cast<Documentary *>(&(*avPtr)) != nullptr){
+        Documentary * edited = static_cast<Documentary *>(&(*avPtr));
+        edited->setNarrator(docNarr->text().toStdString());
+        edited->setTopic(docTopic->text().toStdString());
     }
-    else if (dynamic_cast<Movie *>(i) != nullptr){
-        Movie * i = static_cast<Movie *>(&(*avPtr));
-        i->setCast(cast->toPlainText().toStdString());
-        i->setRating(rating->currentText().toStdString());
-        i->setGenre(genre->currentText().toStdString());
+    else if (dynamic_cast<Movie *>(&(*avPtr)) != nullptr){
+        Movie * edited = static_cast<Movie *>(&(*avPtr));
+        edited->setCast(cast->toPlainText().toStdString());
+        edited->setRating(rating->currentText().toStdString());
+        edited->setGenre(genre->currentText().toStdString());
     }
-    else if (dynamic_cast<TvSerie *>(i) != nullptr){
-        TvSerie * i = static_cast<TvSerie *>(&(*avPtr));
-        i->setCast(cast->toPlainText().toStdString());
-        i->setRating(rating->currentText().toStdString());
-        i->setGenre(genre->currentText().toStdString());
-        i->setSeason(tvSeason->text().toUInt());
-        i->setEpisode(tvEpisode->text().toUInt());
-        i->setEnded(tvEnded->isChecked());
+    else if (dynamic_cast<TvSerie *>(&(*avPtr)) != nullptr){
+        TvSerie * edited = static_cast<TvSerie *>(&(*avPtr));
+        edited->setCast(cast->toPlainText().toStdString());
+        edited->setRating(rating->currentText().toStdString());
+        edited->setGenre(genre->currentText().toStdString());
+        edited->setSeason(tvSeason->text().toUInt());
+        edited->setEpisode(tvEpisode->text().toUInt());
+        edited->setEnded(tvEnded->isChecked());
     }
-*/
-    avPtr = i;
-    *avPtr = *i;
-    //emit edited(avPtr);
 }
 
 DeepPtr<AudioVisual> EditWidget::getEdited(){
@@ -228,7 +223,7 @@ EditWidget::EditWidget(DeepPtr<AudioVisual> a, QWidget * p) : avPtr(a), parent(p
 
     //----------------[]
 
-    setWindowTitle("Edit an item");
+    setWindowTitle("Edit item");
 
     mainBox = new QVBoxLayout;
     //mainBox->addWidget(typeSelGroupBox);

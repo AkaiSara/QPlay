@@ -17,7 +17,7 @@ TvSerie* TvSerie::clone() const {
 }
 
 int TvSerie::getTotalRunningTime() const{
-    return (running_time * static_cast<int>(episode)); //episode * season
+    return (running_time * static_cast<int>(episode) * static_cast<int>(season)); //episode * season
 }
 std::string TvSerie::getType() const{
     return "TvSerie";
