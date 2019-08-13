@@ -108,7 +108,7 @@ void MainWindow::update(){
         time += (*it)->getTotalRunningTime();
     }
 
-    int min = time % 60, hour = time % (60 *24), day = time / (60 * 24);
+    int min = time % 60, hour = ((time / 60) % 24), day = time / (60 * 24);
     totalTime->setText("Total time: " + (day != 0? QString::number(day) + "d " : "") + (hour != 0? QString::number(hour) + "h " : "") + QString::number(min) + "min");
      //questo messaggio verrà cancellato prima dell ultimo commit, mi serviva per debuggare
         //QMessageBox msgBox;
@@ -293,7 +293,7 @@ void MainWindow::search(){
         listBoxLayout->addWidget((*it)->getLine());
         if(*it == listSearchResult.back()) //se il nodo corrente non è l'ultimo
             (*it)->setLine(false);
-        listBoxLayout->addStretch(1);
+        listBoxLayout->addStretch(1); //se lo metto fuori dal for??
     }
 }
 
@@ -319,8 +319,14 @@ MainWindow::MainWindow(): model(new Model){
 
     //----------------[UserProfile]
     QLabel * nickName = new QLabel(tr("User"));
-    QLabel * proPic = new QLabel(tr("proPic"));
+    nickName->setAlignment(Qt::AlignHCenter | Qt::AlignVCenter);
+    QLabel * proPic = new QLabel;
+    proPic->setPixmap(QPixmap(":/img/propic").scaled(200, 100, Qt::KeepAspectRatio));
+    proPic->setAlignment(Qt::AlignHCenter | Qt::AlignVCenter);
+    proPic->setMaximumWidth(200);
+
     totalTime = new QLabel(tr("Total time: 0min"));
+    totalTime->setAlignment(Qt::AlignHCenter | Qt::AlignVCenter);
 
     QHBoxLayout * userLayout;
     userLayout = new QHBoxLayout;
@@ -355,7 +361,7 @@ MainWindow::MainWindow(): model(new Model){
 
     searchComboBox = new QComboBox();
 
-    QPushButton* searchButton = new QPushButton(QIcon(":/img/search"), tr("cerca"));
+    QPushButton* searchButton = new QPushButton(QIcon(":/img/search"), tr("Cerca"));
     QPushButton* clearSearchButton = new QPushButton(tr("Cancel"));
     clearSearchButton->setToolTip(tr("Delete filters"));
 
@@ -454,7 +460,7 @@ void MainWindow::saveFile(){
 }
 
 QSize MainWindow::sizeHint() const{
-    return QSize(450,350);
+    return QSize(550,500);
 }
 
 MainWindow::~MainWindow(){}

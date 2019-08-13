@@ -37,6 +37,8 @@ Container<DeepPtr<AudioVisual>> Xmlio::read() const{
                     input.readNextStartElement();
                     bool preferiti = (input.readElementText()) == "true"? true:false;
                     input.readNextStartElement();
+                    std::string imgPath = (input.readElementText()).toStdString();
+                    input.readNextStartElement();
                     int durata = (input.readElementText()).toInt();
                     input.readNextStartElement();
                     bool compressione = (input.readElementText()) == "true"? true:false;
@@ -50,7 +52,7 @@ Container<DeepPtr<AudioVisual>> Xmlio::read() const{
                     input.readNextStartElement();
                     std::string argomento = (input.readElementText()).toStdString();
                     input.readNextStartElement();
-                    list.push_back(DeepPtr<AudioVisual>(new Documentary(titolo, descrizione, anno, direttore, preferiti, durata, compressione, risoluzione, frame, narratore, argomento)));
+                    list.push_back(DeepPtr<AudioVisual>(new Documentary(titolo, descrizione, anno, direttore, preferiti, imgPath, durata, compressione, risoluzione, frame, narratore, argomento)));
                 }
                 else if (input.name() == "Movie") {
                     input.readNextStartElement();
@@ -63,6 +65,8 @@ Container<DeepPtr<AudioVisual>> Xmlio::read() const{
                     std::string direttore = (input.readElementText()).toStdString();
                     input.readNextStartElement();
                     bool preferiti = (input.readElementText()) == "true"? true:false;
+                    input.readNextStartElement();
+                    std::string imgPath = (input.readElementText()).toStdString();
                     input.readNextStartElement();
                     int durata = (input.readElementText()).toInt();
                     input.readNextStartElement();
@@ -81,7 +85,7 @@ Container<DeepPtr<AudioVisual>> Xmlio::read() const{
                     std::string rating = (input.readElementText()).toStdString();
                     input.readNextStartElement();
 
-                    list.push_back(DeepPtr<AudioVisual>(new Movie(titolo, descrizione, anno, direttore, preferiti, durata, compressione, risoluzione, frame, cast, genere, rating)));
+                    list.push_back(DeepPtr<AudioVisual>(new Movie(titolo, descrizione, anno, direttore, preferiti, imgPath, durata, compressione, risoluzione, frame, cast, genere, rating)));
                 }
                 else if (input.name() == "TvSerie") {
                     input.readNextStartElement();
@@ -94,6 +98,8 @@ Container<DeepPtr<AudioVisual>> Xmlio::read() const{
                     std::string direttore = (input.readElementText()).toStdString();
                     input.readNextStartElement();
                     bool preferiti = (input.readElementText()) == "true"? true:false;
+                    input.readNextStartElement();
+                    std::string imgPath = (input.readElementText()).toStdString();
                     input.readNextStartElement();
                     int durata = (input.readElementText()).toInt();
                     input.readNextStartElement();
@@ -118,7 +124,7 @@ Container<DeepPtr<AudioVisual>> Xmlio::read() const{
                     std::string rating = (input.readElementText()).toStdString();
                     input.readNextStartElement();
 
-                    list.push_back(DeepPtr<AudioVisual>(new TvSerie(titolo, descrizione, anno, direttore, preferiti, durata, compressione, risoluzione, frame, stagioni, episodi, cast, genere, finita, rating)));
+                    list.push_back(DeepPtr<AudioVisual>(new TvSerie(titolo, descrizione, anno, direttore, preferiti, imgPath, durata, compressione, risoluzione, frame, stagioni, episodi, cast, genere, finita, rating)));
                 }
             }
         }
@@ -165,6 +171,10 @@ void Xmlio::write(const Container<DeepPtr<AudioVisual>> & list) const {
 
                 output.writeStartElement("Favorite");
                     output.writeCharacters(doc.isFavorite() ? "true": "false");
+                output.writeEndElement();
+
+                output.writeStartElement("ImhPath");
+                    output.writeCharacters(QString::fromStdString(doc.getPath()));
                 output.writeEndElement();
 
                 output.writeStartElement("RunningTime");
@@ -215,6 +225,10 @@ void Xmlio::write(const Container<DeepPtr<AudioVisual>> & list) const {
 
                 output.writeStartElement("Favorite");
                     output.writeCharacters(mov.isFavorite() ? "true": "false");
+                output.writeEndElement();
+
+                output.writeStartElement("ImhPath");
+                    output.writeCharacters(QString::fromStdString(mov.getPath()));
                 output.writeEndElement();
 
                 output.writeStartElement("RunningTime");
@@ -269,6 +283,10 @@ void Xmlio::write(const Container<DeepPtr<AudioVisual>> & list) const {
 
                 output.writeStartElement("Favorite");
                     output.writeCharacters(tvs.isFavorite() ? "true": "false");
+                output.writeEndElement();
+
+                output.writeStartElement("ImhPath");
+                    output.writeCharacters(QString::fromStdString(tvs.getPath()));
                 output.writeEndElement();
 
                 output.writeStartElement("RunningTime");

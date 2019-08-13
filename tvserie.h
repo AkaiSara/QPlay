@@ -12,7 +12,7 @@ class TvSerie : public AudioVisual{
         bool ended; //serie conclusa
         std::string rating; //enum Rating
     public:
-        TvSerie(std::string, std::string, unsigned int, std::string, bool, int, bool, unsigned int, unsigned int, unsigned int, unsigned int, std::string, std::string, bool, std::string);
+        TvSerie(std::string, std::string, unsigned int, std::string, bool, std::string, int, bool, unsigned int, unsigned int, unsigned int, unsigned int, std::string, std::string, bool, std::string);
 
         virtual bool operator==(const AudioVisual&) const override;
 

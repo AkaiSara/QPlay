@@ -2,6 +2,7 @@
 
 #include <QVBoxLayout>
 #include <QLabel>
+#include <QFile>
 
 void AudioVisualItem::setLine(bool b){
     b? line->show() : line->hide();
@@ -20,18 +21,17 @@ AudioVisualItem::AudioVisualItem(DeepPtr<AudioVisual> a, QWidget * p, QFrame * f
     //setMaximumSize(QSize(150,300));
 
     //----------------[immagine]
-    /*
-    auto path = "img/" + QString::fromStdString(avptr->getImg());
 
-    if (!QFile::exists(path)) {
-        path = ":/gui/img/av";
-    }
-    QLabel *img = new QLabel();
-    img->setPixmap(QPixmap(path).scaled(200, 100, Qt::KeepAspectRatio));
+    QLabel * img = new QLabel;
+
+    //QString path = "img/" + QString::fromStdString(avPtr->getPath());
+    //if (!QFile::exists(path)) {
+    //    path = ":/img/picture";
+    //}
+    img->setPixmap(QPixmap(":/img/picture").scaled(200, 100, Qt::KeepAspectRatio));
     img->setAlignment(Qt::AlignHCenter | Qt::AlignVCenter);
     img->setMaximumWidth(200);
-    master->addWidget(img);
-    */
+
     //----------------[]
 
     //----------------[titolo]
@@ -40,10 +40,12 @@ AudioVisualItem::AudioVisualItem(DeepPtr<AudioVisual> a, QWidget * p, QFrame * f
     //f.setBold(true);
     f.setPointSize(16);
     title->setFont(f);
+    title->setAlignment(Qt::AlignHCenter | Qt::AlignVCenter);
 
     //----------------[]
 
-    //tempo totale?
+    QLabel * totTime = new QLabel("Total time: " + QString::number(avPtr->getTotalRunningTime()) + "min");
+    totTime->setAlignment(Qt::AlignHCenter | Qt::AlignVCenter);
 
     //----------------[bottoni]
     deleteBtn = new QPushButton(QIcon(":/img/remove"), tr("Elimina"));
@@ -56,8 +58,9 @@ AudioVisualItem::AudioVisualItem(DeepPtr<AudioVisual> a, QWidget * p, QFrame * f
 
     //----------------[Layout]
     QVBoxLayout * mainLayout = new QVBoxLayout;
-    //immagine
+    mainLayout->addWidget(img);
     mainLayout->addWidget(title); //titolo
+    mainLayout->addWidget(totTime);
     mainLayout->addLayout(buttonsLayout); //bottoni
     setLayout(mainLayout);
 

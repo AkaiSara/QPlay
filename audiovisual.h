@@ -21,7 +21,7 @@ private: //-----campi dati-----
     unsigned int release_date; // data
     std::string director;
     bool favorite; // contenuto nei preferiti
-    //immagine
+    std::string pathImg;
 protected:
     int running_time; //durata
     bool audio_compression; //perdita di informazioni, se compresso
@@ -29,7 +29,7 @@ protected:
     unsigned int fps; //frame per secondo
 public:
     //--------costruttori------
-    AudioVisual(std::string, std::string, unsigned int, std::string, bool, int, bool, unsigned int, unsigned int);
+    AudioVisual(std::string, std::string, unsigned int, std::string, bool, std::string, int, bool, unsigned int, unsigned int);
 
     //------distruttore----
     virtual ~AudioVisual();
@@ -49,6 +49,7 @@ public:
 
     //getter & setter
     bool isFavorite() const;
+    std::string getPath() const;
     std::string getTitle() const;
     std::string getDescription() const;
     unsigned int getRelease_date() const;
@@ -59,6 +60,7 @@ public:
     unsigned int getFps() const;
 
     void setFavorite(const bool);
+    void setPath(const std::string &);
     void setTitle(const std::string &);
     void setDescription(const std::string &);
     void setRelease_date(const unsigned int);

@@ -8,7 +8,7 @@ class Documentary: public AudioVisual{
         std::string narrator;
         std::string topic; //scientifico, storico, naturalistico, biografia
     public:
-        Documentary(std::string, std::string, unsigned int, std::string, bool, int, bool, unsigned int, unsigned int, std::string, std::string);
+        Documentary(std::string, std::string, unsigned int, std::string, bool,std::string, int, bool, unsigned int, unsigned int, std::string, std::string);
 
         virtual bool operator==(const AudioVisual&) const override;
 

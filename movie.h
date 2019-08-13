@@ -9,7 +9,7 @@ class Movie: public AudioVisual{
         std::string  genre; //enum Genere
         std::string  rating; //enum Rating
     public:
-        Movie(std::string, std::string, unsigned int, std::string, bool, int, bool, unsigned int, unsigned int, std::string, std::string, std::string);
+        Movie(std::string, std::string, unsigned int, std::string, bool, std::string, int, bool, unsigned int, unsigned int, std::string, std::string, std::string);
 
         virtual bool operator==(const AudioVisual&) const override;
 
