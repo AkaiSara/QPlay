@@ -1,17 +1,35 @@
 #include "mainwindow.h"
 
-
-#include <QPixmap>
-
 void MainWindow::showSearchDetail(const QString & attr){
+    searchBar->hide();
+    searchCheckBox->hide();
+    searchDoc->hide();
+    searchMov->hide();
+    searchTvs->hide();
+    searchComboBox->hide();
+
     if(attr == "Favorite"){
         searchCheckBox->show();
+        searchCheckBox->setText(searchAttribute->currentText());
         searchCheckBox->setDown(false);
-        searchbar->hide();
     }
-    else{
-        searchCheckBox->hide();
-        searchbar->show();
+    if(attr == "Title" || attr == "Director"){
+        searchBar->show();
+    }
+    if(attr == "Release year" || attr == "Running time"){
+        QIntValidator * positVal = new QIntValidator();
+        positVal->setBottom(0);
+        searchBar->setValidator(positVal);
+        searchBar->show();
+    }
+
+    if(attr == "Type"){
+        searchDoc->show();
+        searchMov->show();
+        searchTvs->show();
+    }
+    if(attr == "Genre" || attr == "Rating"){
+        searchComboBox->show();
     }
 }
 
@@ -87,37 +105,13 @@ void MainWindow::update(){
 
 void MainWindow::search(){
     listSearchResult.clear();
+
     QString attributo = searchAttribute->currentText();
-
-    bool check = false;
     QString valore;
-    if(attributo == "Favorite")
-        check = searchCheckBox->isChecked();
-    else
-        valore = searchbar->text();
 
-    for(auto it = listWidget.begin(); it != listWidget.end(); ++it){
-        if(attributo == "Title"){
-            if(QString::compare(QString::fromStdString( (*it)->getAvPtr()->getTitle()), valore, Qt::CaseInsensitive) == 0){
-                listSearchResult.push_back(*it);
-            }
-            else{
-                (*it)->hide();
-                (*it)->setLine(false);
-            }
-        }
-
-        if(attributo == "Release year"){
-            if(QString::number((*it)->getAvPtr()->getRelease_date()) == valore){
-                listSearchResult.push_back(*it);
-            }
-            else{
-                (*it)->hide();
-                (*it)->setLine(false);
-            }
-        }
-
-        if(attributo == "Favorite"){
+    if(attributo == "Favorite"){
+        bool check = searchCheckBox->isChecked();
+        for(auto it = listWidget.begin(); it != listWidget.end(); ++it){
             if( (check && (*it)->getAvPtr()->isFavorite()) || (!check && (!(*it)->getAvPtr()->isFavorite()))){
                 listSearchResult.push_back(*it);
             }
@@ -127,6 +121,154 @@ void MainWindow::search(){
             }
         }
     }
+
+
+    if(attributo == "Title" || attributo == "Release year" || attributo == "Director" || attributo == "Running time"){
+        valore = searchBar->text();
+
+        if(attributo == "Title"){
+            for(auto it = listWidget.begin(); it != listWidget.end(); ++it){
+                if(QString::compare(QString::fromStdString( (*it)->getAvPtr()->getTitle()), valore, Qt::CaseInsensitive) == 0){
+                    listSearchResult.push_back(*it);
+                }
+                else{
+                    (*it)->hide();
+                    (*it)->setLine(false);
+                }
+            }
+        }
+
+        if(attributo == "Release year"){
+            for(auto it = listWidget.begin(); it != listWidget.end(); ++it){
+                if(QString::number((*it)->getAvPtr()->getRelease_date()) == valore){
+                    listSearchResult.push_back(*it);
+                }
+                else{
+                    (*it)->hide();
+                    (*it)->setLine(false);
+                }
+            }
+        }
+
+        if(attributo == "Director"){
+            for(auto it = listWidget.begin(); it != listWidget.end(); ++it){
+                if(QString::compare(QString::fromStdString( (*it)->getAvPtr()->getDirector()), valore, Qt::CaseInsensitive) == 0){
+                    listSearchResult.push_back(*it);
+                }
+                else{
+                    (*it)->hide();
+                    (*it)->setLine(false);
+                }
+            }
+        }
+
+        if(attributo == "Running time"){
+            for(auto it = listWidget.begin(); it != listWidget.end(); ++it){
+                if(QString::number((*it)->getAvPtr()->getRunning_time()) == valore){
+                    listSearchResult.push_back(*it);
+                }
+                else{
+                    (*it)->hide();
+                    (*it)->setLine(false);
+                }
+            }
+        }
+    }
+
+
+    if(attributo == "Type"){ //in base a quale bottone è down poi farò un dynamic
+        if(searchDoc->isDown()){
+            for(auto it = listWidget.begin(); it != listWidget.end(); ++it){
+                if(dynamic_cast<Documentary *>((*it)->getAvPtr())){
+                    listSearchResult.push_back(*it);
+                }
+                else{
+                    (*it)->hide();
+                    (*it)->setLine(false);
+                }
+            }
+        }
+
+        if(searchMov->isDown()){
+            for(auto it = listWidget.begin(); it != listWidget.end(); ++it){
+                if(dynamic_cast<Movie *>((*it)->getAvPtr())){
+                    listSearchResult.push_back(*it);
+                }
+                else{
+                    (*it)->hide();
+                    (*it)->setLine(false);
+                }
+            }
+        }
+
+        if(searchTvs->isDown()){
+            for(auto it = listWidget.begin(); it != listWidget.end(); ++it){
+                if(dynamic_cast<TvSerie *>((*it)->getAvPtr())){
+                    listSearchResult.push_back(*it);
+                }
+                else{
+                    (*it)->hide();
+                    (*it)->setLine(false);
+                }
+            }
+        }
+    }
+
+
+    if(attributo == "Genre" || attributo == "Rating"){
+        valore = searchComboBox->currentText();
+
+        if(attributo == "Genre"){
+            for(auto it = listWidget.begin(); it != listWidget.end(); ++it){
+                Movie * p = dynamic_cast<Movie *>((*it)->getAvPtr());
+                TvSerie * q = dynamic_cast<TvSerie *>((*it)->getAvPtr());
+                if(p != nullptr){
+                    if(QString::fromStdString(p->getGenre()) == valore){
+                        listSearchResult.push_back(*it);
+                    }
+                    else{
+                        (*it)->hide();
+                        (*it)->setLine(false);
+                    }
+                }
+                if(q != nullptr){
+                    if(QString::fromStdString(q->getGenre()) == valore){
+                        listSearchResult.push_back(*it);
+                    }
+                    else{
+                        (*it)->hide();
+                        (*it)->setLine(false);
+                    }
+                }
+            }
+        }
+
+        if(attributo == "Rating"){
+            for(auto it = listWidget.begin(); it != listWidget.end(); ++it){
+                Movie * p = dynamic_cast<Movie *>((*it)->getAvPtr());
+                TvSerie * q = dynamic_cast<TvSerie *>((*it)->getAvPtr());
+                if(p != nullptr){
+                    if(QString::fromStdString(p->getRating()) == valore){
+                        listSearchResult.push_back(*it);
+                    }
+                    else{
+                        (*it)->hide();
+                        (*it)->setLine(false);
+                    }
+                }
+                if(q != nullptr){
+                    if(QString::fromStdString(q->getRating()) == valore){
+                        listSearchResult.push_back(*it);
+                    }
+                    else{
+                        (*it)->hide();
+                        (*it)->setLine(false);
+                    }
+                }
+            }
+        }
+    }
+
 
     while(listBoxLayout->count() != 0){ //cancello cosa c'è attualmente nel layout
         auto item = listBoxLayout->takeAt(0);
@@ -149,9 +291,9 @@ MainWindow::MainWindow(): model(new Model){
     setMaximumSize(QSize(600,600));
 
     //----------------[Menu]
-    openAct = new QAction(QIcon(":/img/load"), tr("&Open"), this);
-    saveAct = new QAction(QIcon(":/img/save"), tr("&Save"), this);
-    exitAct = new QAction(QIcon(":/img/exit"), tr("E&xit"), this);
+    QAction * openAct = new QAction(QIcon(":/img/load"), tr("&Open"), this);
+    QAction * saveAct = new QAction(QIcon(":/img/save"), tr("&Save"), this);
+    QAction * exitAct = new QAction(QIcon(":/img/exit"), tr("E&xit"), this);
 
     fileMenu = menuBar()->addMenu(tr("&File"));
 
@@ -163,11 +305,11 @@ MainWindow::MainWindow(): model(new Model){
     //----------------[]
 
     //----------------[UserProfile]
-    nickName = new QLabel(tr("User"));
-    proPic = new QLabel(tr("proPic"));
+    QLabel * nickName = new QLabel(tr("User"));
+    QLabel * proPic = new QLabel(tr("proPic"));
     totalTime = new QLabel(tr("Total time: 0min"));
 
-    QHBoxLayout *userLayout;
+    QHBoxLayout * userLayout;
     userLayout = new QHBoxLayout;
     userLayout->addWidget(nickName);
     userLayout->addWidget(proPic);
@@ -177,14 +319,28 @@ MainWindow::MainWindow(): model(new Model){
     //----------------[SearchBar]
     searchAttribute = new QComboBox();
     searchAttribute->addItem(QString("Title"));
-    //searchAttribute->addItem(QString("Type"));
+    searchAttribute->addItem(QString("Type"));
     searchAttribute->addItem(QString("Favorite"));
     searchAttribute->addItem(QString("Release year"));
+    searchAttribute->addItem(QString("Running time"));
+    searchAttribute->addItem(QString("Director"));
+    searchAttribute->addItem(QString("Genre"));
+    searchAttribute->addItem(QString("Rating"));
 
-    searchbar = new QLineEdit();
-    searchbar->setPlaceholderText("Search");
+    searchBar = new QLineEdit();
+    searchBar->setPlaceholderText("Search");
 
-    searchCheckBox = new QCheckBox("Favorite"); //l'etichetta deve essere la stessa del combobox (sfrutto currentTextChanged(const QString&))
+    searchCheckBox = new QCheckBox();
+
+    searchDoc = new QRadioButton("Documentary");
+    searchMov = new QRadioButton("Movie");
+    searchTvs = new QRadioButton("SerieTv");
+    typeSearchGroup = new QHBoxLayout;
+    typeSearchGroup->addWidget(searchDoc);
+    typeSearchGroup->addWidget(searchMov);
+    typeSearchGroup->addWidget(searchTvs);
+
+    searchComboBox = new QComboBox();
 
     QPushButton* searchButton = new QPushButton(QIcon(":/img/search"), tr("cerca"));
     QPushButton* clearSearchButton = new QPushButton(tr("Cancel"));
@@ -192,8 +348,10 @@ MainWindow::MainWindow(): model(new Model){
 
     QHBoxLayout* searchLayout = new QHBoxLayout();
     searchLayout->addWidget(searchAttribute);
-    searchLayout->addWidget(searchbar);
+    searchLayout->addWidget(searchBar);
     searchLayout->addWidget(searchCheckBox);
+    searchLayout->addLayout(typeSearchGroup);
+    searchLayout->addWidget(searchComboBox);
     searchLayout->addWidget(searchButton);
     searchLayout->addWidget(clearSearchButton);
 
@@ -247,7 +405,7 @@ MainWindow::MainWindow(): model(new Model){
     //connect(searchbar, SIGNAL(textChanged(const QString&)), this, SLOT(textFilterChanged()));
     connect(searchAttribute, SIGNAL(currentTextChanged(const QString&)), this, SLOT(showSearchDetail(const QString&)));
     connect(searchAttribute, SIGNAL(currentTextChanged(const QString&)), this, SLOT(update()));
-    connect(clearSearchButton, SIGNAL(clicked()), searchbar, SLOT(clear()));
+    connect(clearSearchButton, SIGNAL(clicked()), searchBar, SLOT(clear()));
     connect(clearSearchButton, SIGNAL(clicked()), this, SLOT(update()));
     connect(searchButton, SIGNAL(clicked()), this, SLOT(search()));
 

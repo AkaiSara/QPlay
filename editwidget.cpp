@@ -255,8 +255,5 @@ EditWidget::EditWidget(DeepPtr<AudioVisual> a, QWidget * p) : avPtr(a), parent(p
 
     connect(this, SIGNAL(accepted()), this, SLOT(modifyItem()));
 
-
-    //connect(this, SIGNAL(edited(AudioVisual *)), parent, SLOT(editItem(AudioVisual *)));
-
     //----------------[]
 }

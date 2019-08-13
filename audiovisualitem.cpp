@@ -11,8 +11,8 @@ QFrame* AudioVisualItem::getLine() const{
     return line;
 }
 
-DeepPtr<AudioVisual> AudioVisualItem::getAvPtr() const{
-    return avPtr;
+AudioVisual *AudioVisualItem::getAvPtr() const{
+    return &(*avPtr);
 }
 
 AudioVisualItem::AudioVisualItem(DeepPtr<AudioVisual> a, QWidget * p, QFrame * fr) :avPtr(a), parent(p), line(fr){

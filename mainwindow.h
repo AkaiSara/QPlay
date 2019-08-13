@@ -25,17 +25,16 @@ class MainWindow : public QMainWindow {
 
 private:
     QMenu * fileMenu;
-    QAction * openAct;
-    QAction * saveAct;
-    QAction * exitAct;
-
-    QLabel * nickName;
-    QLabel * proPic;
     QLabel * totalTime;
 
-    QLineEdit * searchbar;
+    QLineEdit * searchBar;
     QComboBox * searchAttribute;
     QCheckBox * searchCheckBox;
+    QRadioButton * searchDoc;
+    QRadioButton * searchMov;
+    QRadioButton * searchTvs;
+    QHBoxLayout * typeSearchGroup;
+    QComboBox * searchComboBox;
     QList<AudioVisualItem *> listSearchResult;
 
     QScrollArea * scrollArea;
