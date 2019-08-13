@@ -177,7 +177,7 @@ void MainWindow::search(){
 
 
     if(attributo == "Type"){ //in base a quale bottone è down poi farò un dynamic
-        if(searchDoc->isDown()){
+        if(searchDoc->isChecked()){
             for(auto it = listWidget.begin(); it != listWidget.end(); ++it){
                 if(dynamic_cast<Documentary *>((*it)->getAvPtr())){
                     listSearchResult.push_back(*it);
@@ -189,7 +189,7 @@ void MainWindow::search(){
             }
         }
 
-        if(searchMov->isDown()){
+        if(searchMov->isChecked()){
             for(auto it = listWidget.begin(); it != listWidget.end(); ++it){
                 if(dynamic_cast<Movie *>((*it)->getAvPtr())){
                     listSearchResult.push_back(*it);
@@ -201,7 +201,7 @@ void MainWindow::search(){
             }
         }
 
-        if(searchTvs->isDown()){
+        if(searchTvs->isChecked()){
             for(auto it = listWidget.begin(); it != listWidget.end(); ++it){
                 if(dynamic_cast<TvSerie *>((*it)->getAvPtr())){
                     listSearchResult.push_back(*it);
