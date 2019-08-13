@@ -17,11 +17,10 @@ public:
 	bool operator!=(const DeepPtr&) const;
 };
 
-
-//----------implementazione-----------
+//----------------[Implementazione]
 
 template<class T>
-DeepPtr<T>::DeepPtr(const T* p): ptr(p != nullptr ? p->clone() : nullptr) {} 
+DeepPtr<T>::DeepPtr(const T* p) : ptr(p != nullptr ? p->clone() : nullptr) {}
 
 template<class T>
 DeepPtr<T>::DeepPtr(const DeepPtr<T> & dp) : ptr(dp.ptr != nullptr ? (dp.ptr)->clone() : nullptr) {}
@@ -65,8 +64,7 @@ bool DeepPtr<T>::operator==(const DeepPtr<T>& dp) const { //uguaglianza
 
 template<class T>
 bool DeepPtr<T>::operator!=(const DeepPtr& dp) const { //disuguaglianza
-	return !(dp == *this); 
-} 
+    return !(dp == *this);
+}
 
-
-#endif 
+#endif

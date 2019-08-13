@@ -160,10 +160,16 @@ EditWidget::EditWidget(DeepPtr<AudioVisual> a, QWidget * p) : avPtr(a), parent(p
         cast->setText(QString::fromStdString(aux->getCast()));
         genre = new QComboBox();
         genre->addItems(listOfGenre);
-        //genre->set ??? genre->currentText().toStdString()
+        int index = genre->findText(QString::fromStdString(aux->getGenre()));
+        if(index != -1){
+            genre->setCurrentIndex(index);
+        }
         rating = new QComboBox();
         rating->addItems(listOfRating);
-        //rating->setText(QString::fromStdString(avPtr->getDescription()));
+        index = rating->findText(QString::fromStdString(aux->getRating()));
+        if(index != -1){
+            rating->setCurrentIndex(index);
+        }
 
         QVBoxLayout * aux1 = new QVBoxLayout;
         aux1->addWidget(genre);
@@ -184,9 +190,16 @@ EditWidget::EditWidget(DeepPtr<AudioVisual> a, QWidget * p) : avPtr(a), parent(p
         cast->setText(QString::fromStdString(aux->getCast()));
         genre = new QComboBox();
         genre->addItems(listOfGenre);
-
+        int index = genre->findText(QString::fromStdString(aux->getGenre()));
+        if(index != -1){
+            genre->setCurrentIndex(index);
+        }
         rating = new QComboBox();
         rating->addItems(listOfRating);
+        index = rating->findText(QString::fromStdString(aux->getRating()));
+        if(index != -1){
+            rating->setCurrentIndex(index);
+        }
 
         tvSeason = new QLineEdit();
         tvSeason->setValidator(positVal);

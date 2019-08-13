@@ -173,8 +173,8 @@ AddDialog::AddDialog(QWidget * p) :parent(p) {
     //----------------[]
 
     //----------------[LowerButtons]
-    add =new QPushButton(tr("Add"));
-    cancel =new QPushButton(tr("Cancel"));
+    add =new QPushButton(QIcon(":/img/add"), tr("Add"));
+    cancel =new QPushButton(QIcon(":/img/cancel"), tr("Cancel"));
 
     QHBoxLayout * lowerButtonsBox = new QHBoxLayout;
     lowerButtonsBox->addWidget(add);
