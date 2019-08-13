@@ -7,6 +7,7 @@ void MainWindow::showSearchDetail(const QString & attr){
     searchMov->hide();
     searchTvs->hide();
     searchComboBox->hide();
+    searchComboBox->clear();
 
     if(attr == "Favorite"){
         searchCheckBox->show();
@@ -28,9 +29,21 @@ void MainWindow::showSearchDetail(const QString & attr){
         searchMov->show();
         searchTvs->show();
     }
-    if(attr == "Genre" || attr == "Rating"){
+
+    if(attr == "Genre"){
+        foreach (std::string str, AudioVisual::Genre) {
+            searchComboBox->addItem(QString::fromStdString(str));
+        }
         searchComboBox->show();
     }
+
+    if(attr == "Rating"){
+        foreach (std::string str, AudioVisual::Rating) {
+            searchComboBox->addItem(QString::fromStdString(str));
+        }
+        searchComboBox->show();
+    }
+
 }
 
 void MainWindow::clearList(){
