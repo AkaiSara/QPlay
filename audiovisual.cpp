@@ -56,30 +56,30 @@ unsigned int AudioVisual::getFps() const{
     return fps;
 }
 
-void AudioVisual::setFavorite(const bool & f){
+void AudioVisual::setFavorite(const bool f){
     favorite = f;
 }
 void AudioVisual::setTitle(const std::string & t){
     title = t;
 }
-void AudioVisual::setDescription(std::string d){
+void AudioVisual::setDescription(const std::string & d){
     description = d;
 }
-void AudioVisual::setRelease_date(unsigned int d){
+void AudioVisual::setRelease_date(const unsigned int d){
     release_date = d;
 }
-void AudioVisual::setDirector(std::string d){
+void AudioVisual::setDirector(const std::string & d){
     director = d;
 }
-void AudioVisual::setRunning_time(int t){
+void AudioVisual::setRunning_time(const int t){
     running_time = t;
 }
-void AudioVisual::setAudioComp(bool a){
+void AudioVisual::setAudioComp(const bool a){
     audio_compression = a;
 }
-void AudioVisual::setImage_resolution(unsigned int r){
+void AudioVisual::setImage_resolution(const unsigned int r){
     image_resolution = r;
 }
-void AudioVisual::setFps(unsigned int f){
+void AudioVisual::setFps(const unsigned int f){
     fps = f;
 }

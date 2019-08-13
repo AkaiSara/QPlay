@@ -214,8 +214,8 @@ EditWidget::EditWidget(DeepPtr<AudioVisual> a, QWidget * p) : avPtr(a), parent(p
     //----------------[]
 
     //----------------[LowerButtons]
-    edit =new QPushButton(tr("Edit"));
-    cancel =new QPushButton(tr("Cancel"));
+    edit =new QPushButton(QIcon(":/img/edit"), tr("Edit"));
+    cancel =new QPushButton(QIcon(":/img/cancel"), tr("Cancel"));
 
     QHBoxLayout * lowerButtonsBox = new QHBoxLayout;
     lowerButtonsBox->addWidget(edit);

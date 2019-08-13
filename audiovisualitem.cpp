@@ -7,7 +7,7 @@ void AudioVisualItem::setLine(bool b){
     b? line->show() : line->hide();
 }
 
-QFrame * AudioVisualItem::getLine() const{
+QFrame* AudioVisualItem::getLine() const{
     return line;
 }
 
@@ -46,8 +46,8 @@ AudioVisualItem::AudioVisualItem(DeepPtr<AudioVisual> a, QWidget * p, QFrame * f
     //tempo totale?
 
     //----------------[bottoni]
-    deleteBtn = new QPushButton(tr("Elimina"));
-    editBtn = new QPushButton(tr("Modifica"));
+    deleteBtn = new QPushButton(QIcon(":/img/remove"), tr("Elimina"));
+    editBtn = new QPushButton(QIcon(":/img/edit"), tr("Modifica"));
     QHBoxLayout * buttonsLayout = new QHBoxLayout;
     buttonsLayout->addWidget(editBtn);
     buttonsLayout->addWidget(deleteBtn);

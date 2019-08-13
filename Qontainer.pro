@@ -43,3 +43,6 @@ HEADERS  += \
     movie.h \
     tvserie.h \
     xmlio.h
+
+RESOURCES += \
+    resources.qrc

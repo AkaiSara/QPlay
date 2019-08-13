@@ -1,5 +1,8 @@
 #include "mainwindow.h"
 
+
+#include <QPixmap>
+
 void MainWindow::showSearchDetail(const QString & attr){
     if(attr == "Favorite"){
         searchCheckBox->show();
@@ -77,9 +80,9 @@ void MainWindow::update(){
     int min = time % 60, hour = time % (60 *24), day = time / (60 * 24);
     totalTime->setText("Total time: " + (day != 0? QString::number(day) + "d " : "") + (hour != 0? QString::number(hour) + "h " : "") + QString::number(min) + "min");
      //questo messaggio verrà cancellato prima dell ultimo commit, mi serviva per debuggare
-        QMessageBox msgBox;
-        msgBox.setText("fatto update");
-        msgBox.exec();
+        //QMessageBox msgBox;
+        //msgBox.setText("fatto update");
+        //msgBox.exec();
 }
 
 void MainWindow::search(){
@@ -139,24 +142,22 @@ void MainWindow::search(){
     }
 }
 
-MainWindow::MainWindow(): model(new Model()){
+MainWindow::MainWindow(): model(new Model){
+    setWindowTitle(tr("WikiPlay")); //lui cambia le cose, io le sistemo
+    setWindowIcon(QIcon(":/img/app"));
+
     setMaximumSize(QSize(600,600));
 
-    setWindowTitle(tr("WikiPlay")); //lui cambia le cose, io le sistemo
-    //setWindowIcon(QIcon(":/icon.svg"));
-
     //----------------[Menu]
+    openAct = new QAction(QIcon(":/img/load"), tr("&Open"), this);
+    saveAct = new QAction(QIcon(":/img/save"), tr("&Save"), this);
+    exitAct = new QAction(QIcon(":/img/exit"), tr("E&xit"), this);
+
     fileMenu = menuBar()->addMenu(tr("&File"));
 
-    openAct = new QAction(tr("&Open"), this);
     fileMenu->addAction(openAct);
-
-    saveAct = new QAction(tr("&Save"), this);
     fileMenu->addAction(saveAct);
-
     fileMenu->addSeparator();
-
-    exitAct = new QAction(tr("E&xit"), this);
     fileMenu->addAction(exitAct);
 
     //----------------[]
@@ -176,7 +177,7 @@ MainWindow::MainWindow(): model(new Model()){
     //----------------[SearchBar]
     searchAttribute = new QComboBox();
     searchAttribute->addItem(QString("Title"));
-    searchAttribute->addItem(QString("Type"));
+    //searchAttribute->addItem(QString("Type"));
     searchAttribute->addItem(QString("Favorite"));
     searchAttribute->addItem(QString("Release year"));
 
@@ -185,14 +186,14 @@ MainWindow::MainWindow(): model(new Model()){
 
     searchCheckBox = new QCheckBox("Favorite"); //l'etichetta deve essere la stessa del combobox (sfrutto currentTextChanged(const QString&))
 
-    QPushButton* searchButton = new QPushButton(tr("cerca"));
+    QPushButton* searchButton = new QPushButton(QIcon(":/img/search"), tr("cerca"));
     QPushButton* clearSearchButton = new QPushButton(tr("Cancel"));
     clearSearchButton->setToolTip(tr("Delete filters"));
 
     QHBoxLayout* searchLayout = new QHBoxLayout();
+    searchLayout->addWidget(searchAttribute);
     searchLayout->addWidget(searchbar);
     searchLayout->addWidget(searchCheckBox);
-    searchLayout->addWidget(searchAttribute);
     searchLayout->addWidget(searchButton);
     searchLayout->addWidget(clearSearchButton);
 
@@ -211,11 +212,11 @@ MainWindow::MainWindow(): model(new Model()){
     //----------------[]
 
     //----------------[ButtonsControl]
-    showAddDialog = new QPushButton(tr("Add an item"));
+    showAddDialog = new QPushButton(QIcon(":/img/add"), tr(" Add an item"));
     showAddDialog->setToolTip(tr("Open an add dialog and add a new item"));
-    clearListBtn = new QPushButton(tr("Clear"));
+    clearListBtn = new QPushButton(QIcon(":/img/delete"), tr("Clear"));
     clearListBtn->setToolTip(tr("Delete all item"));
-    exitBtn = new QPushButton(tr("Exit"));
+    exitBtn = new QPushButton(QIcon(":/img/exit"), tr(" Exit"));
 
     QHBoxLayout *BtnLayout;
     BtnLayout = new QHBoxLayout;
