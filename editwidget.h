@@ -16,6 +16,7 @@
 #include <QLabel>
 #include <QComboBox>
 #include <QPushButton>
+#include <QFileDialog>
 
 #include "documentary.h"
 #include "movie.h"
@@ -37,7 +38,11 @@ private:
     QLineEdit * director;
     QCheckBox * fav;
     QLabel * favLabel;
-    //img
+
+    QPushButton * selectImgBtn;
+    QLabel * imgLabel;
+    QString imgPath;
+
     QLineEdit * rt;
     QCheckBox * ac;
     QLineEdit * imgres;
@@ -77,6 +82,7 @@ private slots:
     //void showMovWidget(bool);
     //void showTvSWidget(bool);
     void modifyItem();
+    void selectImg();
 };
 
 #endif // EDITWIDGET_H

@@ -24,11 +24,11 @@ AudioVisualItem::AudioVisualItem(DeepPtr<AudioVisual> a, QWidget * p, QFrame * f
 
     QLabel * img = new QLabel;
 
-    //QString path = "img/" + QString::fromStdString(avPtr->getPath());
-    //if (!QFile::exists(path)) {
-    //    path = ":/img/picture";
-    //}
-    img->setPixmap(QPixmap(":/img/picture").scaled(200, 100, Qt::KeepAspectRatio));
+    QString path = QString::fromStdString(avPtr->getPath());
+    if (!QFile::exists(path)) {
+        path = ":/img/picture";
+    }
+    img->setPixmap(QPixmap(path).scaled(200, 100, Qt::KeepAspectRatio));
     img->setAlignment(Qt::AlignHCenter | Qt::AlignVCenter);
     img->setMaximumWidth(200);
 

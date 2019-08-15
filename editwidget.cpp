@@ -1,4 +1,15 @@
 #include "editwidget.h"
+void EditWidget::selectImg(){
+    QFileDialog dialog;
+    dialog.setFileMode(QFileDialog::ExistingFile);
+    dialog.setNameFilter(("File (*.png *.svg *.jpg)"));
+
+    if (dialog.exec() == QDialog::Accepted) {
+        imgPath = dialog.selectedFiles().first();
+        imgLabel->setPixmap(QPixmap(imgPath).scaled(150, 150, Qt::KeepAspectRatio));
+        imgLabel->show();
+    }
+}
 
 void EditWidget::modifyItem(){
     edited = avPtr;
@@ -7,6 +18,7 @@ void EditWidget::modifyItem(){
     edited->setRelease_date(date->text().toUInt());
     edited->setDirector(director->text().toStdString());
     edited->setFavorite(fav->isChecked());
+    edited->setPath(imgPath.toStdString());
     edited->setRunning_time(rt->text().toInt());
     edited->setAudioComp(ac->isChecked());
     edited->setImage_resolution(imgres->text().toUInt());
@@ -94,11 +106,20 @@ EditWidget::EditWidget(DeepPtr<AudioVisual> a, QWidget * p) : avPtr(a), parent(p
     titleBox->addWidget(director);
     titleBox->addWidget(fav);
 
+    selectImgBtn = new QPushButton("Seleziona immagine");
+    imgLabel = new QLabel();
+    QVBoxLayout *imgLayout = new QVBoxLayout();
+    imgLayout->addWidget(selectImgBtn);
+    imgLayout->addWidget(imgLabel);
+    imgLabel->hide();
+
+    QHBoxLayout * titleImgLayout = new QHBoxLayout;
+    titleImgLayout->addLayout(titleBox);
+    titleImgLayout->addLayout(imgLayout);
+
     descr = new QTextEdit();
     descr->setPlaceholderText(QString("Description"));
     descr->setText(QString::fromStdString(avPtr->getDescription()));
-
-    //img
 
     rt = new QLineEdit();
     rt->setValidator(positVal);
@@ -128,7 +149,7 @@ EditWidget::EditWidget(DeepPtr<AudioVisual> a, QWidget * p) : avPtr(a), parent(p
     descrBox->addLayout(specBox);
 
     QVBoxLayout * mainLayout = new QVBoxLayout;
-    mainLayout->addLayout(titleBox);
+    mainLayout->addLayout(titleImgLayout);
     mainLayout->addLayout(descrBox);
 
     QHBoxLayout * docLayout = new QHBoxLayout;
@@ -249,6 +270,8 @@ EditWidget::EditWidget(DeepPtr<AudioVisual> a, QWidget * p) : avPtr(a), parent(p
     //connect(doc, SIGNAL(toggled(bool)), this, SLOT(showDocWidget(bool)));
     //connect(mov, SIGNAL(toggled(bool)), this, SLOT(showMovWidget(bool)));
     //connect(tvs, SIGNAL(toggled(bool)), this, SLOT(showTvSWidget(bool)));
+
+        connect(selectImgBtn, SIGNAL(clicked()), this, SLOT(selectImg()));
 
     connect(edit, SIGNAL(clicked()), this, SLOT(accept()));
     connect(cancel, SIGNAL(clicked()), this, SLOT(reject()));

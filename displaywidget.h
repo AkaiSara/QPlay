@@ -4,6 +4,7 @@
 #include <QWidget>
 #include <QLabel>
 #include <QVBoxLayout>
+#include <QPixmap>
 
 #include "deepptr.h"
 #include "audiovisual.h"

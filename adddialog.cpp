@@ -23,21 +23,34 @@ void AddDialog::showTvSWidget(bool show){
 void AddDialog::addNewItem() {
     AudioVisual * i = nullptr;
     if (doc->isChecked())
-        i = new Documentary(title->text().toStdString(), descr->toPlainText().toStdString(), date->text().toUInt(), director->text().toStdString(), fav->isChecked(), title->text().toStdString(), rt->text().toInt(), ac->isChecked(), imgres->text().toUInt(), frameRate->text().toUInt(), docNarr->text().toStdString(), docTopic->text().toStdString());
+        i = new Documentary(title->text().toStdString(), descr->toPlainText().toStdString(), date->text().toUInt(), director->text().toStdString(), fav->isChecked(), imgPath.toStdString(), rt->text().toInt(), ac->isChecked(), imgres->text().toUInt(), frameRate->text().toUInt(), docNarr->text().toStdString(), docTopic->text().toStdString());
 
     if (mov->isChecked())
-        i = new Movie(title->text().toStdString(), descr->toPlainText().toStdString(), date->text().toUInt(), director->text().toStdString(), fav->isChecked(), title->text().toStdString(), rt->text().toInt(), ac->isChecked(), imgres->text().toUInt(), frameRate->text().toUInt(), cast->toPlainText().toStdString(), genre->currentText().toStdString(), rating->currentText().toStdString());
+        i = new Movie(title->text().toStdString(), descr->toPlainText().toStdString(), date->text().toUInt(), director->text().toStdString(), fav->isChecked(), imgPath.toStdString(), rt->text().toInt(), ac->isChecked(), imgres->text().toUInt(), frameRate->text().toUInt(), cast->toPlainText().toStdString(), genre->currentText().toStdString(), rating->currentText().toStdString());
 
     if (tvs->isChecked())
-        i = new TvSerie(title->text().toStdString(), descr->toPlainText().toStdString(), date->text().toUInt(), director->text().toStdString(), fav->isChecked(), title->text().toStdString(), rt->text().toInt(), ac->  isChecked(), imgres->text().toUInt(), frameRate->text().toUInt(), tvSeason->text().toUInt(), tvEpisode->text().toUInt(), cast->toPlainText().toStdString(), genre->currentText().toStdString(), tvEnded->isChecked(), rating->currentText().toStdString());
+        i = new TvSerie(title->text().toStdString(), descr->toPlainText().toStdString(), date->text().toUInt(), director->text().toStdString(), fav->isChecked(), imgPath.toStdString(), rt->text().toInt(), ac->isChecked(), imgres->text().toUInt(), frameRate->text().toUInt(), tvSeason->text().toUInt(), tvEpisode->text().toUInt(), cast->toPlainText().toStdString(), genre->currentText().toStdString(), tvEnded->isChecked(), rating->currentText().toStdString());
 
     emit created(i);
 }
 
 
+void AddDialog::selectImg(){
+    QFileDialog dialog;
+    dialog.setFileMode(QFileDialog::ExistingFile);
+    dialog.setNameFilter(("File (*.png *.svg *.jpg)"));
+
+    if (dialog.exec() == QDialog::Accepted) {
+        imgPath = dialog.selectedFiles().first();
+
+        imgLabel->setPixmap(QPixmap(imgPath).scaled(150, 150, Qt::KeepAspectRatio));
+        imgLabel->show();
+    }
+}
+
 AddDialog::AddDialog(QWidget * p) :parent(p) {
-    setMaximumSize(QSize(500,420));
-    setMinimumSize(QSize(450,400));
+    setMaximumSize(QSize(600,600));
+    setMinimumSize(QSize(500,400));
 
     QStringList listOfGenre;
     foreach (std::string str, AudioVisual::Genre) {
@@ -83,16 +96,25 @@ AddDialog::AddDialog(QWidget * p) :parent(p) {
 
     fav = new QCheckBox("Favorite");
 
-    QHBoxLayout * titleBox = new QHBoxLayout;
+    QVBoxLayout * titleBox = new QVBoxLayout;
     titleBox->addWidget(title);
     titleBox->addWidget(date);
     titleBox->addWidget(director);
     titleBox->addWidget(fav);
 
+    selectImgBtn = new QPushButton("Seleziona immagine");
+    imgLabel = new QLabel();
+    QVBoxLayout *imgLayout = new QVBoxLayout();
+    imgLayout->addWidget(selectImgBtn);
+    imgLayout->addWidget(imgLabel);
+    imgLabel->hide();
+
+    QHBoxLayout * titleImgLayout = new QHBoxLayout;
+    titleImgLayout->addLayout(titleBox);
+    titleImgLayout->addLayout(imgLayout);
+
     descr = new QTextEdit();
     descr->setPlaceholderText(QString("Description"));
-
-    //img
 
     rt = new QLineEdit();
     rt->setValidator(positVal);
@@ -118,7 +140,7 @@ AddDialog::AddDialog(QWidget * p) :parent(p) {
     descrBox->addLayout(specBox);
 
     QVBoxLayout * mainLayout = new QVBoxLayout;
-    mainLayout->addLayout(titleBox);
+    mainLayout->addLayout(titleImgLayout);
     mainLayout->addLayout(descrBox);
 
     docNarr = new QLineEdit();
@@ -205,6 +227,8 @@ AddDialog::AddDialog(QWidget * p) :parent(p) {
     connect(mov, SIGNAL(toggled(bool)), this, SLOT(showMovWidget(bool)));
     connect(tvs, SIGNAL(toggled(bool)), this, SLOT(showTvSWidget(bool)));
 
+    connect(selectImgBtn, SIGNAL(clicked()), this, SLOT(selectImg()));
+
     connect(add, SIGNAL(clicked()), this, SLOT(accept()));
     connect(cancel, SIGNAL(clicked()), this, SLOT(reject()));
 
@@ -212,29 +236,3 @@ AddDialog::AddDialog(QWidget * p) :parent(p) {
 
     //----------------[]
 }
-
-
-/*QGroupBox *imgBox = new QGroupBox("Immagine");
-    QHBoxLayout *imgLayout = new QHBoxLayout();
-    imgBox->setLayout(imgLayout);
-    QPushButton *imgSelectBtt = new QPushButton("Seleziona immagine");
-    imgLayout->addWidget(imgSelectBtt);
-    QLabel *imgPrev = new QLabel();
-    imgLayout->addWidget(imgPrev);
-    imgPrev->hide();
-
-    connect(imgSelectBtt, &QPushButton::clicked, this, [this, imgPrev]() {
-        QFileDialog dialog;
-        dialog.setFileMode(QFileDialog::ExistingFile);
-        dialog.setNameFilter(("Images (*.png *.xpm *.jpg)"));
-
-        if (dialog.exec() == QDialog::Accepted) {
-            QString filepath = dialog.selectedFiles().first();
-            filepathLE->setText(filepath);
-
-            imgPrev->setPixmap(QPixmap(filepath).scaled(150, 150, Qt::KeepAspectRatio));
-            imgPrev->show();
-
-
-        }
-    });*/

@@ -14,7 +14,8 @@ DisplayWidget::DisplayWidget(DeepPtr<AudioVisual> a, QWidget * p) :avPtr(a), par
     QString favString = (avPtr->isFavorite())? "Yes" : "No";
     fav = new QLabel("Favorites: " + favString);
     time = new QLabel("Duration: " + QString::number(avPtr->getRunning_time()));
-    //img = new QLabel(QString::fromStdString(avPtr->())); qhbox info | img oppure img | info
+    img = new QLabel; // qhbox info | img oppure img | info
+    img->setPixmap(QPixmap(QString::fromStdString(avPtr->getPath())).scaled(150, 150, Qt::KeepAspectRatio));
 
     //----------------[]
 
@@ -38,12 +39,21 @@ DisplayWidget::DisplayWidget(DeepPtr<AudioVisual> a, QWidget * p) :avPtr(a), par
     //----------------[]
 
     //----------------[Costruzione parziale del mainLayout]
-    mainLayout->addWidget(title);
-    mainLayout->addWidget(type);
-    mainLayout->addWidget(year);
-    mainLayout->addWidget(dir);
-    mainLayout->addWidget(fav);
-    mainLayout->addWidget(time);
+
+
+    QVBoxLayout * titleLayout = new QVBoxLayout;
+    titleLayout->addWidget(title);
+    titleLayout->addWidget(type);
+    titleLayout->addWidget(year);
+    titleLayout->addWidget(dir);
+    titleLayout->addWidget(fav);
+    titleLayout->addWidget(time);
+
+    QHBoxLayout * imgTitleLayout = new QHBoxLayout;
+    imgTitleLayout->addLayout(titleLayout);
+    imgTitleLayout->addWidget(img);
+
+    mainLayout->addLayout(imgTitleLayout);
 
     line = new QFrame(); //spaziatore
     line->setFrameShape(QFrame::HLine);
