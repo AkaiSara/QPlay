@@ -1,13 +1,4 @@
 #include "model.h"
-#include <QMessageBox>
-
-Model::Model(){
-
-}
-
-Model::~Model(){
-
-}
 
 void Model::save(const std::string & path) const {
     Xmlio savePath = Xmlio(path);
@@ -36,7 +27,7 @@ void Model::remove(DeepPtr<AudioVisual> a){
 }
 
 void Model::edit(DeepPtr<AudioVisual> a, DeepPtr<AudioVisual> b){
-    list.swapInfo(a, b); //devo passare il nodo da modificare e la roba da assegnarci
+    list.swapInfo(a, b);
 }
 
 void Model::clearAll(){

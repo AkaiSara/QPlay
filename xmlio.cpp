@@ -1,13 +1,4 @@
 #include "xmlio.h"
-#include "documentary.h"
-#include "movie.h"
-#include "tvserie.h"
-
-#include <QFile>
-#include <QSaveFile>
-#include <QXmlStreamReader>
-#include <QXmlStreamWriter>
-#include <QMessageBox>
 
 Xmlio::Xmlio(const std::string & filepath) : filename(filepath) {}
 

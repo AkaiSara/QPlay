@@ -1,10 +1,11 @@
 #include "displaywidget.h"
 
-
 DisplayWidget::DisplayWidget(DeepPtr<AudioVisual> a, QWidget * p) :avPtr(a), parent(p) {
     QVBoxLayout * mainLayout = new QVBoxLayout;
     QFrame *line;
     setWindowTitle("Item details");
+    setMinimumSize(QSize(500,300));
+    setMaximumSize(QSize(600,400));
 
     //----------------[Prima parte]
     title = new QLabel("Title: " + QString::fromStdString(avPtr->getTitle()));
@@ -14,8 +15,8 @@ DisplayWidget::DisplayWidget(DeepPtr<AudioVisual> a, QWidget * p) :avPtr(a), par
     QString favString = (avPtr->isFavorite())? "Yes" : "No";
     fav = new QLabel("Favorites: " + favString);
     time = new QLabel("Duration: " + QString::number(avPtr->getRunning_time()));
-    img = new QLabel; // qhbox info | img oppure img | info
-    img->setPixmap(QPixmap(QString::fromStdString(avPtr->getPath())).scaled(150, 150, Qt::KeepAspectRatio));
+    img = new QLabel;
+    img->setPixmap(QPixmap(QString::fromStdString((avPtr->getPath() != ""? avPtr->getPath() : ":/img/picture"))).scaled(150, 150, Qt::KeepAspectRatio));
 
     //----------------[]
 
@@ -28,19 +29,25 @@ DisplayWidget::DisplayWidget(DeepPtr<AudioVisual> a, QWidget * p) :avPtr(a), par
     //----------------[Terza parte]
     frame = new QLabel("Frame rate: " + QString::number(avPtr->getFps()));
     res = new QLabel("Image resolution: " + QString::number(avPtr->getImage_resolution()));
-    QString audioString = (avPtr->isAudioComp())? "Yes" : "No";
-    audio = new QLabel("Audio compression: " + audioString);
+    audio = new QLabel("Audio compression: " + QString::fromStdString(avPtr->isAudioComp() ? "Yes" : "No"));
+
+    QLabel * matureContent = new QLabel("Mature content: " + QString::fromStdString(avPtr->matureContent() ? "Yes" : "No"));
+    QLabel * quality = new QLabel("Quality: " + QString::fromStdString(avPtr->getQuality()? "Yes" : "No"));
+    QLabel * totalRunningTime = new QLabel("Total running time: " + QString::number(avPtr->getTotalRunningTime()));
 
     QHBoxLayout * tec = new QHBoxLayout;
     tec->addWidget(res);
     tec->addWidget(audio);
     tec->addWidget(frame);
 
+    QHBoxLayout * metodiPuri = new QHBoxLayout;
+    metodiPuri->addWidget(matureContent);
+    metodiPuri->addWidget(quality);
+    metodiPuri->addWidget(totalRunningTime);
+
     //----------------[]
 
     //----------------[Costruzione parziale del mainLayout]
-
-
     QVBoxLayout * titleLayout = new QVBoxLayout;
     titleLayout->addWidget(title);
     titleLayout->addWidget(type);
@@ -68,6 +75,7 @@ DisplayWidget::DisplayWidget(DeepPtr<AudioVisual> a, QWidget * p) :avPtr(a), par
     mainLayout->addWidget(line);
 
     mainLayout->addLayout(tec);
+    mainLayout->addLayout(metodiPuri);
 
     line = new QFrame(); //spaziatore
     line->setFrameShape(QFrame::HLine);

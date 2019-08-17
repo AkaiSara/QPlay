@@ -20,7 +20,7 @@ std::string Documentary::getType() const{
 }
 
 bool Documentary::getQuality() const{
-    return audio_compression && (image_resolution>500? true : false) && (fps > 25? true: false);
+    return !audio_compression && (image_resolution>500? true : false) && (fps > 25? true: false);
 }
 
 bool Documentary::matureContent() const{

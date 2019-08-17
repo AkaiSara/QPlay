@@ -1,10 +1,18 @@
 #ifndef XMLIO_H
 #define XMLIO_H
 
-#include <QString>
 #include "container.h"
 #include "deepptr.h"
 #include "audiovisual.h"
+#include "documentary.h"
+#include "movie.h"
+#include "tvserie.h"
+
+#include <QFile>
+#include <QSaveFile>
+#include <QXmlStreamReader>
+#include <QXmlStreamWriter>
+#include <QMessageBox>
 
 class Xmlio {
 private:

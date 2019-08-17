@@ -1,8 +1,11 @@
 #ifndef MODEL_H
 #define MODEL_H
+
 #include "xmlio.h"
 #include "deepptr.h"
 #include "audiovisual.h"
+
+#include <QMessageBox>
 #include <string>
 
 class Model
@@ -10,8 +13,8 @@ class Model
 private:
     Container<DeepPtr<AudioVisual>> list;
 public:
-    Model();
-    ~Model();
+    Model() = default;
+    ~Model() = default;
 
     void save(const std::string &) const;
     void load(const std::string &);

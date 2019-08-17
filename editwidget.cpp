@@ -1,8 +1,9 @@
 #include "editwidget.h"
+
 void EditWidget::selectImg(){
     QFileDialog dialog;
     dialog.setFileMode(QFileDialog::ExistingFile);
-    dialog.setNameFilter(("File (*.png *.svg *.jpg)"));
+    dialog.setNameFilter(("Files (*.png *.jpg *.svg)"));
 
     if (dialog.exec() == QDialog::Accepted) {
         imgPath = dialog.selectedFiles().first();
@@ -67,22 +68,6 @@ EditWidget::EditWidget(DeepPtr<AudioVisual> a, QWidget * p) : avPtr(a), parent(p
     QIntValidator * positVal = new QIntValidator();
     positVal->setBottom(0);
 
-    //----------------[UpperRadioButtons]
-    /*doc = new QRadioButton(tr("Documentary"));
-    mov = new QRadioButton(tr("Movie"));
-    tvs = new QRadioButton(tr("TV Serie"));
-
-    QHBoxLayout * typeSelectorBox = new QHBoxLayout;
-    typeSelectorBox->addWidget(doc);
-    typeSelectorBox->addWidget(mov);
-    typeSelectorBox->addWidget(tvs);
-    typeSelectorBox->addStretch(1);
-
-    QGroupBox * typeSelGroupBox = new   QGroupBox(tr("Select type"));
-    typeSelGroupBox->setLayout(typeSelectorBox);*/
-
-    //----------------[]
-
     //----------------[Central]
     title = new QLineEdit();
     title->setPlaceholderText(QString("Title"));
@@ -106,12 +91,12 @@ EditWidget::EditWidget(DeepPtr<AudioVisual> a, QWidget * p) : avPtr(a), parent(p
     titleBox->addWidget(director);
     titleBox->addWidget(fav);
 
-    selectImgBtn = new QPushButton("Seleziona immagine");
+    selectImgBtn = new QPushButton("Select image");
     imgLabel = new QLabel();
+    imgLabel->setPixmap(QPixmap(QString::fromStdString((avPtr->getPath() != "" ? avPtr->getPath() : ":/img/picture"))).scaled(150, 150, Qt::KeepAspectRatio));
     QVBoxLayout *imgLayout = new QVBoxLayout();
     imgLayout->addWidget(selectImgBtn);
     imgLayout->addWidget(imgLabel);
-    imgLabel->hide();
 
     QHBoxLayout * titleImgLayout = new QHBoxLayout;
     titleImgLayout->addLayout(titleBox);
@@ -248,8 +233,8 @@ EditWidget::EditWidget(DeepPtr<AudioVisual> a, QWidget * p) : avPtr(a), parent(p
     //----------------[]
 
     //----------------[LowerButtons]
-    edit =new QPushButton(QIcon(":/img/edit"), tr("Edit"));
-    cancel =new QPushButton(QIcon(":/img/cancel"), tr("Cancel"));
+    edit =new QPushButton(QIcon(":/img/edit"), tr("&Edit"));
+    cancel =new QPushButton(QIcon(":/img/cancel"), tr("&Cancel"));
 
     QHBoxLayout * lowerButtonsBox = new QHBoxLayout;
     lowerButtonsBox->addWidget(edit);
@@ -260,18 +245,13 @@ EditWidget::EditWidget(DeepPtr<AudioVisual> a, QWidget * p) : avPtr(a), parent(p
     setWindowTitle("Edit item");
 
     mainBox = new QVBoxLayout;
-    //mainBox->addWidget(typeSelGroupBox);
     mainBox->addLayout(mainLayout);
     mainBox->addLayout(menuLayout);
     mainBox->addLayout(lowerButtonsBox);
     setLayout(mainBox);
 
     //----------------[Connect]
-    //connect(doc, SIGNAL(toggled(bool)), this, SLOT(showDocWidget(bool)));
-    //connect(mov, SIGNAL(toggled(bool)), this, SLOT(showMovWidget(bool)));
-    //connect(tvs, SIGNAL(toggled(bool)), this, SLOT(showTvSWidget(bool)));
-
-        connect(selectImgBtn, SIGNAL(clicked()), this, SLOT(selectImg()));
+    connect(selectImgBtn, SIGNAL(clicked()), this, SLOT(selectImg()));
 
     connect(edit, SIGNAL(clicked()), this, SLOT(accept()));
     connect(cancel, SIGNAL(clicked()), this, SLOT(reject()));

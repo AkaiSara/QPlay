@@ -1,18 +1,14 @@
 #include "audiovisualitem.h"
 
-#include <QVBoxLayout>
-#include <QLabel>
-#include <QFile>
-
 void AudioVisualItem::setLine(bool b){
     b? line->show() : line->hide();
 }
 
-QFrame* AudioVisualItem::getLine() const{
+QFrame * AudioVisualItem::getLine() const{
     return line;
 }
 
-AudioVisual *AudioVisualItem::getAvPtr() const{
+AudioVisual * AudioVisualItem::getAvPtr() const{
     return &(*avPtr);
 }
 
@@ -21,7 +17,6 @@ AudioVisualItem::AudioVisualItem(DeepPtr<AudioVisual> a, QWidget * p, QFrame * f
     //setMaximumSize(QSize(150,300));
 
     //----------------[immagine]
-
     QLabel * img = new QLabel;
 
     QString path = QString::fromStdString(avPtr->getPath());
@@ -44,12 +39,14 @@ AudioVisualItem::AudioVisualItem(DeepPtr<AudioVisual> a, QWidget * p, QFrame * f
 
     //----------------[]
 
+    //----------------[Time]
     QLabel * totTime = new QLabel("Total time: " + QString::number(avPtr->getTotalRunningTime()) + "min");
     totTime->setAlignment(Qt::AlignHCenter | Qt::AlignVCenter);
+    //----------------[]
 
     //----------------[bottoni]
-    deleteBtn = new QPushButton(QIcon(":/img/remove"), tr("Elimina"));
-    editBtn = new QPushButton(QIcon(":/img/edit"), tr("Modifica"));
+    deleteBtn = new QPushButton(QIcon(":/img/remove"), tr(" &Delete"));
+    editBtn = new QPushButton(QIcon(":/img/edit"), tr(" &Edit"));
     QHBoxLayout * buttonsLayout = new QHBoxLayout;
     buttonsLayout->addWidget(editBtn);
     buttonsLayout->addWidget(deleteBtn);
@@ -59,9 +56,17 @@ AudioVisualItem::AudioVisualItem(DeepPtr<AudioVisual> a, QWidget * p, QFrame * f
     //----------------[Layout]
     QVBoxLayout * mainLayout = new QVBoxLayout;
     mainLayout->addWidget(img);
-    mainLayout->addWidget(title); //titolo
+    mainLayout->addWidget(title);
     mainLayout->addWidget(totTime);
-    mainLayout->addLayout(buttonsLayout); //bottoni
+    mainLayout->addLayout(buttonsLayout);
+
+    QLabel * hint = new QLabel("Double click to see more..");
+    QFont hintFont = hint->font();
+    hintFont.setItalic(true);
+    hintFont.setPixelSize(10);
+    hint->setFont(hintFont);
+
+    mainLayout->addWidget(hint);
     setLayout(mainLayout);
 
     //----------------[]

@@ -3,6 +3,10 @@
 
 #include <QWidget>
 #include <QPushButton>
+#include <QVBoxLayout>
+#include <QLabel>
+#include <QFile>
+
 #include "audiovisual.h"
 #include "deepptr.h"
 #include "displaywidget.h"

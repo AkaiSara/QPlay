@@ -35,6 +35,7 @@ private:
     QRadioButton * searchTvs;
     QHBoxLayout * typeSearchGroup;
     QComboBox * searchComboBox;
+    QPushButton* searchButton;
     QList<AudioVisualItem *> listSearchResult;
 
     QScrollArea * scrollArea;

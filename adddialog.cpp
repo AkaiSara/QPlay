@@ -21,6 +21,7 @@ void AddDialog::showTvSWidget(bool show){
 
 
 void AddDialog::addNewItem() {
+    //se almeno un campo non è stato riempito lancio un popup
     AudioVisual * i = nullptr;
     if (doc->isChecked())
         i = new Documentary(title->text().toStdString(), descr->toPlainText().toStdString(), date->text().toUInt(), director->text().toStdString(), fav->isChecked(), imgPath.toStdString(), rt->text().toInt(), ac->isChecked(), imgres->text().toUInt(), frameRate->text().toUInt(), docNarr->text().toStdString(), docTopic->text().toStdString());
@@ -38,7 +39,7 @@ void AddDialog::addNewItem() {
 void AddDialog::selectImg(){
     QFileDialog dialog;
     dialog.setFileMode(QFileDialog::ExistingFile);
-    dialog.setNameFilter(("File (*.png *.svg *.jpg)"));
+    dialog.setNameFilter(("Files (*.png *.jpg *.svg)"));
 
     if (dialog.exec() == QDialog::Accepted) {
         imgPath = dialog.selectedFiles().first();
@@ -102,7 +103,7 @@ AddDialog::AddDialog(QWidget * p) :parent(p) {
     titleBox->addWidget(director);
     titleBox->addWidget(fav);
 
-    selectImgBtn = new QPushButton("Seleziona immagine");
+    selectImgBtn = new QPushButton("Select image");
     imgLabel = new QLabel();
     QVBoxLayout *imgLayout = new QVBoxLayout();
     imgLayout->addWidget(selectImgBtn);
@@ -195,8 +196,8 @@ AddDialog::AddDialog(QWidget * p) :parent(p) {
     //----------------[]
 
     //----------------[LowerButtons]
-    add =new QPushButton(QIcon(":/img/add"), tr("Add"));
-    cancel =new QPushButton(QIcon(":/img/cancel"), tr("Cancel"));
+    add =new QPushButton(QIcon(":/img/add"), tr("&Add"));
+    cancel =new QPushButton(QIcon(":/img/cancel"), tr("&Cancel"));
 
     QHBoxLayout * lowerButtonsBox = new QHBoxLayout;
     lowerButtonsBox->addWidget(add);

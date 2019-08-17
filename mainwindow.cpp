@@ -1,6 +1,7 @@
 #include "mainwindow.h"
 
 void MainWindow::showSearchDetail(const QString & attr){
+    searchButton->hide();
     searchBar->hide();
     searchCheckBox->hide();
     searchDoc->hide();
@@ -16,12 +17,14 @@ void MainWindow::showSearchDetail(const QString & attr){
     }
     if(attr == "Title" || attr == "Director"){
         searchBar->show();
+        searchButton->show();
     }
     if(attr == "Release year" || attr == "Running time"){
         QIntValidator * positVal = new QIntValidator();
         positVal->setBottom(0);
         searchBar->setValidator(positVal);
         searchBar->show();
+        searchButton->show();
     }
 
     if(attr == "Type"){
@@ -103,21 +106,18 @@ void MainWindow::update(){
         if(*it == list.back()) //se il nodo corrente non è l'ultimo
             item->setLine(false);
 
-        listBoxLayout->addStretch(1);
-
         time += (*it)->getTotalRunningTime();
     }
 
+    listBoxLayout->addStretch(1);
+
     int min = time % 60, hour = ((time / 60) % 24), day = time / (60 * 24);
     totalTime->setText("Total time: " + (day != 0? QString::number(day) + "d " : "") + (hour != 0? QString::number(hour) + "h " : "") + QString::number(min) + "min");
-     //questo messaggio verrà cancellato prima dell ultimo commit, mi serviva per debuggare
-        //QMessageBox msgBox;
-        //msgBox.setText("fatto update");
-        //msgBox.exec();
 }
 
 void MainWindow::search(){
     listSearchResult.clear();
+    update();
 
     QString attributo = searchAttribute->currentText();
     QString valore;
@@ -293,8 +293,14 @@ void MainWindow::search(){
         listBoxLayout->addWidget((*it)->getLine());
         if(*it == listSearchResult.back()) //se il nodo corrente non è l'ultimo
             (*it)->setLine(false);
-        listBoxLayout->addStretch(1); //se lo metto fuori dal for??
     }
+
+    if(listSearchResult.isEmpty()){
+        QMessageBox msgBox(QMessageBox::Information, "Information", "No results");
+        msgBox.exec();
+    }
+
+    listBoxLayout->addStretch(1);
 }
 
 MainWindow::MainWindow(): model(new Model){
@@ -361,7 +367,7 @@ MainWindow::MainWindow(): model(new Model){
 
     searchComboBox = new QComboBox();
 
-    QPushButton* searchButton = new QPushButton(QIcon(":/img/search"), tr("Cerca"));
+    searchButton = new QPushButton(QIcon(":/img/search"), tr(" Search"));
     QPushButton* clearSearchButton = new QPushButton(tr("Cancel"));
     clearSearchButton->setToolTip(tr("Delete filters"));
 
@@ -389,11 +395,11 @@ MainWindow::MainWindow(): model(new Model){
     //----------------[]
 
     //----------------[ButtonsControl]
-    showAddDialog = new QPushButton(QIcon(":/img/add"), tr(" Add an item"));
+    showAddDialog = new QPushButton(QIcon(":/img/add"), tr(" &Add an item"));
     showAddDialog->setToolTip(tr("Open an add dialog and add a new item"));
-    clearListBtn = new QPushButton(QIcon(":/img/delete"), tr("Clear"));
+    clearListBtn = new QPushButton(QIcon(":/img/delete"), tr("&Clear"));
     clearListBtn->setToolTip(tr("Delete all item"));
-    exitBtn = new QPushButton(QIcon(":/img/exit"), tr(" Exit"));
+    exitBtn = new QPushButton(QIcon(":/img/exit"), tr(" E&xit"));
 
     QHBoxLayout *BtnLayout;
     BtnLayout = new QHBoxLayout;
@@ -427,6 +433,11 @@ MainWindow::MainWindow(): model(new Model){
     connect(clearSearchButton, SIGNAL(clicked()), searchBar, SLOT(clear()));
     connect(clearSearchButton, SIGNAL(clicked()), this, SLOT(update()));
     connect(searchButton, SIGNAL(clicked()), this, SLOT(search()));
+    connect(searchCheckBox, SIGNAL(clicked()), this, SLOT(search()));
+    connect(searchDoc, SIGNAL(toggled(bool)), this, SLOT(search()));
+    connect(searchTvs, SIGNAL(toggled(bool)), this, SLOT(search()));
+    connect(searchMov, SIGNAL(toggled(bool)), this, SLOT(search()));
+    connect(searchComboBox, SIGNAL(currentTextChanged(const QString&)), this, SLOT(search()));
 
     connect(showAddDialog, SIGNAL(clicked()), this, SLOT(openAddDialog()));
     connect(clearListBtn, SIGNAL(clicked()), this, SLOT(clearList()));

@@ -1,5 +1,3 @@
 #include "exception.h"
 
-Exception::Exception(const std::string & ER): errorMessage(ER) {
-
-}
+Exception::Exception(const std::string & ER): errorMessage(ER) {}
