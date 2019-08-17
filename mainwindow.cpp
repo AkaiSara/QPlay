@@ -1,7 +1,6 @@
 #include "mainwindow.h"
 
 void MainWindow::showSearchDetail(const QString & attr){
-    searchButton->hide();
     searchBar->hide();
     searchCheckBox->hide();
     searchDoc->hide();
@@ -17,14 +16,12 @@ void MainWindow::showSearchDetail(const QString & attr){
     }
     if(attr == "Title" || attr == "Director"){
         searchBar->show();
-        searchButton->show();
     }
     if(attr == "Release year" || attr == "Running time"){
         QIntValidator * positVal = new QIntValidator();
         positVal->setBottom(0);
         searchBar->setValidator(positVal);
         searchBar->show();
-        searchButton->show();
     }
 
     if(attr == "Type"){
@@ -66,9 +63,8 @@ void MainWindow::deleteItem(DeepPtr<AudioVisual> a){
 
 void MainWindow::editItem(DeepPtr<AudioVisual> a){
     editWidget = new EditWidget(a, this);
-    editWidget->exec();
-
-    model->edit(a,editWidget->getEdited());
+    if(editWidget->exec() == QDialog::Accepted)
+        model->edit(a,editWidget->getEdited());
 
     emit listChanged();
 }
@@ -141,7 +137,7 @@ void MainWindow::search(){
 
         if(attributo == "Title"){
             for(auto it = listWidget.begin(); it != listWidget.end(); ++it){
-                if(QString::compare(QString::fromStdString( (*it)->getAvPtr()->getTitle()), valore, Qt::CaseInsensitive) == 0){
+                if(QString::fromStdString((*it)->getAvPtr()->getTitle()).startsWith(valore, Qt::CaseInsensitive) ){
                     listSearchResult.push_back(*it);
                 }
                 else{
@@ -153,7 +149,7 @@ void MainWindow::search(){
 
         if(attributo == "Release year"){
             for(auto it = listWidget.begin(); it != listWidget.end(); ++it){
-                if(QString::number((*it)->getAvPtr()->getRelease_date()) == valore){
+                if(QString::number((*it)->getAvPtr()->getRelease_date()).startsWith(valore, Qt::CaseInsensitive) ){
                     listSearchResult.push_back(*it);
                 }
                 else{
@@ -165,7 +161,7 @@ void MainWindow::search(){
 
         if(attributo == "Director"){
             for(auto it = listWidget.begin(); it != listWidget.end(); ++it){
-                if(QString::compare(QString::fromStdString( (*it)->getAvPtr()->getDirector()), valore, Qt::CaseInsensitive) == 0){
+                if(QString::fromStdString((*it)->getAvPtr()->getDirector()).startsWith(valore, Qt::CaseInsensitive) ){
                     listSearchResult.push_back(*it);
                 }
                 else{
@@ -177,7 +173,7 @@ void MainWindow::search(){
 
         if(attributo == "Running time"){
             for(auto it = listWidget.begin(); it != listWidget.end(); ++it){
-                if(QString::number((*it)->getAvPtr()->getRunning_time()) == valore){
+                if(QString::number((*it)->getAvPtr()->getRunning_time()).startsWith(valore, Qt::CaseInsensitive) ){
                     listSearchResult.push_back(*it);
                 }
                 else{
@@ -342,6 +338,8 @@ MainWindow::MainWindow(): model(new Model){
     //----------------[]
 
     //----------------[SearchBar]
+    QLabel * searchImg = new QLabel;
+    searchImg->setPixmap(QPixmap(":/img/search").scaled(20, 20, Qt::KeepAspectRatio));
     searchAttribute = new QComboBox();
     searchAttribute->addItem(QString("Title"));
     searchAttribute->addItem(QString("Type"));
@@ -367,17 +365,16 @@ MainWindow::MainWindow(): model(new Model){
 
     searchComboBox = new QComboBox();
 
-    searchButton = new QPushButton(QIcon(":/img/search"), tr(" Search"));
     QPushButton* clearSearchButton = new QPushButton(tr("Cancel"));
     clearSearchButton->setToolTip(tr("Delete filters"));
 
     QHBoxLayout* searchLayout = new QHBoxLayout();
+    searchLayout->addWidget(searchImg);
     searchLayout->addWidget(searchAttribute);
     searchLayout->addWidget(searchBar);
     searchLayout->addWidget(searchCheckBox);
     searchLayout->addLayout(typeSearchGroup);
     searchLayout->addWidget(searchComboBox);
-    searchLayout->addWidget(searchButton);
     searchLayout->addWidget(clearSearchButton);
 
     showSearchDetail(searchAttribute->currentText());
@@ -427,12 +424,11 @@ MainWindow::MainWindow(): model(new Model){
     connect(saveAct, SIGNAL(triggered()), this, SLOT(saveFile()));
     connect(exitAct, SIGNAL(triggered()), this, SLOT(close()));
 
-    //connect(searchbar, SIGNAL(textChanged(const QString&)), this, SLOT(textFilterChanged()));
     connect(searchAttribute, SIGNAL(currentTextChanged(const QString&)), this, SLOT(showSearchDetail(const QString&)));
     connect(searchAttribute, SIGNAL(currentTextChanged(const QString&)), this, SLOT(update()));
     connect(clearSearchButton, SIGNAL(clicked()), searchBar, SLOT(clear()));
     connect(clearSearchButton, SIGNAL(clicked()), this, SLOT(update()));
-    connect(searchButton, SIGNAL(clicked()), this, SLOT(search()));
+    connect(searchBar, SIGNAL(textChanged(const QString&)), this, SLOT(search()));
     connect(searchCheckBox, SIGNAL(clicked()), this, SLOT(search()));
     connect(searchDoc, SIGNAL(toggled(bool)), this, SLOT(search()));
     connect(searchTvs, SIGNAL(toggled(bool)), this, SLOT(search()));
