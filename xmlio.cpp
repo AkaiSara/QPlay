@@ -30,7 +30,7 @@ Container<DeepPtr<AudioVisual>> Xmlio::read() const{
                     input.readNextStartElement();
                     std::string imgPath = (input.readElementText()).toStdString();
                     input.readNextStartElement();
-                    int durata = (input.readElementText()).toInt();
+                    unsigned int durata = (input.readElementText()).toUInt();
                     input.readNextStartElement();
                     bool compressione = (input.readElementText()) == "true"? true:false;
                     input.readNextStartElement();
@@ -59,7 +59,7 @@ Container<DeepPtr<AudioVisual>> Xmlio::read() const{
                     input.readNextStartElement();
                     std::string imgPath = (input.readElementText()).toStdString();
                     input.readNextStartElement();
-                    int durata = (input.readElementText()).toInt();
+                    unsigned int durata = (input.readElementText()).toUInt();
                     input.readNextStartElement();
                     bool compressione = (input.readElementText()) == "true"? true:false;
                     input.readNextStartElement();
@@ -92,7 +92,7 @@ Container<DeepPtr<AudioVisual>> Xmlio::read() const{
                     input.readNextStartElement();
                     std::string imgPath = (input.readElementText()).toStdString();
                     input.readNextStartElement();
-                    int durata = (input.readElementText()).toInt();
+                    unsigned int durata = (input.readElementText()).toUInt();
                     input.readNextStartElement();
                     bool compressione = (input.readElementText()) == "true"? true:false;
                     input.readNextStartElement();

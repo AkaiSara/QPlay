@@ -4,7 +4,7 @@ const std::vector<std::string> AudioVisual::Rating = {"All", "VM14", "VM18"};
 
 const std::vector<std::string> AudioVisual::Genre = {"Unknown", "Action", "Adventure", "Animation", "Comedy", "Crime", "Drama", "Fantasy", "Food", "Game show", "Horror", "Mystery", "Reality", "Romance", "Science fiction", "Soap", "Sport", "Talk show", "Thriller", "Travel", "Western"};
 
-AudioVisual::AudioVisual(std::string ti, std::string tr, unsigned int rd, std::string r, bool f, std::string p, int rt, bool ac, unsigned int ir, unsigned int fp): title(ti), description(tr), release_date(rd), director(r), favorite(f), pathImg(p), running_time(rt), audio_compression(ac), image_resolution(ir), fps(fp) {}
+AudioVisual::AudioVisual(std::string ti, std::string tr, unsigned int rd, std::string r, bool f, std::string p, unsigned int rt, bool ac, unsigned int ir, unsigned int fp): title(ti), description(tr), release_date(rd), director(r), favorite(f), pathImg(p), running_time(rt), audio_compression(ac), image_resolution(ir), fps(fp) {}
 
 AudioVisual::~AudioVisual(){}
 
@@ -47,7 +47,7 @@ unsigned int AudioVisual::getRelease_date() const{
 std::string AudioVisual::getDirector() const{
     return director;
 }
-int AudioVisual::getRunning_time() const{
+unsigned int AudioVisual::getRunning_time() const{
 return running_time;
 }
 bool AudioVisual::isAudioComp() const{
@@ -78,7 +78,7 @@ void AudioVisual::setRelease_date(const unsigned int d){
 void AudioVisual::setDirector(const std::string & d){
     director = d;
 }
-void AudioVisual::setRunning_time(const int t){
+void AudioVisual::setRunning_time(const unsigned int t){
     running_time = t;
 }
 void AudioVisual::setAudioComp(const bool a){

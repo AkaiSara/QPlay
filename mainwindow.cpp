@@ -304,7 +304,7 @@ void MainWindow::search(){
 }
 
 MainWindow::MainWindow(): model(new Model){
-    setWindowTitle(tr("WikiPlay")); //lui cambia le cose, io le sistemo
+    setWindowTitle(tr("QPlay"));
     setWindowIcon(QIcon(":/img/app"));
 
     setMaximumSize(QSize(600,600));

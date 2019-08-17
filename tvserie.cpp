@@ -1,6 +1,6 @@
 #include "tvserie.h"
 
-TvSerie::TvSerie(std::string ti, std::string tr, unsigned int rd, std::string r, bool f, std::string p, int rt, bool ac, unsigned int ir, unsigned int fp, unsigned int st, unsigned int ep, std::string ca, std::string g, bool ic, std::string ra): AudioVisual(ti,tr,rd,r,f,p,rt,ac,ir,fp), season(st), episode(ep), cast(ca), genre(g), ended(ic), rating(ra) {}
+TvSerie::TvSerie(std::string ti, std::string tr, unsigned int rd, std::string r, bool f, std::string p, unsigned int rt, bool ac, unsigned int ir, unsigned int fp, unsigned int st, unsigned int ep, std::string ca, std::string g, bool ic, std::string ra): AudioVisual(ti,tr,rd,r,f,p,rt,ac,ir,fp), season(st), episode(ep), cast(ca), genre(g), ended(ic), rating(ra) {}
 
 bool TvSerie::operator==(const AudioVisual& av) const{
     return AudioVisual::operator==(av) &&
@@ -16,8 +16,8 @@ TvSerie* TvSerie::clone() const {
     return new TvSerie(*this);
 }
 
-int TvSerie::getTotalRunningTime() const{
-    return (running_time * static_cast<int>(episode) * static_cast<int>(season)); //episode * season
+unsigned int TvSerie::getTotalRunningTime() const{
+    return (running_time * episode * season);
 }
 std::string TvSerie::getType() const{
     return "TvSerie";

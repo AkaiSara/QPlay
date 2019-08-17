@@ -16,6 +16,7 @@
 #include <QComboBox>
 #include <QPushButton>
 #include <QFileDialog>
+#include <QMessageBox>
 
 #include "documentary.h"
 #include "movie.h"
@@ -78,6 +79,7 @@ private slots:
     void showTvSWidget(bool);
     void selectImg();
     void addNewItem();
+    void checkFields();
 };
 
 #endif // ADDDIALOG_H

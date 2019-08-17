@@ -23,7 +23,6 @@ void Model::remove(DeepPtr<AudioVisual> a){
     QMessageBox msgBox;
     msgBox.setText("Eliminato con successo.");
     msgBox.exec();
-    //delete &a fa crashare
 }
 
 void Model::edit(DeepPtr<AudioVisual> a, DeepPtr<AudioVisual> b){

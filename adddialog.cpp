@@ -19,18 +19,38 @@ void AddDialog::showTvSWidget(bool show){
     }
 }
 
+void AddDialog::checkFields(){
+    QMessageBox message;
+    message.setText("Riempire tutti i campi dati!");
+
+    if(title->text().toStdString() == "" || descr->toPlainText().toStdString()== "" || date->text().toUInt()== 0 || director->text().toStdString()== "" || rt->text().toInt() == 0 || imgres->text().toUInt() == 0 || frameRate->text().toUInt()== 0){
+        message.exec();
+    } else if(doc->isChecked() && (docNarr->text().toStdString()== "" || docTopic->text().toStdString()== "")){
+        message.exec();
+    } else if(mov->isChecked() && cast->toPlainText().toStdString() == ""){
+        message.exec();
+    } else if(tvs->isChecked() && (cast->toPlainText().toStdString() == "" || tvSeason->text().toUInt() == 0 || tvEpisode->text().toUInt() == 0)){
+        message.exec();
+    }
+    else {
+        accept();
+    }
+}
 
 void AddDialog::addNewItem() {
-    //se almeno un campo non è stato riempito lancio un popup
     AudioVisual * i = nullptr;
-    if (doc->isChecked())
-        i = new Documentary(title->text().toStdString(), descr->toPlainText().toStdString(), date->text().toUInt(), director->text().toStdString(), fav->isChecked(), imgPath.toStdString(), rt->text().toInt(), ac->isChecked(), imgres->text().toUInt(), frameRate->text().toUInt(), docNarr->text().toStdString(), docTopic->text().toStdString());
 
-    if (mov->isChecked())
-        i = new Movie(title->text().toStdString(), descr->toPlainText().toStdString(), date->text().toUInt(), director->text().toStdString(), fav->isChecked(), imgPath.toStdString(), rt->text().toInt(), ac->isChecked(), imgres->text().toUInt(), frameRate->text().toUInt(), cast->toPlainText().toStdString(), genre->currentText().toStdString(), rating->currentText().toStdString());
+    if (doc->isChecked()){
+        i = new Documentary(title->text().toStdString(), descr->toPlainText().toStdString(), date->text().toUInt(), director->text().toStdString(), fav->isChecked(), imgPath.toStdString(), rt->text().toUInt(), ac->isChecked(), imgres->text().toUInt(), frameRate->text().toUInt(), docNarr->text().toStdString(), docTopic->text().toStdString());
+    }
 
-    if (tvs->isChecked())
-        i = new TvSerie(title->text().toStdString(), descr->toPlainText().toStdString(), date->text().toUInt(), director->text().toStdString(), fav->isChecked(), imgPath.toStdString(), rt->text().toInt(), ac->isChecked(), imgres->text().toUInt(), frameRate->text().toUInt(), tvSeason->text().toUInt(), tvEpisode->text().toUInt(), cast->toPlainText().toStdString(), genre->currentText().toStdString(), tvEnded->isChecked(), rating->currentText().toStdString());
+    if (mov->isChecked()){
+        i = new Movie(title->text().toStdString(), descr->toPlainText().toStdString(), date->text().toUInt(), director->text().toStdString(), fav->isChecked(), imgPath.toStdString(), rt->text().toUInt(), ac->isChecked(), imgres->text().toUInt(), frameRate->text().toUInt(), cast->toPlainText().toStdString(), genre->currentText().toStdString(), rating->currentText().toStdString());
+    }
+
+    if (tvs->isChecked()){
+        i = new TvSerie(title->text().toStdString(), descr->toPlainText().toStdString(), date->text().toUInt(), director->text().toStdString(), fav->isChecked(), imgPath.toStdString(), rt->text().toUInt(), ac->isChecked(), imgres->text().toUInt(), frameRate->text().toUInt(), tvSeason->text().toUInt(), tvEpisode->text().toUInt(), cast->toPlainText().toStdString(), genre->currentText().toStdString(), tvEnded->isChecked(), rating->currentText().toStdString());
+    }
 
     emit created(i);
 }
@@ -119,11 +139,12 @@ AddDialog::AddDialog(QWidget * p) :parent(p) {
 
     rt = new QLineEdit();
     rt->setValidator(positVal);
-    rt->setPlaceholderText(QString("Running time"));
+    rt->setPlaceholderText(QString("Running time in min"));
 
     ac = new QCheckBox("Audio compression");
 
     imgres= new QLineEdit();
+    imgres->setValidator(positVal);
     imgres->setPlaceholderText(QString("Image resolution"));
 
     frameRate = new QLineEdit();
@@ -230,7 +251,7 @@ AddDialog::AddDialog(QWidget * p) :parent(p) {
 
     connect(selectImgBtn, SIGNAL(clicked()), this, SLOT(selectImg()));
 
-    connect(add, SIGNAL(clicked()), this, SLOT(accept()));
+    connect(add, SIGNAL(clicked()), this, SLOT(checkFields()));
     connect(cancel, SIGNAL(clicked()), this, SLOT(reject()));
 
     connect(this, SIGNAL(created(AudioVisual *)), parent, SLOT(addItem(AudioVisual *)));

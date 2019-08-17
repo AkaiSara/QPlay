@@ -90,14 +90,11 @@ public:
 
 	void push_back(const T &);
 	void push_front(const T &);
-
 	void clear();
     void pop_back();
     void pop_front();
     void erase(T&);
-
     void swapInfo(const T&, const T&);
-
     T& search(const T&);
     T& search(const T&) const;
 };
@@ -327,16 +324,6 @@ template<class T>
 void Container<T>::pop_back(){
     if(first == nullptr)
         throw Exception("Empty container");
-    /* Node * p = last;
-    T i = p->info;
-    if(first != last){
-        last = last->prev;
-        p->prev = nullptr;
-    }
-    first->prev = last->next = nullptr;
-    delete p;
-    size--;
-    return i; */
     Node * p = last;
     last = last->prev;
     if(last) 
@@ -473,7 +460,6 @@ bool Container<T>::isEmpty() const {
 	return (size == 0 && first == nullptr);
 }
 
-/*--------- ricerca -------*/
 template<class T>
 T& Container<T>::search(const T& t){
     Iterator it = begin();

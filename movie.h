@@ -9,7 +9,7 @@ class Movie: public AudioVisual{
         std::string  genre; //enum Genere
         std::string  rating; //enum Rating
     public:
-        Movie(std::string, std::string, unsigned int, std::string, bool, std::string, int, bool, unsigned int, unsigned int, std::string, std::string, std::string);
+        Movie(std::string, std::string, unsigned int, std::string, bool, std::string, unsigned int, bool, unsigned int, unsigned int, std::string, std::string, std::string);
 
         virtual bool operator==(const AudioVisual&) const override;
 
@@ -17,7 +17,7 @@ class Movie: public AudioVisual{
 
         virtual Movie* clone() const override;
 
-        virtual int getTotalRunningTime() const override;
+        virtual unsigned int getTotalRunningTime() const override;
         virtual std::string getType() const override;
         virtual bool getQuality() const override;
         virtual bool matureContent() const override;

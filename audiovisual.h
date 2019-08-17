@@ -17,19 +17,19 @@ public:
 
 private: //-----campi dati-----
     std::string title;
-    std::string description; //plot
-    unsigned int release_date; // data
+    std::string description;
+    unsigned int release_date;
     std::string director;
-    bool favorite; // contenuto nei preferiti
+    bool favorite;
     std::string pathImg;
 protected:
-    int running_time; //durata
+    unsigned int running_time;
     bool audio_compression; //perdita di informazioni, se compresso
     unsigned int image_resolution;//video -> 4k, 144p etc in pixel
     unsigned int fps; //frame per secondo
 public:
     //--------costruttori------
-    AudioVisual(std::string, std::string, unsigned int, std::string, bool, std::string, int, bool, unsigned int, unsigned int);
+    AudioVisual(std::string, std::string, unsigned int, std::string, bool, std::string, unsigned int, bool, unsigned int, unsigned int);
 
     //------distruttore----
     virtual ~AudioVisual();
@@ -42,7 +42,7 @@ public:
     virtual AudioVisual* clone() const =0;
 
     //---------metodi virtuali puri------------
-    virtual int getTotalRunningTime() const =0;
+    virtual unsigned int getTotalRunningTime() const =0;
     virtual std::string getType() const =0;
     virtual bool getQuality() const =0;
     virtual bool matureContent() const =0;
@@ -54,7 +54,7 @@ public:
     std::string getDescription() const;
     unsigned int getRelease_date() const;
     std::string getDirector() const;
-    int getRunning_time() const;
+    unsigned int getRunning_time() const;
     bool isAudioComp() const;
     unsigned int getImage_resolution() const;
     unsigned int getFps() const;
@@ -65,7 +65,7 @@ public:
     void setDescription(const std::string &);
     void setRelease_date(const unsigned int);
     void setDirector(const std::string &);
-    void setRunning_time(const int);
+    void setRunning_time(const unsigned int);
     void setAudioComp(const bool);
     void setImage_resolution(const unsigned int);
     void setFps(const unsigned int);

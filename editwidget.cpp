@@ -20,7 +20,7 @@ void EditWidget::modifyItem(){
     edited->setDirector(director->text().toStdString());
     edited->setFavorite(fav->isChecked());
     edited->setPath(imgPath.toStdString());
-    edited->setRunning_time(rt->text().toInt());
+    edited->setRunning_time(rt->text().toUInt());
     edited->setAudioComp(ac->isChecked());
     edited->setImage_resolution(imgres->text().toUInt());
     edited->setFps(frameRate->text().toUInt());

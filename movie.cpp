@@ -1,6 +1,6 @@
 #include "movie.h"
 
-Movie::Movie(std::string ti, std::string tr, unsigned int rd, std::string r, bool f, std::string p, int rt , bool ac, unsigned int ir, unsigned int fp, std::string ca, std::string g, std::string ra):  AudioVisual(ti,tr,rd,r,f,p,rt,ac,ir,fp), cast(ca), genre(g), rating(ra) {}
+Movie::Movie(std::string ti, std::string tr, unsigned int rd, std::string r, bool f, std::string p, unsigned int rt , bool ac, unsigned int ir, unsigned int fp, std::string ca, std::string g, std::string ra):  AudioVisual(ti,tr,rd,r,f,p,rt,ac,ir,fp), cast(ca), genre(g), rating(ra) {}
 
 bool Movie::operator==(const AudioVisual& av) const{
     return AudioVisual::operator==(av) &&
@@ -14,7 +14,7 @@ Movie* Movie::clone() const {
     return new Movie(*this);
 }
 
-int Movie::getTotalRunningTime() const{
+unsigned int Movie::getTotalRunningTime() const{
     return running_time;
 }
 std::string Movie::getType() const{
