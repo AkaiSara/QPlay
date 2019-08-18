@@ -16,12 +16,14 @@
     \section*{Container<T>}
         Il contenitore templetizzato è stato sviluppato secondo la linea del contenitore \texttt{List} della libreria STL. \newline
         Il contenitore fa utilizzo delle classi annidate \texttt{Node} che rappresenta un nodo della lista, con la sua \textit{info}, il puntatore al nodo precedente \textit{prev} e al successivo \textit{next}, la classe \texttt{Iterator} e \texttt{Const\_Iterator} usate per scorrere gli elementi della lista.
-        Come da specifica offre metodi per l'inserimento di nodi, quali \texttt{push\_front} e \texttt{push\_back}, la rimozione di nodi tramite \texttt{clear}, \texttt{erase}, \texttt{pop\_front} e \texttt{pop\_back}, e la ricerca grazie all'uso di \texttt{search}. \newline
+        Come da specifica offre metodi per l'inserimento di nodi, quali \texttt{push\_front} e \texttt{push\_back}, la rimozione di nodi tramite \texttt{clear}, \texttt{erase}, \texttt{pop\_front} e \texttt{pop\_back}, e la ricerca di elementi grazie all'uso di \texttt{search} sia const che non. \newline
         Sebbene il contenitore venga utilizzato istanziandolo con parametro uguale a \texttt{DeepPtr<AudioVisual>}, il parametro T può assumere qualsiasi tipo, che sia primitivo o definito dall'utente.
         %Double linked list per sostenere meglio i costi per la rimozione dei nodi in posizione arbitraria.
 
-    \section*{XML}
-        save, load, file xml
+    \section*{Persistenza delle informazioni}
+        Come da specifica il progetto consente il caricamento e salvataggio delle informazioni relative al contenitore. Si è scelto di adottare l'uso dei file \textsc{XML} come formato di file per la persistenza. \newline
+        Sono state implementate le funzioni \texttt{load} e \texttt{save} che fanno uso delle classi \texttt{QXmlStreamWriter} e \texttt{QXmlStreamReader} per la codifica e decodifica del file \textsc{XML}, e le classi \texttt{QFile} e \texttt{QSaveFile} per l'apertura e in generale la gestione dei file. \newline
+        Entrambe le funzioni devono essere chiamate esplicitamente dall'utente e avvengono in automatico, tranne all'uscita dell'applicazione in cui tramite un popup apposito viene chiesto se si vuole salvare o meno i dati correnti.
 
     \section*{GUI}
         Per lo sviluppo della parte relativa alla GUI è stato adottato il design pattern \textit{Model-View}. \newline

@@ -327,7 +327,6 @@ void Xmlio::write(const Container<DeepPtr<AudioVisual>> & list) const {
     output.writeEndElement(); //chiude root
     output.writeEndDocument();
 
-    bool okay = file.commit();
-    if(!okay)
+    if(!file.commit())
         throw Exception("Failed write on XML file");
 }

@@ -95,8 +95,8 @@ public:
     void pop_front();
     void erase(T&);
     void swapInfo(const T&, const T&);
-    T& search(const T&);
-    T& search(const T&) const;
+    Iterator search(const T&);
+    Const_Iterator search(const T&) const;
 };
 
 //--------implementazione-------
@@ -461,14 +461,14 @@ bool Container<T>::isEmpty() const {
 }
 
 template<class T>
-T& Container<T>::search(const T& t){
+typename Container<T>::Iterator Container<T>::search(const T& t){
     Iterator it = begin();
     for(; it != end() && *it != t; it++);
     return it;
 }
 
 template<class T>
-T& Container<T>::search(const T& t) const{
+typename Container<T>::Const_Iterator Container<T>::search(const T& t) const{
     Const_Iterator cit = cbegin();
     for(; cit != cend() && *cit != t; cit++);
     return cit;
