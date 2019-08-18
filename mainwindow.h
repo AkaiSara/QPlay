@@ -7,6 +7,7 @@
 #include "audiovisualitem.h"
 
 #include <QMainWindow>
+#include <QApplication>
 #include <QMenuBar>
 #include <QAction>
 #include <QFileDialog>
@@ -48,6 +49,9 @@ private:
     EditWidget * editWidget;
 
     QWidget * mainWidget;
+
+protected:
+    void closeEvent(QCloseEvent *) override;
 public:
     Model * model;
     MainWindow();

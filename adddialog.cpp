@@ -59,7 +59,7 @@ void AddDialog::addNewItem() {
 void AddDialog::selectImg(){
     QFileDialog dialog;
     dialog.setFileMode(QFileDialog::ExistingFile);
-    dialog.setNameFilter(("Files (*.png *.jpg *.svg)"));
+    dialog.setNameFilter(("Files (*.png *.jpg)"));
 
     if (dialog.exec() == QDialog::Accepted) {
         imgPath = dialog.selectedFiles().first();

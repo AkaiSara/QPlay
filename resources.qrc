@@ -1,35 +1,27 @@
 <RCC>
     <qresource prefix="/">
-        <file>img/add.svg</file>
-        <file>img/attachment.svg</file>
-        <file>img/delete.svg</file>
-        <file>img/download.svg</file>
-        <file>img/download2.svg</file>
-        <file>img/edit.svg</file>
-        <file>img/exit.svg</file>
-        <file>img/fav.svg</file>
-        <file>img/fav2.svg</file>
         <file>img/fields.svg</file>
-        <file>img/info.svg</file>
-        <file>img/like.svg</file>
-        <file>img/load.svg</file>
-        <file>img/load1.svg</file>
-        <file>img/load2.svg</file>
-        <file>img/ok.svg</file>
-        <file>img/picture.svg</file>
-        <file>img/propic.svg</file>
-        <file>img/propic1.svg</file>
-        <file>img/save.svg</file>
-        <file>img/save2.svg</file>
         <file>img/saveLoadFail.svg</file>
-        <file>img/search-1.svg</file>
-        <file>img/search.svg</file>
-        <file>img/time.svg</file>
-        <file>img/upload.svg</file>
-        <file>img/warning.svg</file>
         <file>img/app.png</file>
-        <file>img/remove.svg</file>
-        <file>img/cancel.svg</file>
-        <file>img/trash.svg</file>
+        <file>img/add.png</file>
+        <file>img/cancel.png</file>
+        <file>img/delete.png</file>
+        <file>img/edit.png</file>
+        <file>img/exit.png</file>
+        <file>img/fav.png</file>
+        <file>img/fav1.png</file>
+        <file>img/info.png</file>
+        <file>img/load.png</file>
+        <file>img/ok.png</file>
+        <file>img/picture.png</file>
+        <file>img/play.png</file>
+        <file>img/play1.png</file>
+        <file>img/propic.png</file>
+        <file>img/remove.png</file>
+        <file>img/save.png</file>
+        <file>img/time.png</file>
+        <file>img/trash.png</file>
+        <file>img/warning.png</file>
+        <file>img/search.png</file>
     </qresource>
 </RCC>

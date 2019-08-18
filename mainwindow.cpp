@@ -339,7 +339,7 @@ MainWindow::MainWindow(): model(new Model){
 
     //----------------[SearchBar]
     QLabel * searchImg = new QLabel;
-    searchImg->setPixmap(QPixmap(":/img/search").scaled(20, 20, Qt::KeepAspectRatio));
+    searchImg->setPixmap(QPixmap(":/img/search").scaled(25, 25, Qt::KeepAspectRatio));
     searchAttribute = new QComboBox();
     searchAttribute->addItem(QString("Title"));
     searchAttribute->addItem(QString("Type"));
@@ -469,5 +469,13 @@ void MainWindow::saveFile(){
 QSize MainWindow::sizeHint() const{
     return QSize(550,500);
 }
+
+void MainWindow::closeEvent(QCloseEvent *) {
+    auto answer = QMessageBox::question(this, "QPlay","Salvare prima di uscire dall'applicazione?", QMessageBox::Yes | QMessageBox::No);
+    if(answer == QMessageBox::Yes)
+        saveFile();
+    QApplication::quit();
+}
+
 
 MainWindow::~MainWindow(){}
