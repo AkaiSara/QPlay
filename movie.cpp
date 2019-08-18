@@ -21,12 +21,12 @@ std::string Movie::getType() const{
     return "Movie";
 }
 
-bool Movie::getQuality() const{
-    return !audio_compression && (image_resolution>500? true : false) && (fps > 25? true: false);
+bool Movie::isHighQuality() const{
+    return (!audio_compression && image_resolution >= 1080 && fps > 40);
 }
 
 bool Movie::matureContent() const{
-    return ((rating == "VM18"? true : false) && (genre == "Crime" || genre == "Horror" ? true : false)) || (rating == "VM18"? true : false);
+    return ((rating == "VM18" && (genre == "Crime" || genre == "Horror")) || rating == "VM18");
 }
 
 Movie::~Movie() {}

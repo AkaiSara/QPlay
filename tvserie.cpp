@@ -23,12 +23,12 @@ std::string TvSerie::getType() const{
     return "TvSerie";
 }
 
-bool TvSerie::getQuality() const{
-    return !audio_compression && (image_resolution>500? true : false) && (fps > 25? true: false);
+bool TvSerie::isHighQuality() const{
+    return (!audio_compression && image_resolution >= 720 && fps >= 30);
 }
 
 bool TvSerie::matureContent() const{
-    return ((rating == "VM18"? true : false) && (genre == "Crime" || genre == "Horror" ? true : false)) || (rating == "VM18"? true : false);
+    return (rating == "VM18" || ((genre == "Crime" || genre == "Horror" || genre == "Thriller") && rating == "VM18"));
 }
 
 TvSerie::~TvSerie() {}

@@ -18,7 +18,7 @@ class Documentary: public AudioVisual{
 
         virtual unsigned int getTotalRunningTime() const override;
         virtual std::string getType() const override;
-        virtual bool getQuality() const override;
+        virtual bool isHighQuality() const override;
         virtual bool matureContent() const override;
 
         //getter n setter

@@ -44,7 +44,7 @@ public:
     //---------metodi virtuali puri------------
     virtual unsigned int getTotalRunningTime() const =0;
     virtual std::string getType() const =0;
-    virtual bool getQuality() const =0;
+    virtual bool isHighQuality() const =0;
     virtual bool matureContent() const =0;
 
     //getter & setter

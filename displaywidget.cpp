@@ -32,7 +32,7 @@ DisplayWidget::DisplayWidget(DeepPtr<AudioVisual> a, QWidget * p) :avPtr(a), par
     audio = new QLabel("Audio compression: " + QString::fromStdString(avPtr->isAudioComp() ? "Yes" : "No"));
 
     QLabel * matureContent = new QLabel("Mature content: " + QString::fromStdString(avPtr->matureContent() ? "Yes" : "No"));
-    QLabel * quality = new QLabel("Quality: " + QString::fromStdString(avPtr->getQuality()? "Yes" : "No"));
+    QLabel * quality = new QLabel("Quality: " + QString::fromStdString(avPtr->isHighQuality()? "Yes" : "No"));
     QLabel * totalRunningTime = new QLabel("Total running time: " + QString::number(avPtr->getTotalRunningTime()));
 
     QHBoxLayout * tec = new QHBoxLayout;
