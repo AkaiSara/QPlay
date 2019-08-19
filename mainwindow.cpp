@@ -394,8 +394,8 @@ MainWindow::MainWindow(): model(new Model){
     //----------------[ButtonsControl]
     showAddDialog = new QPushButton(QIcon(":/img/add"), tr(" &Add an item"));
     showAddDialog->setToolTip(tr("Open an add dialog and add a new item"));
-    clearListBtn = new QPushButton(QIcon(":/img/delete"), tr("&Clear"));
-    clearListBtn->setToolTip(tr("Delete all item"));
+    clearListBtn = new QPushButton(QIcon(":/img/delete"), tr("&Clear All"));
+    clearListBtn->setToolTip(tr("Delete all items"));
     exitBtn = new QPushButton(QIcon(":/img/exit"), tr(" E&xit"));
 
     QHBoxLayout *BtnLayout;
@@ -444,38 +444,33 @@ MainWindow::MainWindow(): model(new Model){
 }
 
 void MainWindow::openFile(){
-    QFileDialog choose;
+    //fileData = QFileDialog::getSaveFileName(this, "Salva come", "", "JSON (*.json);;All Files (*)");
+    //modello->save(fileData.toStdString());
 
-    choose.setFileMode(QFileDialog::ExistingFile);
-    choose.setWindowTitle("Load Lineup");
-    choose.setNameFilter("XML file (*.xml)");
-
-    if (choose.exec())
-        model->load(choose.selectedFiles()[0].toStdString());
+    QString filePath = QFileDialog::getOpenFileName(this, "Load", "", "XML file (*.xml);;All Files (*)");
+    model->load(filePath.toStdString());
 
     emit listChanged();
 }
 void MainWindow::saveFile(){
-    QFileDialog choose;
-
-    choose.setFileMode(QFileDialog::AnyFile);
-    choose.setWindowTitle("Save Lineup");
-    choose.setNameFilter("XML file (*.xml)");
-
-    if (choose.exec())
-        model->save(choose.selectedFiles()[0].toStdString());
+    QString filePath = QFileDialog::getSaveFileName(this, "Save as", "", "XML file (*.xml);;All Files (*)");
+    model->save(filePath.toStdString());
 }
 
 QSize MainWindow::sizeHint() const{
     return QSize(550,500);
 }
 
-void MainWindow::closeEvent(QCloseEvent *) {
-    auto answer = QMessageBox::question(this, "QPlay","Salvare prima di uscire dall'applicazione?", QMessageBox::Yes | QMessageBox::No);
-    if(answer == QMessageBox::Yes)
-        saveFile();
-    QApplication::quit();
-}
+void MainWindow::closeEvent(QCloseEvent * event) {
+    auto answer = QMessageBox::question(this, "QPlay","Salvare prima di uscire dall'applicazione?", QMessageBox::Yes | QMessageBox::No | QMessageBox::Cancel);
 
+    if(answer == QMessageBox::Cancel)
+        event->ignore();
+    else {
+        if(answer == QMessageBox::Yes)
+            saveFile();
+        event->accept();
+    }
+}
 
 MainWindow::~MainWindow(){}

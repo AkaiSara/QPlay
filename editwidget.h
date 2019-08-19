@@ -28,35 +28,30 @@ class EditWidget : public QDialog
     Q_OBJECT
 
 private:
-    /*QRadioButton * doc; //li teniamo sti cosi?
-    QRadioButton * mov;
-    QRadioButton * tvs;*/
-
-    QLineEdit * title;
+    QLineEdit * titleEdit;
     QTextEdit * descr;
-    QLineEdit * date;
-    QLineEdit * director;
+    QLineEdit * dateEdit;
+    QLineEdit * directorEdit;
     QCheckBox * fav;
-    QLabel * favLabel;
 
     QPushButton * selectImgBtn;
     QLabel * imgLabel;
     QString imgPath;
 
-    QLineEdit * rt;
+    QLineEdit * rtEdit;
     QCheckBox * ac;
-    QLineEdit * imgres;
-    QLineEdit * frameRate;
+    QLineEdit * imgresEdit;
+    QLineEdit * frameRateEdit;
 
-    QLineEdit * docNarr;
-    QLineEdit * docTopic;
+    QLineEdit * docNarrEdit;
+    QLineEdit * docTopicEdit;
 
     QTextEdit * cast;
     QComboBox * genre;
     QComboBox * rating;
 
-    QLineEdit * tvSeason;
-    QLineEdit * tvEpisode;
+    QLineEdit * tvSeasonEdit;
+    QLineEdit * tvEpisodeEdit;
     QCheckBox * tvEnded;
 
     QPushButton * edit;

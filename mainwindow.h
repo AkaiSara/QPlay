@@ -8,6 +8,7 @@
 
 #include <QMainWindow>
 #include <QApplication>
+#include <QCloseEvent>
 #include <QMenuBar>
 #include <QAction>
 #include <QFileDialog>

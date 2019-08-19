@@ -14,21 +14,21 @@ void EditWidget::selectImg(){
 
 void EditWidget::modifyItem(){
     edited = avPtr;
-    edited->setTitle(title->text().toStdString());
+    edited->setTitle(titleEdit->text().toStdString());
     edited->setDescription(descr->toPlainText().toStdString());
-    edited->setRelease_date(date->text().toUInt());
-    edited->setDirector(director->text().toStdString());
+    edited->setRelease_date(dateEdit->text().toUInt());
+    edited->setDirector(directorEdit->text().toStdString());
     edited->setFavorite(fav->isChecked());
     edited->setPath(imgPath.toStdString());
-    edited->setRunning_time(rt->text().toUInt());
+    edited->setRunning_time(rtEdit->text().toUInt());
     edited->setAudioComp(ac->isChecked());
-    edited->setImage_resolution(imgres->text().toUInt());
-    edited->setFps(frameRate->text().toUInt());
+    edited->setImage_resolution(imgresEdit->text().toUInt());
+    edited->setFps(frameRateEdit->text().toUInt());
 
     if (dynamic_cast<Documentary *>(&(*avPtr)) != nullptr){
         Documentary * edited = static_cast<Documentary *>(&(*avPtr));
-        edited->setNarrator(docNarr->text().toStdString());
-        edited->setTopic(docTopic->text().toStdString());
+        edited->setNarrator(docNarrEdit->text().toStdString());
+        edited->setTopic(docTopicEdit->text().toStdString());
     }
     else if (dynamic_cast<Movie *>(&(*avPtr)) != nullptr){
         Movie * edited = static_cast<Movie *>(&(*avPtr));
@@ -41,8 +41,8 @@ void EditWidget::modifyItem(){
         edited->setCast(cast->toPlainText().toStdString());
         edited->setRating(rating->currentText().toStdString());
         edited->setGenre(genre->currentText().toStdString());
-        edited->setSeason(tvSeason->text().toUInt());
-        edited->setEpisode(tvEpisode->text().toUInt());
+        edited->setSeason(tvSeasonEdit->text().toUInt());
+        edited->setEpisode(tvEpisodeEdit->text().toUInt());
         edited->setEnded(tvEnded->isChecked());
     }
 }
@@ -52,7 +52,7 @@ DeepPtr<AudioVisual> EditWidget::getEdited(){
 }
 
 EditWidget::EditWidget(DeepPtr<AudioVisual> a, QWidget * p) : avPtr(a), parent(p) {
-    setMaximumSize(QSize(500,420));
+    //setMaximumSize(QSize(500,420));
     setMinimumSize(QSize(450,400));
 
     QStringList listOfGenre;
@@ -69,27 +69,57 @@ EditWidget::EditWidget(DeepPtr<AudioVisual> a, QWidget * p) : avPtr(a), parent(p
     positVal->setBottom(0);
 
     //----------------[Central]
-    title = new QLineEdit();
-    title->setPlaceholderText(QString("Title"));
-    title->setText(QString::fromStdString(avPtr->getTitle()));
+    QLabel * titleLab = new QLabel("Title: ");
+    titleEdit = new QLineEdit();
+    titleEdit->setPlaceholderText(QString("Title"));
+    titleEdit->setText(QString::fromStdString(avPtr->getTitle()));
+    QHBoxLayout * title = new QHBoxLayout;
+    title->addWidget(titleLab);
+    title->addWidget(titleEdit);
 
-    date = new QLineEdit();
-    date->setValidator(positVal);
-    date->setPlaceholderText(QString("Release year"));
-    date->setText(QString::number(avPtr->getRelease_date()));
+    QLabel * dateLab = new QLabel("Release year: ");
+    dateEdit = new QLineEdit();
+    dateEdit->setValidator(positVal);
+    dateEdit->setMaxLength(4);
+    dateEdit->setPlaceholderText(QString("Release year"));
+    dateEdit->setText(QString::number(avPtr->getRelease_date()));
+    QHBoxLayout * date = new QHBoxLayout;
+    date->addWidget(dateLab);
+    date->addWidget(dateEdit);
 
-    director = new QLineEdit();
-    director->setPlaceholderText(QString("Director"));
-    director->setText(QString::fromStdString(avPtr->getDirector()));
+    QLabel * dirLab = new QLabel("Director: ");
+    directorEdit = new QLineEdit();
+    directorEdit->setPlaceholderText(QString("Director"));
+    directorEdit->setText(QString::fromStdString(avPtr->getDirector()));
+    QHBoxLayout * director = new QHBoxLayout;
+    director->addWidget(dirLab);
+    director->addWidget(directorEdit);
+
+    QHBoxLayout * titleBox = new QHBoxLayout;
+    titleBox->addLayout(title);
+    titleBox->addLayout(date);
+    titleBox->addLayout(director);
 
     fav = new QCheckBox("Favorite");
     fav->setChecked(avPtr->isFavorite());
 
-    QHBoxLayout * titleBox = new QHBoxLayout;
-    titleBox->addWidget(title);
-    titleBox->addWidget(date);
-    titleBox->addWidget(director);
-    titleBox->addWidget(fav);
+    QLabel * rtLab= new QLabel("Running time");
+    rtEdit = new QLineEdit();
+    rtEdit->setValidator(positVal);
+    rtEdit->setPlaceholderText(QString("Running time"));
+    rtEdit->setText(QString::number(avPtr->getRunning_time()));
+    QHBoxLayout * rt = new QHBoxLayout;
+    rt->addWidget(rtLab);
+    rt->addWidget(rtEdit);
+
+    descr = new QTextEdit();
+    descr->setPlaceholderText(QString("Description"));
+    descr->setText(QString::fromStdString(avPtr->getDescription()));
+
+    QVBoxLayout * favRtBox = new QVBoxLayout;
+    favRtBox->addWidget(fav);
+    favRtBox->addLayout(rt);
+    favRtBox->addWidget(descr);
 
     selectImgBtn = new QPushButton("Select image");
     imgLabel = new QLabel();
@@ -98,44 +128,39 @@ EditWidget::EditWidget(DeepPtr<AudioVisual> a, QWidget * p) : avPtr(a), parent(p
     imgLayout->addWidget(selectImgBtn);
     imgLayout->addWidget(imgLabel);
 
-    QHBoxLayout * titleImgLayout = new QHBoxLayout;
-    titleImgLayout->addLayout(titleBox);
-    titleImgLayout->addLayout(imgLayout);
-
-    descr = new QTextEdit();
-    descr->setPlaceholderText(QString("Description"));
-    descr->setText(QString::fromStdString(avPtr->getDescription()));
-
-    rt = new QLineEdit();
-    rt->setValidator(positVal);
-    rt->setPlaceholderText(QString("Running time"));
-    rt->setText(QString::number(avPtr->getRunning_time()));
+    QHBoxLayout * descrImageBox = new QHBoxLayout;
+    descrImageBox->addLayout(favRtBox);
+    descrImageBox->addLayout(imgLayout);
 
     ac = new QCheckBox("Audio compression");
     ac->setChecked(avPtr->isAudioComp());
 
-    imgres= new QLineEdit();
-    imgres->setPlaceholderText(QString("Image resolution"));
-    imgres->setText(QString::number(avPtr->getImage_resolution()));
+    QLabel * irLab = new QLabel("Image resolution:");
+    imgresEdit = new QLineEdit();
+    imgresEdit->setPlaceholderText(QString("Image resolution"));
+    imgresEdit->setText(QString::number(avPtr->getImage_resolution()));
+    QHBoxLayout * imgres = new QHBoxLayout;
+    imgres->addWidget(irLab);
+    imgres->addWidget(imgresEdit);
 
-    frameRate = new QLineEdit();
-    frameRate->setValidator(positVal);
-    frameRate->setPlaceholderText(QString("Frame rate"));
-    frameRate->setText(QString::number(avPtr->getFps()));
+    QLabel * frLab = new QLabel("Frame rate:");
+    frameRateEdit = new QLineEdit();
+    frameRateEdit->setValidator(positVal);
+    frameRateEdit->setPlaceholderText(QString("Frame rate"));
+    frameRateEdit->setText(QString::number(avPtr->getFps()));
+    QHBoxLayout * frameRate = new QHBoxLayout;
+    frameRate->addWidget(frLab);
+    frameRate->addWidget(frameRateEdit);
 
-    QVBoxLayout * specBox = new QVBoxLayout();
-    specBox->addWidget(rt);
+    QHBoxLayout * specBox = new QHBoxLayout();
     specBox->addWidget(ac);
-    specBox->addWidget(imgres);
-    specBox->addWidget(frameRate);
-
-    QHBoxLayout * descrBox = new QHBoxLayout;
-    descrBox->addWidget(descr);
-    descrBox->addLayout(specBox);
+    specBox->addLayout(imgres);
+    specBox->addLayout(frameRate);
 
     QVBoxLayout * mainLayout = new QVBoxLayout;
-    mainLayout->addLayout(titleImgLayout);
-    mainLayout->addLayout(descrBox);
+    mainLayout->addLayout(titleBox);
+    mainLayout->addLayout(descrImageBox);
+    mainLayout->addLayout(specBox);
 
     QHBoxLayout * docLayout = new QHBoxLayout;
     QHBoxLayout * movLayout = new QHBoxLayout;
@@ -144,15 +169,25 @@ EditWidget::EditWidget(DeepPtr<AudioVisual> a, QWidget * p) : avPtr(a), parent(p
 
     if(dynamic_cast<Documentary *>(&(*avPtr)) != nullptr){
         Documentary * aux = static_cast<Documentary *>(&(*avPtr));
-        docNarr = new QLineEdit();
-        docNarr ->setPlaceholderText("Narrator");
-        docNarr->setText(QString::fromStdString(aux->getNarrator()));
-        docTopic = new QLineEdit();
-        docTopic->setPlaceholderText(tr("Main topic"));
-        docTopic->setText(QString::fromStdString(aux->getTopic()));
 
-        docLayout->addWidget(docNarr);
-        docLayout->addWidget(docTopic);
+        QLabel * narrLab= new QLabel("Narrator");
+        docNarrEdit = new QLineEdit();
+        docNarrEdit ->setPlaceholderText("Narrator");
+        docNarrEdit->setText(QString::fromStdString(aux->getNarrator()));
+        QHBoxLayout * docNarr = new QHBoxLayout;
+        docNarr->addWidget(narrLab);
+        docNarr->addWidget(docNarrEdit);
+
+        QLabel * topicLab= new QLabel("Main topic");
+        docTopicEdit = new QLineEdit();
+        docTopicEdit->setPlaceholderText(tr("Main topic"));
+        docTopicEdit->setText(QString::fromStdString(aux->getTopic()));
+        QHBoxLayout * docTopic = new QHBoxLayout;
+        docTopic->addWidget(topicLab);
+        docTopic->addWidget(docTopicEdit);
+
+        docLayout->addLayout(docNarr);
+        docLayout->addLayout(docTopic);
         docMenu = new QWidget;
         docMenu->setLayout(docLayout);
 
@@ -207,21 +242,29 @@ EditWidget::EditWidget(DeepPtr<AudioVisual> a, QWidget * p) : avPtr(a), parent(p
             rating->setCurrentIndex(index);
         }
 
-        tvSeason = new QLineEdit();
-        tvSeason->setValidator(positVal);
-        tvSeason->setPlaceholderText(QString("Season"));
-        tvSeason->setText(QString::number(aux->getSeason()));
+        QLabel * snLab= new QLabel("Season");
+        tvSeasonEdit = new QLineEdit();
+        tvSeasonEdit->setValidator(positVal);
+        tvSeasonEdit->setPlaceholderText(QString("Season"));
+        tvSeasonEdit->setText(QString::number(aux->getSeason()));
+        QHBoxLayout * tvSeason = new QHBoxLayout;
+        tvSeason->addWidget(snLab);
+        tvSeason->addWidget(tvSeasonEdit);
 
-        tvEpisode = new QLineEdit();
-        tvEpisode->setValidator(positVal);
-        tvEpisode->setPlaceholderText(QString("Episode"));
-        tvEpisode->setText(QString::number(aux->getEpisode()));
+        QLabel * epLab= new QLabel("Episode");
+        tvEpisodeEdit = new QLineEdit();
+        tvEpisodeEdit->setValidator(positVal);
+        tvEpisodeEdit->setPlaceholderText(QString("Episode"));
+        tvEpisodeEdit->setText(QString::number(aux->getEpisode()));
+        QHBoxLayout * tvEpisode = new QHBoxLayout;
+        tvEpisode->addWidget(epLab);
+        tvEpisode->addWidget(tvEpisodeEdit);
 
         tvEnded = new QCheckBox(tr("This serie has ended"));
         tvEnded->setChecked(aux->isEnded());
 
-        tvsLayout->addWidget(tvSeason);
-        tvsLayout->addWidget(tvEpisode);
+        tvsLayout->addLayout(tvSeason);
+        tvsLayout->addLayout(tvEpisode);
         tvsLayout->addWidget(tvEnded);
         tvsMenu = new QWidget;
         tvsMenu->setLayout(tvsLayout);

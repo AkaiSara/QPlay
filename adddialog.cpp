@@ -82,8 +82,6 @@ AddDialog::AddDialog(QWidget * p) :parent(p) {
     foreach (std::string str, AudioVisual::Rating) {
         listOfRating.append(QString::fromStdString(str));
     }
-    /*for(auto it =  AudioVisual::Rating.begin() ; it != AudioVisual::Rating.end(); ++it)
-        listOfRating << QString::fromStdString(*it); cristoddio che mi toglie i commenti*/
 
     QIntValidator * positVal = new QIntValidator();
     positVal->setBottom(0);
