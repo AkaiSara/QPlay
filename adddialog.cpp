@@ -97,32 +97,42 @@ AddDialog::AddDialog(QWidget * p) :parent(p) {
     typeSelectorBox->addWidget(tvs);
     typeSelectorBox->addStretch(1);
 
-    QGroupBox * typeSelGroupBox = new   QGroupBox(tr("Select type"));
+    QGroupBox * typeSelGroupBox = new QGroupBox(tr("Select type"));
     typeSelGroupBox->setLayout(typeSelectorBox);
 
     //----------------[]
 
     //----------------[Central]
     title = new QLineEdit();
+    title->setMaximumWidth(200);
     title->setPlaceholderText(QString("Title"));
 
     date = new QLineEdit();
     date->setValidator(positVal);
+    date->setMaximumWidth(100);
     date->setPlaceholderText(QString("Release year"));
 
     director = new QLineEdit();
+    director->setMaximumWidth(200);
     director->setPlaceholderText(QString("Director"));
 
     fav = new QCheckBox("Favorite");
+
+    rt = new QLineEdit();
+    rt->setMaximumWidth(200);
+    rt->setValidator(positVal);
+    rt->setPlaceholderText(QString("Running time in min"));
 
     QVBoxLayout * titleBox = new QVBoxLayout;
     titleBox->addWidget(title);
     titleBox->addWidget(date);
     titleBox->addWidget(director);
     titleBox->addWidget(fav);
+    titleBox->addWidget(rt);
 
     selectImgBtn = new QPushButton("Select image");
     imgLabel = new QLabel();
+    imgLabel->setAlignment(Qt::AlignHCenter | Qt::AlignVCenter);
     QVBoxLayout *imgLayout = new QVBoxLayout();
     imgLayout->addWidget(selectImgBtn);
     imgLayout->addWidget(imgLabel);
@@ -135,22 +145,19 @@ AddDialog::AddDialog(QWidget * p) :parent(p) {
     descr = new QTextEdit();
     descr->setPlaceholderText(QString("Description"));
 
-    rt = new QLineEdit();
-    rt->setValidator(positVal);
-    rt->setPlaceholderText(QString("Running time in min"));
-
     ac = new QCheckBox("Audio compression");
 
     imgres= new QLineEdit();
+    imgres->setMaximumWidth(200);
     imgres->setValidator(positVal);
     imgres->setPlaceholderText(QString("Image resolution"));
 
     frameRate = new QLineEdit();
+    frameRate->setMaximumWidth(200);
     frameRate->setValidator(positVal);
     frameRate->setPlaceholderText(QString("Frame rate"));
 
     QVBoxLayout * specBox = new QVBoxLayout();
-    specBox->addWidget(rt);
     specBox->addWidget(ac);
     specBox->addWidget(imgres);
     specBox->addWidget(frameRate);

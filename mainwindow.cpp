@@ -444,9 +444,6 @@ MainWindow::MainWindow(): model(new Model){
 }
 
 void MainWindow::openFile(){
-    //fileData = QFileDialog::getSaveFileName(this, "Salva come", "", "JSON (*.json);;All Files (*)");
-    //modello->save(fileData.toStdString());
-
     QString filePath = QFileDialog::getOpenFileName(this, "Load", "", "XML file (*.xml);;All Files (*)");
     model->load(filePath.toStdString());
 

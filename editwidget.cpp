@@ -52,8 +52,8 @@ DeepPtr<AudioVisual> EditWidget::getEdited(){
 }
 
 EditWidget::EditWidget(DeepPtr<AudioVisual> a, QWidget * p) : avPtr(a), parent(p) {
-    //setMaximumSize(QSize(500,420));
-    setMinimumSize(QSize(450,400));
+    setMaximumSize(QSize(500,580));
+    setMinimumSize(QSize(450,500));
 
     QStringList listOfGenre;
     foreach (std::string str, AudioVisual::Genre) {
