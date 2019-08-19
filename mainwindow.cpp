@@ -319,22 +319,15 @@ MainWindow::MainWindow(): model(new Model){
 
     //----------------[]
 
-    //----------------[UserProfile]
-    QLabel * nickName = new QLabel(tr("User"));
-    nickName->setAlignment(Qt::AlignHCenter | Qt::AlignVCenter);
-    QLabel * proPic = new QLabel;
-    proPic->setPixmap(QPixmap(":/img/propic").scaled(200, 100, Qt::KeepAspectRatio));
-    proPic->setAlignment(Qt::AlignHCenter | Qt::AlignVCenter);
-    proPic->setMaximumWidth(200);
-
+    //----------------[Total running time]
+    QLabel * imgTime = new QLabel;
+    imgTime->setPixmap(QPixmap(":/img/time").scaled(25, 25, Qt::KeepAspectRatio));
     totalTime = new QLabel(tr("Total time: 0min"));
     totalTime->setAlignment(Qt::AlignHCenter | Qt::AlignVCenter);
 
-    QHBoxLayout * userLayout;
-    userLayout = new QHBoxLayout;
-    userLayout->addWidget(nickName);
-    userLayout->addWidget(proPic);
-    userLayout->addWidget(totalTime);
+    QHBoxLayout * timeLayout = new QHBoxLayout;
+    timeLayout->addWidget(imgTime);
+    timeLayout->addWidget(totalTime);
     //----------------[]
 
     //----------------[SearchBar]
@@ -409,9 +402,9 @@ MainWindow::MainWindow(): model(new Model){
 
     //----------------[MainLayout]
     QVBoxLayout *mainLayout = new QVBoxLayout;
-    mainLayout->addLayout(userLayout);
     mainLayout->addLayout(searchLayout);
     mainLayout->addWidget(scrollArea);
+    mainLayout->addLayout(timeLayout);
     mainLayout->addLayout(BtnLayout);
     mainWidget = new QWidget();
     mainWidget->setLayout(mainLayout);
