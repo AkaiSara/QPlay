@@ -438,13 +438,22 @@ MainWindow::MainWindow(): model(new Model){
 
 void MainWindow::openFile(){
     QString filePath = QFileDialog::getOpenFileName(this, "Load", "", "XML file (*.xml);;All Files (*)");
-    model->load(filePath.toStdString());
+    try {
+        model->load(filePath.toStdString());
+    } catch (Exception & e) {
+        QMessageBox::warning(this, "Attenzione", QString::fromStdString(e.getErrorMessage()));
+    }
+
 
     emit listChanged();
 }
 void MainWindow::saveFile(){
     QString filePath = QFileDialog::getSaveFileName(this, "Save as", "", "XML file (*.xml);;All Files (*)");
-    model->save(filePath.toStdString());
+    try {
+        model->save(filePath.toStdString());
+    } catch (Exception & e) {
+        QMessageBox::warning(this, "Attenzione", QString::fromStdString(e.getErrorMessage()));
+    }
 }
 
 QSize MainWindow::sizeHint() const{

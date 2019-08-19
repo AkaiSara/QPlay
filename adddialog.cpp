@@ -19,40 +19,37 @@ void AddDialog::showTvSWidget(bool show){
     }
 }
 
-void AddDialog::checkFields(){
-    QMessageBox message;
-    message.setText("Riempire tutti i campi dati!");
-
-    if(title->text().toStdString() == "" || descr->toPlainText().toStdString()== "" || date->text().toUInt()== 0 || director->text().toStdString()== "" || rt->text().toInt() == 0 || imgres->text().toUInt() == 0 || frameRate->text().toUInt()== 0){
-        message.exec();
-    } else if(doc->isChecked() && (docNarr->text().toStdString()== "" || docTopic->text().toStdString()== "")){
-        message.exec();
-    } else if(mov->isChecked() && cast->toPlainText().toStdString() == ""){
-        message.exec();
-    } else if(tvs->isChecked() && (cast->toPlainText().toStdString() == "" || tvSeason->text().toUInt() == 0 || tvEpisode->text().toUInt() == 0)){
-        message.exec();
-    }
-    else {
-        accept();
-    }
-}
-
 void AddDialog::addNewItem() {
     AudioVisual * i = nullptr;
 
-    if (doc->isChecked()){
-        i = new Documentary(title->text().toStdString(), descr->toPlainText().toStdString(), date->text().toUInt(), director->text().toStdString(), fav->isChecked(), imgPath.toStdString(), rt->text().toUInt(), ac->isChecked(), imgres->text().toUInt(), frameRate->text().toUInt(), docNarr->text().toStdString(), docTopic->text().toStdString());
-    }
+    try {
+        if(title->text().toStdString() == "" || descr->toPlainText().toStdString()== "" || date->text().toUInt()== 0 || director->text().toStdString()== "" || rt->text().toInt() == 0 || imgres->text().toUInt() == 0 || frameRate->text().toUInt()== 0){
+            throw Exception("Riempire tutti i campi dati!");
+        } else if(doc->isChecked() && (docNarr->text().toStdString()== "" || docTopic->text().toStdString()== "")){
+            throw Exception("Riempire tutti i campi dati!");
+        } else if(mov->isChecked() && cast->toPlainText().toStdString() == ""){
+            throw Exception("Riempire tutti i campi dati!");
+        } else if(tvs->isChecked() && (cast->toPlainText().toStdString() == "" || tvSeason->text().toUInt() == 0 || tvEpisode->text().toUInt() == 0)){
+            throw Exception("Riempire tutti i campi dati!");
+        }
 
-    if (mov->isChecked()){
-        i = new Movie(title->text().toStdString(), descr->toPlainText().toStdString(), date->text().toUInt(), director->text().toStdString(), fav->isChecked(), imgPath.toStdString(), rt->text().toUInt(), ac->isChecked(), imgres->text().toUInt(), frameRate->text().toUInt(), cast->toPlainText().toStdString(), genre->currentText().toStdString(), rating->currentText().toStdString());
-    }
+        if (doc->isChecked()){
+            i = new Documentary(title->text().toStdString(), descr->toPlainText().toStdString(), date->text().toUInt(), director->text().toStdString(), fav->isChecked(), imgPath.toStdString(), rt->text().toUInt(), ac->isChecked(), imgres->text().toUInt(), frameRate->text().toUInt(), docNarr->text().toStdString(), docTopic->text().toStdString());
+        }
 
-    if (tvs->isChecked()){
-        i = new TvSerie(title->text().toStdString(), descr->toPlainText().toStdString(), date->text().toUInt(), director->text().toStdString(), fav->isChecked(), imgPath.toStdString(), rt->text().toUInt(), ac->isChecked(), imgres->text().toUInt(), frameRate->text().toUInt(), tvSeason->text().toUInt(), tvEpisode->text().toUInt(), cast->toPlainText().toStdString(), genre->currentText().toStdString(), tvEnded->isChecked(), rating->currentText().toStdString());
-    }
+        if (mov->isChecked()){
+            i = new Movie(title->text().toStdString(), descr->toPlainText().toStdString(), date->text().toUInt(), director->text().toStdString(), fav->isChecked(), imgPath.toStdString(), rt->text().toUInt(), ac->isChecked(), imgres->text().toUInt(), frameRate->text().toUInt(), cast->toPlainText().toStdString(), genre->currentText().toStdString(), rating->currentText().toStdString());
+        }
 
-    emit created(i);
+        if (tvs->isChecked()){
+            i = new TvSerie(title->text().toStdString(), descr->toPlainText().toStdString(), date->text().toUInt(), director->text().toStdString(), fav->isChecked(), imgPath.toStdString(), rt->text().toUInt(), ac->isChecked(), imgres->text().toUInt(), frameRate->text().toUInt(), tvSeason->text().toUInt(), tvEpisode->text().toUInt(), cast->toPlainText().toStdString(), genre->currentText().toStdString(), tvEnded->isChecked(), rating->currentText().toStdString());
+        }
+
+        emit created(i);
+        accept();
+    } catch (Exception & e) {
+        QMessageBox::warning(this, "Attenzione", QString::fromStdString(e.getErrorMessage()));
+    }
 }
 
 
@@ -248,7 +245,7 @@ AddDialog::AddDialog(QWidget * p) :parent(p) {
     setLayout(mainBox);
 
     //----------------[Connect]
-    connect(this, SIGNAL(accepted()), this, SLOT(addNewItem()));
+    //connect(this, SIGNAL(accepted()), this, SLOT(addNewItem()));
 
     connect(doc, SIGNAL(toggled(bool)), this, SLOT(showDocWidget(bool)));
     connect(mov, SIGNAL(toggled(bool)), this, SLOT(showMovWidget(bool)));
@@ -256,7 +253,7 @@ AddDialog::AddDialog(QWidget * p) :parent(p) {
 
     connect(selectImgBtn, SIGNAL(clicked()), this, SLOT(selectImg()));
 
-    connect(add, SIGNAL(clicked()), this, SLOT(checkFields()));
+    connect(add, SIGNAL(clicked()), this, SLOT(addNewItem()));
     connect(cancel, SIGNAL(clicked()), this, SLOT(reject()));
 
     connect(this, SIGNAL(created(AudioVisual *)), parent, SLOT(addItem(AudioVisual *)));

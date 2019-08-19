@@ -21,6 +21,7 @@
 #include "documentary.h"
 #include "movie.h"
 #include "tvserie.h"
+#include "exception.h"
 
 class AddDialog : public QDialog {
     Q_OBJECT
@@ -79,7 +80,6 @@ private slots:
     void showTvSWidget(bool);
     void selectImg();
     void addNewItem();
-    void checkFields();
 };
 
 #endif // ADDDIALOG_H
