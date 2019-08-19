@@ -1,6 +1,6 @@
 #include "movie.h"
 
-Movie::Movie(std::string ti, std::string tr, unsigned int rd, std::string r, bool f, std::string p, unsigned int rt , bool ac, unsigned int ir, unsigned int fp, std::string ca, std::string g, std::string ra):  AudioVisual(ti,tr,rd,r,f,p,rt,ac,ir,fp), cast(ca), genre(g), rating(ra) {}
+Movie::Movie(const std::string & ti, const std::string & tr, unsigned int rd, const std::string & r, bool f, const std::string & p, unsigned int rt , bool ac, unsigned int ir, unsigned int fp, const std::string & ca, const std::string & g, const std::string & ra):  AudioVisual(ti,tr,rd,r,f,p,rt,ac,ir,fp), cast(ca), genre(g), rating(ra) {}
 
 bool Movie::operator==(const AudioVisual& av) const{
     return AudioVisual::operator==(av) &&
@@ -41,12 +41,12 @@ std::string Movie::getRating() const{
     return rating;
 }
 
-void Movie::setCast(std::string c){
+void Movie::setCast(const std::string &c){
     cast = c;
 }
-void Movie::setRating(std::string r){
+void Movie::setRating(const std::string &r){
     rating = r;
 }
-void Movie::setGenre(std::string g){
+void Movie::setGenre(const std::string &g){
     genre = g;
 }

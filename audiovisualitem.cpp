@@ -14,7 +14,6 @@ AudioVisual * AudioVisualItem::getAvPtr() const{
 
 AudioVisualItem::AudioVisualItem(DeepPtr<AudioVisual> a, QWidget * p, QFrame * fr) :avPtr(a), parent(p), line(fr){
     displayWidget = new DisplayWidget(avPtr, this);
-    //setMaximumSize(QSize(150,300));
 
     //----------------[immagine]
     QLabel * img = new QLabel;

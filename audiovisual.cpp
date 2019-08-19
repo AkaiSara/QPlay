@@ -4,7 +4,7 @@ const std::vector<std::string> AudioVisual::Rating = {"All", "VM14", "VM18"};
 
 const std::vector<std::string> AudioVisual::Genre = {"Unknown", "Action", "Adventure", "Animation", "Comedy", "Crime", "Drama", "Fantasy", "Food", "Game show", "Horror", "Mystery", "Reality", "Romance", "Science fiction", "Soap", "Sport", "Talk show", "Thriller", "Travel", "Western"};
 
-AudioVisual::AudioVisual(std::string ti, std::string tr, unsigned int rd, std::string r, bool f, std::string p, unsigned int rt, bool ac, unsigned int ir, unsigned int fp): title(ti), description(tr), release_date(rd), director(r), favorite(f), pathImg(p), running_time(rt), audio_compression(ac), image_resolution(ir), fps(fp) {}
+AudioVisual::AudioVisual(const std::string & ti, const std::string & tr, unsigned int rd, const std::string & r, bool f, const std::string & p, unsigned int rt, bool ac, unsigned int ir, unsigned int fp): title(ti), description(tr), release_date(rd), director(r), favorite(f), pathImg(p), running_time(rt), audio_compression(ac), image_resolution(ir), fps(fp) {}
 
 AudioVisual::~AudioVisual(){}
 
@@ -60,7 +60,7 @@ unsigned int AudioVisual::getFps() const{
     return fps;
 }
 
-void AudioVisual::setFavorite(const bool f){
+void AudioVisual::setFavorite(bool f){
     favorite = f;
 }
 void AudioVisual::setPath(const std::string & p){
@@ -72,21 +72,21 @@ void AudioVisual::setTitle(const std::string & t){
 void AudioVisual::setDescription(const std::string & d){
     description = d;
 }
-void AudioVisual::setRelease_date(const unsigned int d){
+void AudioVisual::setRelease_date(unsigned int d){
     release_date = d;
 }
 void AudioVisual::setDirector(const std::string & d){
     director = d;
 }
-void AudioVisual::setRunning_time(const unsigned int t){
+void AudioVisual::setRunning_time(unsigned int t){
     running_time = t;
 }
-void AudioVisual::setAudioComp(const bool a){
+void AudioVisual::setAudioComp(bool a){
     audio_compression = a;
 }
-void AudioVisual::setImage_resolution(const unsigned int r){
+void AudioVisual::setImage_resolution(unsigned int r){
     image_resolution = r;
 }
-void AudioVisual::setFps(const unsigned int f){
+void AudioVisual::setFps(unsigned int f){
     fps = f;
 }

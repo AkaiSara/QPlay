@@ -245,8 +245,6 @@ AddDialog::AddDialog(QWidget * p) :parent(p) {
     setLayout(mainBox);
 
     //----------------[Connect]
-    //connect(this, SIGNAL(accepted()), this, SLOT(addNewItem()));
-
     connect(doc, SIGNAL(toggled(bool)), this, SLOT(showDocWidget(bool)));
     connect(mov, SIGNAL(toggled(bool)), this, SLOT(showMovWidget(bool)));
     connect(tvs, SIGNAL(toggled(bool)), this, SLOT(showTvSWidget(bool)));

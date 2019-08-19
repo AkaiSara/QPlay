@@ -6,9 +6,9 @@
 class Documentary: public AudioVisual{
     private:
         std::string narrator;
-        std::string topic; //scientifico, storico, naturalistico, biografia
+        std::string topic;
     public:
-        Documentary(std::string, std::string, unsigned int, std::string, bool,std::string, unsigned int, bool, unsigned int, unsigned int, std::string, std::string);
+        Documentary(const std::string &, const std::string &, unsigned int, const std::string &, bool,const std::string &, unsigned int, bool, unsigned int, unsigned int, const std::string &, const std::string &);
 
         virtual bool operator==(const AudioVisual&) const override;
 
@@ -25,8 +25,8 @@ class Documentary: public AudioVisual{
         std::string getNarrator() const;
         std::string getTopic() const;
 
-        void setNarrator(std::string);
-        void setTopic(std::string);
+        void setNarrator(const std::string &);
+        void setTopic(const std::string &);
 };
 
 #endif

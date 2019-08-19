@@ -1,6 +1,6 @@
 #include "documentary.h"
 
-Documentary::Documentary(std::string ti, std::string tr, unsigned int rd, std::string r, bool f, std::string p, unsigned int rt , bool ac, unsigned int ir, unsigned int fp, std::string n, std::string ar): AudioVisual(ti,tr,rd,r,f,p,rt,ac,ir,fp), narrator(n), topic(ar) {}
+Documentary::Documentary(const std::string & ti, const std::string & tr, unsigned int rd, const std::string & r, bool f, const std::string & p, unsigned int rt , bool ac, unsigned int ir, unsigned int fp, const std::string & n, const std::string & ar): AudioVisual(ti,tr,rd,r,f,p,rt,ac,ir,fp), narrator(n), topic(ar) {}
 
 bool Documentary::operator==(const AudioVisual& av) const{
     return AudioVisual::operator==(av) && narrator == static_cast<const Documentary &>(av).narrator && topic == static_cast<const Documentary &>(av).topic;
@@ -36,9 +36,9 @@ std::string Documentary::getTopic() const{
     return topic;
 }
 
-void Documentary::setNarrator(std::string n){
+void Documentary::setNarrator(const std::string & n){
     narrator = n;
 }
-void Documentary::setTopic(std::string t){
+void Documentary::setTopic(const std::string &t){
     topic = t;
 }

@@ -1,6 +1,6 @@
 #include "tvserie.h"
 
-TvSerie::TvSerie(std::string ti, std::string tr, unsigned int rd, std::string r, bool f, std::string p, unsigned int rt, bool ac, unsigned int ir, unsigned int fp, unsigned int st, unsigned int ep, std::string ca, std::string g, bool ic, std::string ra): AudioVisual(ti,tr,rd,r,f,p,rt,ac,ir,fp), season(st), episode(ep), cast(ca), genre(g), ended(ic), rating(ra) {}
+TvSerie::TvSerie(const std::string & ti, const std::string & tr, unsigned int rd, const std::string & r, bool f, const std::string & p, unsigned int rt, bool ac, unsigned int ir, unsigned int fp, unsigned int st, unsigned int ep, const std::string & ca, const std::string & g, bool ic, const std::string & ra): AudioVisual(ti,tr,rd,r,f,p,rt,ac,ir,fp), season(st), episode(ep), cast(ca), genre(g), ended(ic), rating(ra) {}
 
 bool TvSerie::operator==(const AudioVisual& av) const{
     return AudioVisual::operator==(av) &&
@@ -53,13 +53,13 @@ unsigned int TvSerie::getEpisode() const{
     return episode;
 }
 
-void TvSerie::setCast(std::string c){
+void TvSerie::setCast(const std::string &c){
     cast = c;
 }
-void TvSerie::setRating(std::string r){
+void TvSerie::setRating(const std::string &r){
     rating = r;
 }
-void TvSerie::setGenre(std::string g){
+void TvSerie::setGenre(const std::string &g){
     genre = g;
 }
 void TvSerie::setEnded(bool e){

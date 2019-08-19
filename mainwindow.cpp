@@ -80,7 +80,7 @@ void MainWindow::update(){
     listWidget.clear();
     int time = 0;
 
-    while(listBoxLayout->count() != 0){ //cancello cosa c'è attualmente nel layout
+    while(listBoxLayout->count() != 0){
         auto item = listBoxLayout->takeAt(0);
         delete item->widget();
         delete item;
@@ -185,7 +185,7 @@ void MainWindow::search(){
     }
 
 
-    if(attributo == "Type"){ //in base a quale bottone è down poi farò un dynamic
+    if(attributo == "Type"){
         if(searchDoc->isChecked()){
             for(auto it = listWidget.begin(); it != listWidget.end(); ++it){
                 if(dynamic_cast<Documentary *>((*it)->getAvPtr())){
@@ -303,7 +303,8 @@ MainWindow::MainWindow(): model(new Model){
     setWindowTitle(tr("QPlay"));
     setWindowIcon(QIcon(":/img/app"));
 
-    setMaximumSize(QSize(600,600));
+    setMinimumSize(QSize(400,400));
+    setMaximumSize(QSize(600,400));
 
     //----------------[Menu]
     QAction * openAct = new QAction(QIcon(":/img/load"), tr("&Open"), this);
@@ -441,7 +442,7 @@ void MainWindow::openFile(){
     try {
         model->load(filePath.toStdString());
     } catch (Exception & e) {
-        QMessageBox::warning(this, "Attenzione", QString::fromStdString(e.getErrorMessage()));
+        QMessageBox::warning(this, "Warning", QString::fromStdString(e.getErrorMessage()));
     }
 
 
@@ -452,7 +453,7 @@ void MainWindow::saveFile(){
     try {
         model->save(filePath.toStdString());
     } catch (Exception & e) {
-        QMessageBox::warning(this, "Attenzione", QString::fromStdString(e.getErrorMessage()));
+        QMessageBox::warning(this, "Warning", QString::fromStdString(e.getErrorMessage()));
     }
 }
 

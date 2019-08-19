@@ -38,7 +38,7 @@ Container<DeepPtr<AudioVisual>> Xmlio::read() const{
                     input.readNextStartElement();
                     unsigned int frame = (input.readElementText()).toUInt();
                     input.readNextStartElement();
-                    //campi dati doc
+
                     std::string narratore = (input.readElementText()).toStdString();
                     input.readNextStartElement();
                     std::string argomento = (input.readElementText()).toStdString();
@@ -68,7 +68,6 @@ Container<DeepPtr<AudioVisual>> Xmlio::read() const{
                     unsigned int frame = (input.readElementText()).toUInt();
                     input.readNextStartElement();
 
-                    //campidati film
                     std::string cast = (input.readElementText()).toStdString();
                     input.readNextStartElement();
                     std::string genere = (input.readElementText()).toStdString();
@@ -101,7 +100,6 @@ Container<DeepPtr<AudioVisual>> Xmlio::read() const{
                     unsigned int frame = (input.readElementText()).toUInt();
                     input.readNextStartElement();
 
-                    //campi dati serie tv
                     unsigned int stagioni = (input.readElementText()).toUInt();
                     input.readNextStartElement();
                     unsigned int episodi = (input.readElementText()).toUInt();

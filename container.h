@@ -13,7 +13,7 @@ un tipo che supporti la clonazione e la distruziona polimorfa. -> virtual ~T(), 
 #include "exception.h"
 
 template<class T>
-class Container{ //contenitore, double linked list
+class Container{
 private:
     class Node{
 		public:
@@ -27,10 +27,10 @@ private:
     static Node* copy(Node*, Node*&);
 	
 public:
-	class Iterator{ //template annidato associato
+    class Iterator{
 		friend class Container;
 	public:
-		Node* pos; //campo dati
+        Node* pos;
 		Iterator(Node * = nullptr); //costruttore
 
 		Iterator& operator++(); //prefisso
@@ -45,10 +45,10 @@ public:
 		T* operator->() const; //accesso a membro
 	};
 
-	class Const_Iterator{ //template annidato associato
+    class Const_Iterator{
 		friend class Container;
 	public:
-		Node* pos; //campo dati
+        Node* pos;
 		Const_Iterator(Node * = nullptr); //costruttore
 
 		Const_Iterator& operator++(); //prefisso
@@ -377,35 +377,35 @@ void Container<T>::erase(T& info){
 }
 
 template<class T>
-void Container<T>::swapInfo(const T& a,const T& b){ //a è la info da sostituire, b è la info aggiornata
+void Container<T>::swapInfo(const T& a,const T& b){
     if(first == nullptr)
         throw Exception("Empty container");
 
-    if(a == first->info){ //se è il primo nodo lo sostituisco con b
+    if(a == first->info){
         pop_front();
         push_front(b);
         return ;
     }
 
-    Node* aux = first; //è il puntatore che mi serve per scorrere la lista, diventerà il puntatore al nodo contenente a
-    while(aux != nullptr && aux->info != a){ //scorro in avanti fino a trovare il nodo corretto
+    Node* aux = first;
+    while(aux != nullptr && aux->info != a){
         aux = aux->next;
     }
 
-    if(aux == last){ //se è l'ultimo lo sostituisco con b
+    if(aux == last){
         pop_back();
         push_back(b);
         return;
     }
 
-    if(aux != nullptr){ //se il nodo è in mezzo alla lista
+    if(aux != nullptr){
         Node * tmp = new Node(b, aux->prev, aux->next);
 
-        aux->prev->next = tmp; //il precedente di a punta a b
-        aux->next->prev = tmp; //il successivo di a punta a b
+        aux->prev->next = tmp;
+        aux->next->prev = tmp;
 
-        aux->next = nullptr; //stacco a dal next altrimenti mi cancella la lista
-        delete aux; //cancellato a
+        aux->next = nullptr;
+        delete aux;
     }
 }
 

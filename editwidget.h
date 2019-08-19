@@ -70,12 +70,7 @@ public:
     explicit EditWidget(DeepPtr<AudioVisual> , QWidget * = nullptr);
     DeepPtr<AudioVisual> getEdited();
 
-signals:
-
 private slots:
-    //void showDocWidget(bool);
-    //void showMovWidget(bool);
-    //void showTvSWidget(bool);
     void modifyItem();
     void selectImg();
 };

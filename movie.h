@@ -6,10 +6,10 @@
 class Movie: public AudioVisual{
     private:
         std::string cast; 
-        std::string  genre; //enum Genere
-        std::string  rating; //enum Rating
+        std::string  genre;
+        std::string  rating;
     public:
-        Movie(std::string, std::string, unsigned int, std::string, bool, std::string, unsigned int, bool, unsigned int, unsigned int, std::string, std::string, std::string);
+        Movie(const std::string &, const std::string &, unsigned int, const std::string &, bool, const std::string &, unsigned int, bool, unsigned int, unsigned int, const std::string &, const std::string &, const std::string &);
 
         virtual bool operator==(const AudioVisual&) const override;
 
@@ -26,9 +26,9 @@ class Movie: public AudioVisual{
         std::string getGenre() const;
         std::string getRating() const;
 
-        void setCast(std::string);
-        void setRating(std::string);
-        void setGenre(std::string);
+        void setCast(const std::string &);
+        void setRating(const std::string &);
+        void setGenre(const std::string &);
 };
 
 #endif

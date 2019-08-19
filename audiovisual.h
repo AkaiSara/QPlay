@@ -24,12 +24,12 @@ private: //-----campi dati-----
     std::string pathImg;
 protected:
     unsigned int running_time;
-    bool audio_compression; //perdita di informazioni, se compresso
-    unsigned int image_resolution;//video -> 4k, 144p etc in pixel
-    unsigned int fps; //frame per secondo
+    bool audio_compression;
+    unsigned int image_resolution;
+    unsigned int fps;
 public:
     //--------costruttori------
-    AudioVisual(std::string, std::string, unsigned int, std::string, bool, std::string, unsigned int, bool, unsigned int, unsigned int);
+    AudioVisual(const std::string &, const std::string &, unsigned int, const std::string &, bool, const std::string &, unsigned int, bool, unsigned int, unsigned int);
 
     //------distruttore----
     virtual ~AudioVisual();
@@ -59,16 +59,16 @@ public:
     unsigned int getImage_resolution() const;
     unsigned int getFps() const;
 
-    void setFavorite(const bool);
+    void setFavorite(bool);
     void setPath(const std::string &);
     void setTitle(const std::string &);
     void setDescription(const std::string &);
-    void setRelease_date(const unsigned int);
+    void setRelease_date(unsigned int);
     void setDirector(const std::string &);
-    void setRunning_time(const unsigned int);
-    void setAudioComp(const bool);
-    void setImage_resolution(const unsigned int);
-    void setFps(const unsigned int);
+    void setRunning_time(unsigned int);
+    void setAudioComp(bool);
+    void setImage_resolution(unsigned int);
+    void setFps(unsigned int);
 };
 
 

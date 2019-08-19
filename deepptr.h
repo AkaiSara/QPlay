@@ -27,8 +27,8 @@ DeepPtr<T>::DeepPtr(const DeepPtr<T> & dp) : ptr(dp.ptr != nullptr ? (dp.ptr)->c
 
 template<class T>
 DeepPtr<T>& DeepPtr<T>::operator=(const DeepPtr<T> & dp){ //assegnazione profonda
-	if(this != &dp){ //se sono uguali non faccio nulla
-		if(ptr != nullptr) delete ptr; //svuoto il puntatore se ha qualcosa
+    if(this != &dp){
+        if(ptr != nullptr) delete ptr;
         ptr = dp.ptr;
     }
 	return *this;
@@ -42,7 +42,6 @@ DeepPtr<T>::~DeepPtr(){  //distruzione profonda
 
 template<class T>
 T& DeepPtr<T>::operator*() const { //dereferenziazione
-    //if(ptr == nullptr) throw Exception("Invalid pointer");
 	return *ptr;
 }
 
