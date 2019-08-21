@@ -16,6 +16,7 @@ void MainWindow::showSearchDetail(const QString & attr){
     }
     if(attr == "Title" || attr == "Director"){
         searchBar->show();
+        searchBar->setValidator(nullptr);
     }
     if(attr == "Release year" || attr == "Running time"){
         QIntValidator * positVal = new QIntValidator();

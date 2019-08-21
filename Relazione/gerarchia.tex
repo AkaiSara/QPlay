@@ -1,11 +1,11 @@
-La gerarchia vuole modellare degli oggetti che comprendono tutti i file audio-visivi ed è così composta: una classe base astratta denominata \texttt{AudioVisual} e tre classi derivate concrete \texttt{TvSerie}, \texttt{Movie}, \texttt{Documentary} che implementano i metodi puri della classe base. 
+La gerarchia vuole modellare degli oggetti che comprendono alcuni file audio-visivi ed è così composta: una classe base astratta denominata \texttt{AudioVisual} e tre classi derivate concrete \texttt{TvSerie}, \texttt{Movie}, \texttt{Documentary} che implementano i metodi puri della classe base. 
 
 \begin{center}
     \includegraphics[width=0.6\textwidth]{gerarchia}
 \end{center}
 
 \paragraph{AudioVisual}
-La classe base della gerarchia fornisce le informazioni di base comuni a tutti i file di tipo audio-visivo, ossia il \textit{titolo} del file, l'\textit{immagine} di copertina, la \textit{descrizione} della trama, la \textit{data} di rilascio espressa in anni, la \textit{durata} in minuti, il nome del \textit{regista}, se il file appartiene ai \textit{preferiti} dell'utente, se l'audio è \textit{compresso} o meno, la \textit{risoluzione} dell'immagine, i \textit{frame per secondo}.
+La classe base della gerarchia fornisce le informazioni di base comuni a tutti i file di tipo audio-visivo, ossia il \textit{titolo} del file, il percorso dell'\textit{immagine} di copertina, la \textit{descrizione} della trama, l'\textit{anno} di uscita, la \textit{durata} in minuti, il nome del \textit{regista}, l'appartenenza ai \textit{preferiti} dell'utente, se l'audio è \textit{compresso} o meno, la \textit{risoluzione} dell'immagine, i \textit{frame per secondo}.
 
 \paragraph{TvSerie}
 TvSerie è una classe derivata concreta che rappresenta i file riguardanti le serie tv, infatti aggiunge i campi dati riguardanti il numero di \textit{episodi} della serie, il numero di \textit{stagioni}, se la serie è \textit{terminata}, il \textit{rating}, il \textit{genere}, il \textit{cast} formato dai personaggi.

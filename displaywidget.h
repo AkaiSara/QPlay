@@ -12,8 +12,7 @@
 #include "movie.h"
 #include "tvserie.h"
 
-class DisplayWidget : public QWidget
-{
+class DisplayWidget : public QWidget {
     Q_OBJECT
 
 private:

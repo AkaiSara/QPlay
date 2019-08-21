@@ -23,8 +23,7 @@
 #include "tvserie.h"
 #include "deepptr.h"
 
-class EditWidget : public QDialog
-{
+class EditWidget : public QDialog {
     Q_OBJECT
 
 private:
