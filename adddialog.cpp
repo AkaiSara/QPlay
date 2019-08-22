@@ -48,7 +48,7 @@ void AddDialog::addNewItem() {
         emit created(i);
         accept();
     } catch (Exception & e) {
-        QMessageBox::warning(this, "Attenzione", QString::fromStdString(e.getErrorMessage()));
+        QMessageBox::warning(this, "Warning", QString::fromStdString(e.getErrorMessage()));
     }
 }
 
@@ -56,7 +56,7 @@ void AddDialog::addNewItem() {
 void AddDialog::selectImg(){
     QFileDialog dialog;
     dialog.setFileMode(QFileDialog::ExistingFile);
-    dialog.setNameFilter(("Files (*.png *.jpg)"));
+    dialog.setNameFilter(("Images (*.png *.jpg)"));
 
     if (dialog.exec() == QDialog::Accepted) {
         imgPath = dialog.selectedFiles().first();

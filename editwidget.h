@@ -62,12 +62,11 @@ private:
 
     QVBoxLayout * mainBox;
 
-    DeepPtr<AudioVisual> edited;
     DeepPtr<AudioVisual> avPtr;
     QWidget * parent;
 public:
-    explicit EditWidget(DeepPtr<AudioVisual> , QWidget * = nullptr);
-    DeepPtr<AudioVisual> getEdited();
+    explicit EditWidget(const DeepPtr<AudioVisual> & , QWidget * = nullptr);
+    DeepPtr<AudioVisual>& getEdited();
 
 private slots:
     void modifyItem();

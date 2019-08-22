@@ -26,7 +26,7 @@ private:
     void mouseDoubleClickEvent(QMouseEvent *event) override;
 
 public:
-    AudioVisualItem(DeepPtr<AudioVisual> , QWidget * = nullptr, QFrame * = nullptr);
+    AudioVisualItem(const DeepPtr<AudioVisual> &, QWidget * = nullptr, QFrame * = nullptr);
     AudioVisual* getAvPtr() const;
     void setLine(bool);
     QFrame* getLine() const;

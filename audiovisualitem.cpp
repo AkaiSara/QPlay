@@ -12,7 +12,7 @@ AudioVisual * AudioVisualItem::getAvPtr() const{
     return &(*avPtr);
 }
 
-AudioVisualItem::AudioVisualItem(DeepPtr<AudioVisual> a, QWidget * p, QFrame * fr) :avPtr(a), parent(p), line(fr){
+AudioVisualItem::AudioVisualItem(const DeepPtr<AudioVisual> & a, QWidget * p, QFrame * fr) :avPtr(a), parent(p), line(fr){
     displayWidget = new DisplayWidget(avPtr, this);
 
     //----------------[immagine]

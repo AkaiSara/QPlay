@@ -3,7 +3,7 @@
 void EditWidget::selectImg(){
     QFileDialog dialog;
     dialog.setFileMode(QFileDialog::ExistingFile);
-    dialog.setNameFilter(("Files (*.png *.jpg)"));
+    dialog.setNameFilter(("Images (*.png *.jpg)"));
 
     if (dialog.exec() == QDialog::Accepted) {
         imgPath = dialog.selectedFiles().first();
@@ -13,45 +13,44 @@ void EditWidget::selectImg(){
 }
 
 void EditWidget::modifyItem(){
-    edited = avPtr;
-    edited->setTitle(titleEdit->text().toStdString());
-    edited->setDescription(descr->toPlainText().toStdString());
-    edited->setRelease_date(dateEdit->text().toUInt());
-    edited->setDirector(directorEdit->text().toStdString());
-    edited->setFavorite(fav->isChecked());
-    edited->setPath(imgPath.toStdString());
-    edited->setRunning_time(rtEdit->text().toUInt());
-    edited->setAudioComp(ac->isChecked());
-    edited->setImage_resolution(imgresEdit->text().toUInt());
-    edited->setFps(frameRateEdit->text().toUInt());
+    avPtr->setTitle(titleEdit->text().toStdString());
+    avPtr->setDescription(descr->toPlainText().toStdString());
+    avPtr->setRelease_date(dateEdit->text().toUInt());
+    avPtr->setDirector(directorEdit->text().toStdString());
+    avPtr->setFavorite(fav->isChecked());
+    avPtr->setPath(imgPath.toStdString());
+    avPtr->setRunning_time(rtEdit->text().toUInt());
+    avPtr->setAudioComp(ac->isChecked());
+    avPtr->setImage_resolution(imgresEdit->text().toUInt());
+    avPtr->setFps(frameRateEdit->text().toUInt());
 
     if (dynamic_cast<Documentary *>(&(*avPtr)) != nullptr){
-        Documentary * edited = static_cast<Documentary *>(&(*avPtr));
-        edited->setNarrator(docNarrEdit->text().toStdString());
-        edited->setTopic(docTopicEdit->text().toStdString());
+        Documentary * aux = static_cast<Documentary *>(&(*avPtr));
+        aux->setNarrator(docNarrEdit->text().toStdString());
+        aux->setTopic(docTopicEdit->text().toStdString());
     }
     else if (dynamic_cast<Movie *>(&(*avPtr)) != nullptr){
-        Movie * edited = static_cast<Movie *>(&(*avPtr));
-        edited->setCast(cast->toPlainText().toStdString());
-        edited->setRating(rating->currentText().toStdString());
-        edited->setGenre(genre->currentText().toStdString());
+        Movie * aux = static_cast<Movie *>(&(*avPtr));
+        aux->setCast(cast->toPlainText().toStdString());
+        aux->setRating(rating->currentText().toStdString());
+        aux->setGenre(genre->currentText().toStdString());
     }
     else if (dynamic_cast<TvSerie *>(&(*avPtr)) != nullptr){
-        TvSerie * edited = static_cast<TvSerie *>(&(*avPtr));
-        edited->setCast(cast->toPlainText().toStdString());
-        edited->setRating(rating->currentText().toStdString());
-        edited->setGenre(genre->currentText().toStdString());
-        edited->setSeason(tvSeasonEdit->text().toUInt());
-        edited->setEpisode(tvEpisodeEdit->text().toUInt());
-        edited->setEnded(tvEnded->isChecked());
+        TvSerie * aux = static_cast<TvSerie *>(&(*avPtr));
+        aux->setCast(cast->toPlainText().toStdString());
+        aux->setRating(rating->currentText().toStdString());
+        aux->setGenre(genre->currentText().toStdString());
+        aux->setSeason(tvSeasonEdit->text().toUInt());
+        aux->setEpisode(tvEpisodeEdit->text().toUInt());
+        aux->setEnded(tvEnded->isChecked());
     }
 }
 
-DeepPtr<AudioVisual> EditWidget::getEdited(){
-    return edited;
+DeepPtr<AudioVisual> & EditWidget::getEdited(){
+    return avPtr;
 }
 
-EditWidget::EditWidget(DeepPtr<AudioVisual> a, QWidget * p) : avPtr(a), parent(p) {
+EditWidget::EditWidget(const DeepPtr<AudioVisual> & a, QWidget * p) : avPtr(a), parent(p) {
     setMaximumSize(QSize(500,580));
     setMinimumSize(QSize(450,500));
 

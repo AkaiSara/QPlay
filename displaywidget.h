@@ -43,7 +43,7 @@ private:
 
     QWidget * parent;
 public:
-    explicit DisplayWidget(DeepPtr<AudioVisual>, QWidget * = nullptr);
+    explicit DisplayWidget(const DeepPtr<AudioVisual> &, QWidget * = nullptr);
 
 signals:
 
