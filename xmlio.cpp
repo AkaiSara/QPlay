@@ -123,6 +123,7 @@ Container<DeepPtr<AudioVisual>> Xmlio::read() const{
 
 void Xmlio::write(const Container<DeepPtr<AudioVisual>> & list) const {
     QSaveFile file(QString::fromStdString(filename));
+    QDir dir = QDir::currentPath();
 
     if(!file.open(QIODevice::WriteOnly)) {
         throw Exception("Errore nell'aprire il file in scrittura");
@@ -163,7 +164,7 @@ void Xmlio::write(const Container<DeepPtr<AudioVisual>> & list) const {
                 output.writeEndElement();
 
                 output.writeStartElement("ImhPath");
-                    output.writeCharacters(QString::fromStdString(doc.getPath()));
+                    output.writeCharacters(dir.relativeFilePath(QString::fromStdString(doc.getPath())));
                 output.writeEndElement();
 
                 output.writeStartElement("RunningTime");
@@ -217,7 +218,7 @@ void Xmlio::write(const Container<DeepPtr<AudioVisual>> & list) const {
                 output.writeEndElement();
 
                 output.writeStartElement("ImhPath");
-                    output.writeCharacters(QString::fromStdString(mov.getPath()));
+                    output.writeCharacters(dir.relativeFilePath(QString::fromStdString(mov.getPath())));
                 output.writeEndElement();
 
                 output.writeStartElement("RunningTime");
@@ -275,7 +276,7 @@ void Xmlio::write(const Container<DeepPtr<AudioVisual>> & list) const {
                 output.writeEndElement();
 
                 output.writeStartElement("ImhPath");
-                    output.writeCharacters(QString::fromStdString(tvs.getPath()));
+                    output.writeCharacters(dir.relativeFilePath(QString::fromStdString(tvs.getPath())));
                 output.writeEndElement();
 
                 output.writeStartElement("RunningTime");

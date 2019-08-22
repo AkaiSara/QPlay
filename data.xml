@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--File di salvataggio dell'applicazione, non modificare a mano.-->
 <root>
-    <Movie>
-        <Title>bhhbbj</Title>
-        <Description>	hj hj hj</Description>
-        <ReleaseDate>76</ReleaseDate>
-        <Director>bhj</Director>
-        <Favorite>true</Favorite>
-        <RunningTime>5</RunningTime>
-        <AudioCompression>true</AudioCompression>
-        <ImageResolution>4</ImageResolution>
-        <FPS>4</FPS>
-        <Cast>hbjbhhbhb</Cast>
-        <Genre>Food</Genre>
-        <Rating>All</Rating>
-    </Movie>
+    <Documentary>
+        <Title>iyv</Title>
+        <Description>yvvyhy</Description>
+        <ReleaseDate>6</ReleaseDate>
+        <Director>vj</Director>
+        <Favorite>false</Favorite>
+        <ImhPath>../../../ProgettoP2/Qontainer/img/fav1.png</ImhPath>
+        <RunningTime>7</RunningTime>
+        <AudioCompression>false</AudioCompression>
+        <ImageResolution>5</ImageResolution>
+        <FPS>2</FPS>
+        <Narrator>jbi</Narrator>
+        <Topic>bh</Topic>
+    </Documentary>
 </root>

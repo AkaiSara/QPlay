@@ -13,6 +13,7 @@
 #include <QXmlStreamReader>
 #include <QXmlStreamWriter>
 #include <QMessageBox>
+#include <QDir>
 
 class Xmlio {
 private:
