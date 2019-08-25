@@ -31,7 +31,6 @@ AudioVisualItem::AudioVisualItem(const DeepPtr<AudioVisual> & a, QWidget * p, QF
     //----------------[titolo]
     QLabel *title = new QLabel(QString::fromStdString(avPtr->getTitle()));
     QFont f = title->font();
-    //f.setBold(true);
     f.setPointSize(16);
     title->setFont(f);
     title->setAlignment(Qt::AlignHCenter | Qt::AlignVCenter);

@@ -56,7 +56,7 @@ void AddDialog::addNewItem() {
 void AddDialog::selectImg(){
     QFileDialog dialog;
     dialog.setFileMode(QFileDialog::ExistingFile);
-    dialog.setNameFilter(("Images (*.png *.jpg)"));
+    dialog.setNameFilter(("Images (*.png *.jpeg *.jpg)"));
 
     if (dialog.exec() == QDialog::Accepted) {
         imgPath = dialog.selectedFiles().first();
@@ -175,8 +175,10 @@ AddDialog::AddDialog(QWidget * p) :parent(p) {
     cast = new QTextEdit();
     cast->setPlaceholderText(tr("Cast"));
     genre = new QComboBox();
+    QLabel * genreLab = new QLabel("Genre: ");
     genre->addItems(listOfGenre);
     rating = new QComboBox();
+    QLabel * ratingLab = new QLabel("Rating: ");
     rating->addItems(listOfRating);
 
     tvSeason = new QLineEdit();
@@ -196,8 +198,11 @@ AddDialog::AddDialog(QWidget * p) :parent(p) {
     docMenu->setLayout(docLayout);
 
     QVBoxLayout * aux1 = new QVBoxLayout;
+    aux1->addWidget(genreLab);
     aux1->addWidget(genre);
+    aux1->addWidget(ratingLab);
     aux1->addWidget(rating);
+
     QHBoxLayout * movLayout = new QHBoxLayout;
     movLayout->addWidget(cast);
     movLayout->addLayout(aux1);

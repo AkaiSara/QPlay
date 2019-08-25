@@ -3,6 +3,7 @@
 DisplayWidget::DisplayWidget(const DeepPtr<AudioVisual> & a, QWidget * p) :avPtr(a), parent(p) {
     QVBoxLayout * mainLayout = new QVBoxLayout;
     QFrame *line;
+
     setWindowTitle("Item details");
     setMinimumSize(QSize(500,300));
     setMaximumSize(QSize(600,400));

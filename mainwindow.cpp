@@ -7,7 +7,6 @@ void MainWindow::showSearchDetail(const QString & attr){
     searchMov->hide();
     searchTvs->hide();
     searchComboBox->hide();
-    searchComboBox->clear();
 
     if(attr == "Favorite"){
         searchCheckBox->show();
@@ -32,16 +31,20 @@ void MainWindow::showSearchDetail(const QString & attr){
     }
 
     if(attr == "Genre"){
+        searchComboBox->clear();
         foreach (std::string str, AudioVisual::Genre) {
             searchComboBox->addItem(QString::fromStdString(str));
         }
+        connect(searchComboBox, SIGNAL(currentTextChanged(const QString&)), this, SLOT(search()));
         searchComboBox->show();
     }
 
     if(attr == "Rating"){
+        searchComboBox->clear();
         foreach (std::string str, AudioVisual::Rating) {
             searchComboBox->addItem(QString::fromStdString(str));
         }
+        connect(searchComboBox, SIGNAL(currentTextChanged(const QString&)), this, SLOT(search()));
         searchComboBox->show();
     }
 
@@ -230,6 +233,11 @@ void MainWindow::search(){
 
         if(attributo == "Genre"){
             for(auto it = listWidget.begin(); it != listWidget.end(); ++it){
+                if(dynamic_cast<Documentary *>((*it)->getAvPtr())){
+                    (*it)->hide();
+                    (*it)->setLine(false);
+                }
+
                 Movie * p = dynamic_cast<Movie *>((*it)->getAvPtr());
                 TvSerie * q = dynamic_cast<TvSerie *>((*it)->getAvPtr());
                 if(p != nullptr){
@@ -255,6 +263,11 @@ void MainWindow::search(){
 
         if(attributo == "Rating"){
             for(auto it = listWidget.begin(); it != listWidget.end(); ++it){
+                if(dynamic_cast<Documentary *>((*it)->getAvPtr())){
+                    (*it)->hide();
+                    (*it)->setLine(false);
+                }
+
                 Movie * p = dynamic_cast<Movie *>((*it)->getAvPtr());
                 TvSerie * q = dynamic_cast<TvSerie *>((*it)->getAvPtr());
                 if(p != nullptr){
@@ -428,7 +441,7 @@ MainWindow::MainWindow(): model(new Model){
     connect(searchDoc, SIGNAL(toggled(bool)), this, SLOT(search()));
     connect(searchTvs, SIGNAL(toggled(bool)), this, SLOT(search()));
     connect(searchMov, SIGNAL(toggled(bool)), this, SLOT(search()));
-    connect(searchComboBox, SIGNAL(currentTextChanged(const QString&)), this, SLOT(search()));
+    //connect(searchComboBox, SIGNAL(currentTextChanged(const QString&)), this, SLOT(search()));
 
     connect(showAddDialog, SIGNAL(clicked()), this, SLOT(openAddDialog()));
     connect(clearListBtn, SIGNAL(clicked()), this, SLOT(clearList()));

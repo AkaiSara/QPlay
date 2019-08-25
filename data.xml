@@ -1,18 +1,69 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--File di salvataggio dell'applicazione, non modificare a mano.-->
 <root>
-    <Documentary>
-        <Title>iyv</Title>
-        <Description>yvvyhy</Description>
-        <ReleaseDate>6</ReleaseDate>
-        <Director>vj</Director>
-        <Favorite>false</Favorite>
-        <ImhPath>../../../ProgettoP2/Qontainer/img/fav1.png</ImhPath>
-        <RunningTime>7</RunningTime>
+    <Movie>
+        <Title>Pulp Fiction</Title>
+        <Description>Pulp Fiction is a 1994 American crime film written and directed by Quentin Tarantino, who conceived it with Roger Avary. Starring John Travolta, Samuel L. Jackson, Bruce Willis, Tim Roth, Ving Rhames, and Uma Thurman, it tells several stories of criminal Los Angeles. The title refers to the pulp magazines and hardboiled crime novels popular during the mid-20th century, known for their graphic violence and punchy dialogue.</Description>
+        <ReleaseDate>1994</ReleaseDate>
+        <Director>Quentin Tarantino</Director>
+        <Favorite>true</Favorite>
+        <ImhPath>../../../ProgettoP2/Qontainer/img/Pulp_Fiction.jpg</ImhPath>
+        <RunningTime>154</RunningTime>
         <AudioCompression>false</AudioCompression>
-        <ImageResolution>5</ImageResolution>
-        <FPS>2</FPS>
-        <Narrator>jbi</Narrator>
-        <Topic>bh</Topic>
+        <ImageResolution>1080</ImageResolution>
+        <FPS>60</FPS>
+        <Cast>Samuel L. Jackson, John Travolta, Uma Thurman, Harvey Keitel, Tim Roth, Amanda Plummer, Maria de Medeiros, Ving Rhames, Eric Stoltz, Rosanna Arquette, Christopher Walken, Bruce Willis</Cast>
+        <Genre>Crime</Genre>
+        <Rating>VM14</Rating>
+    </Movie>
+    <TvSerie>
+        <Title>The Final Table</Title>
+        <Description>The Final Table is an American reality cooking competition web television series hosted by Andrew Knowlton. The first season was released on Netflix on November 20, 2018. The series features twelve professional teams of two competing against each other by creating cuisine based on each episode's country theme. The first round of cooking is based on the judges (one food critic and two culturally significant citizens of the episode's country) asking the contestants to cook a nationally significant dish. The bottom three dishes cause their cooks to compete in a second round, named The Final Plate Challenge, using a specific ingredient relevant to the country's culture, chosen by a renowned guest chef.</Description>
+        <ReleaseDate>2018</ReleaseDate>
+        <Director>Russell Norman</Director>
+        <Favorite>false</Favorite>
+        <ImhPath>../../../ProgettoP2/Qontainer/img/The_Final_Table.jpg</ImhPath>
+        <RunningTime>56</RunningTime>
+        <AudioCompression>false</AudioCompression>
+        <ImageResolution>720</ImageResolution>
+        <FPS>30</FPS>
+        <Season>1</Season>
+        <Episode>10</Episode>
+        <Cast>Aaron Bludorn and Graham Campbell, Darren MacLean and Timothy Hollingsworth, Shin Takagi and Ronald Hsu, Alex Haupt and Ash Heeger, Shane Osborn and Mark Best, Monique Fiso and Amninder Sandhu, James Knappett and Angel Vazquez, Jessica Lorigio and Johnny Spero, Collin Brown and Colibri Jimenez, Esdras Ochoa and Rafa Gil, Charles Michel and Rodrigo Pacheco, Manuel Berganza and Benjamin Bensoussan</Cast>
+        <Genre>Food</Genre>
+        <Ended>true</Ended>
+        <Rating>All</Rating>
+    </TvSerie>
+    <TvSerie>
+        <Title>13 Reasons Why</Title>
+        <Description>13 Reasons Why (stylized onscreen as TH1RTEEN R3ASONS WHY) is an American teen drama web television series developed for Netflix by Brian Yorkey, based on the 2007 novel Thirteen Reasons Why by Jay Asher. The series revolves around seventeen-year-old high school student, Clay Jensen, and his deceased friend Hannah Baker, who kills herself after having to face a culture of gossip, bullying and sexual assault at her high school and a lack of support from her friends and her school. A box of cassette tapes recorded by Hannah in the weeks preceding her suicide detail thirteen reasons why she chose to end her life. The series is produced by July Moon Productions, Kicked to the Curb Productions, Anonymous Content and Paramount Television, with Yorkey and Diana Son serving as showrunners. </Description>
+        <ReleaseDate>2017</ReleaseDate>
+        <Director>Joseph Incaprera</Director>
+        <Favorite>false</Favorite>
+        <ImhPath>../../../ProgettoP2/Qontainer/img/13_Reasons_Why.png</ImhPath>
+        <RunningTime>50</RunningTime>
+        <AudioCompression>false</AudioCompression>
+        <ImageResolution>1080</ImageResolution>
+        <FPS>60</FPS>
+        <Season>3</Season>
+        <Episode>13</Episode>
+        <Cast>Amy Hargreaves, Dylan Minnette, Christian Navarro , Alisha Boe , Brandon Flynn ,  Justin Prentice, Miles Heizer, Ross Butler, Devin Druid, Timothy Granaderos</Cast>
+        <Genre>Drama</Genre>
+        <Ended>false</Ended>
+        <Rating>VM18</Rating>
+    </TvSerie>
+    <Documentary>
+        <Title>The Code</Title>
+        <Description>The Code is a mathematics-based documentary for BBC Two presented by Marcus du Sautoy, beginning on 27 July 2011 and ended on 10 August 2011. Each episode covers a different branch of mathematics. As well as being a documentary, The Code is also a series of online challenges forming a treasure hunt, with clues to finding the treasure being included in the episodes, online games and other challenges.</Description>
+        <ReleaseDate>2011</ReleaseDate>
+        <Director>Stephen Cooter</Director>
+        <Favorite>false</Favorite>
+        <ImhPath>../../../ProgettoP2/Qontainer/img/The_code.jpg</ImhPath>
+        <RunningTime>180</RunningTime>
+        <AudioCompression>false</AudioCompression>
+        <ImageResolution>480</ImageResolution>
+        <FPS>30</FPS>
+        <Narrator>Marcus du Sautoy</Narrator>
+        <Topic>Mathematics</Topic>
     </Documentary>
 </root>

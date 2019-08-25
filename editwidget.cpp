@@ -3,7 +3,7 @@
 void EditWidget::selectImg(){
     QFileDialog dialog;
     dialog.setFileMode(QFileDialog::ExistingFile);
-    dialog.setNameFilter(("Images (*.png *.jpg)"));
+    dialog.setNameFilter(("Images (*.png *.jpeg *.jpg)"));
 
     if (dialog.exec() == QDialog::Accepted) {
         imgPath = dialog.selectedFiles().first();
@@ -53,6 +53,7 @@ DeepPtr<AudioVisual> & EditWidget::getEdited(){
 EditWidget::EditWidget(const DeepPtr<AudioVisual> & a, QWidget * p) : avPtr(a), parent(p) {
     setMaximumSize(QSize(500,580));
     setMinimumSize(QSize(450,500));
+    QDir dir = QDir::currentPath();
 
     QStringList listOfGenre;
     foreach (std::string str, AudioVisual::Genre) {
@@ -122,7 +123,8 @@ EditWidget::EditWidget(const DeepPtr<AudioVisual> & a, QWidget * p) : avPtr(a), 
 
     selectImgBtn = new QPushButton("Select image");
     imgLabel = new QLabel();
-    imgLabel->setPixmap(QPixmap(QString::fromStdString((avPtr->getPath() != "" ? avPtr->getPath() : ":/img/picture"))).scaled(150, 150, Qt::KeepAspectRatio));
+    imgPath = dir.absoluteFilePath(QString::fromStdString((avPtr->getPath() != "" ? avPtr->getPath() : ":/img/picture")));
+    imgLabel->setPixmap(QPixmap(imgPath).scaled(150, 150, Qt::KeepAspectRatio));
     QVBoxLayout *imgLayout = new QVBoxLayout();
     imgLayout->addWidget(selectImgBtn);
     imgLayout->addWidget(imgLabel);
@@ -163,7 +165,7 @@ EditWidget::EditWidget(const DeepPtr<AudioVisual> & a, QWidget * p) : avPtr(a), 
 
     QHBoxLayout * docLayout = new QHBoxLayout;
     QHBoxLayout * movLayout = new QHBoxLayout;
-    QVBoxLayout * tvsLayout = new QVBoxLayout;
+    QHBoxLayout * tvsLayout = new QHBoxLayout;
     QHBoxLayout * menuLayout = new QHBoxLayout;
 
     if(dynamic_cast<Documentary *>(&(*avPtr)) != nullptr){
@@ -262,9 +264,15 @@ EditWidget::EditWidget(const DeepPtr<AudioVisual> & a, QWidget * p) : avPtr(a), 
         tvEnded = new QCheckBox(tr("This serie has ended"));
         tvEnded->setChecked(aux->isEnded());
 
-        tvsLayout->addLayout(tvSeason);
-        tvsLayout->addLayout(tvEpisode);
-        tvsLayout->addWidget(tvEnded);
+        QVBoxLayout * aux1 = new QVBoxLayout;
+        aux1->addLayout(tvSeason);
+        aux1->addLayout(tvEpisode);
+        aux1->addWidget(tvEnded);
+        aux1->addWidget(genre);
+        aux1->addWidget(rating);
+
+        tvsLayout->addWidget(cast);
+        tvsLayout->addLayout(aux1);
         tvsMenu = new QWidget;
         tvsMenu->setLayout(tvsLayout);
 
