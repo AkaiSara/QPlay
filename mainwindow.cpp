@@ -7,6 +7,7 @@ void MainWindow::showSearchDetail(const QString & attr){
     searchMov->hide();
     searchTvs->hide();
     searchComboBox->hide();
+    searchComboBox->clear();
 
     if(attr == "Favorite"){
         searchCheckBox->show();
@@ -31,20 +32,16 @@ void MainWindow::showSearchDetail(const QString & attr){
     }
 
     if(attr == "Genre"){
-        searchComboBox->clear();
         foreach (std::string str, AudioVisual::Genre) {
             searchComboBox->addItem(QString::fromStdString(str));
         }
-        connect(searchComboBox, SIGNAL(currentTextChanged(const QString&)), this, SLOT(search()));
         searchComboBox->show();
     }
 
     if(attr == "Rating"){
-        searchComboBox->clear();
         foreach (std::string str, AudioVisual::Rating) {
             searchComboBox->addItem(QString::fromStdString(str));
         }
-        connect(searchComboBox, SIGNAL(currentTextChanged(const QString&)), this, SLOT(search()));
         searchComboBox->show();
     }
 
@@ -305,11 +302,6 @@ void MainWindow::search(){
             (*it)->setLine(false);
     }
 
-    if(listSearchResult.isEmpty()){
-        QMessageBox msgBox(QMessageBox::Information, "Information", "No results");
-        msgBox.exec();
-    }
-
     listBoxLayout->addStretch(1);
 }
 
@@ -442,7 +434,7 @@ MainWindow::MainWindow(): model(new Model){
     connect(searchDoc, SIGNAL(toggled(bool)), this, SLOT(search()));
     connect(searchTvs, SIGNAL(toggled(bool)), this, SLOT(search()));
     connect(searchMov, SIGNAL(toggled(bool)), this, SLOT(search()));
-    //connect(searchComboBox, SIGNAL(currentTextChanged(const QString&)), this, SLOT(search()));
+    connect(searchComboBox, SIGNAL(currentTextChanged(const QString&)), this, SLOT(search()));
 
     connect(showAddDialog, SIGNAL(clicked()), this, SLOT(openAddDialog()));
     connect(clearListBtn, SIGNAL(clicked()), this, SLOT(clearList()));
