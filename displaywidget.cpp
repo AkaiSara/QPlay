@@ -5,8 +5,8 @@ DisplayWidget::DisplayWidget(const DeepPtr<AudioVisual> & a, QWidget * p) :avPtr
     QFrame *line;
 
     setWindowTitle("Item details");
-    setMinimumSize(QSize(500,300));
-    setMaximumSize(QSize(600,400));
+    setMinimumSize(QSize(500,330));
+    setMaximumSize(QSize(600,530));
 
     //----------------[Prima parte]
     title = new QLabel("Title: " + QString::fromStdString(avPtr->getTitle()));
@@ -34,7 +34,7 @@ DisplayWidget::DisplayWidget(const DeepPtr<AudioVisual> & a, QWidget * p) :avPtr
 
     QLabel * matureContent = new QLabel("Mature content: " + QString::fromStdString(avPtr->matureContent() ? "Yes" : "No"));
     QLabel * quality = new QLabel("Quality: " + QString::fromStdString(avPtr->isHighQuality()? "Yes" : "No"));
-    QLabel * totalRunningTime = new QLabel("Total running time: " + QString::number(avPtr->getTotalRunningTime()));
+    QLabel * totalRunningTime = new QLabel("Total running time: " + QString::number(avPtr->getTotalRunningTime()) + "min");
 
     QHBoxLayout * tec = new QHBoxLayout;
     tec->addWidget(res);
@@ -106,9 +106,16 @@ DisplayWidget::DisplayWidget(const DeepPtr<AudioVisual> & a, QWidget * p) :avPtr
         rating = new QLabel("Rating: " + QString::fromStdString(aux->getRating()));
         genre = new QLabel("Genre: " + QString::fromStdString(aux->getGenre()));
 
-        movLayout->addWidget(cast);
-        movLayout->addWidget(rating);
-        movLayout->addWidget(genre);
+        QVBoxLayout * tmp1 = new QVBoxLayout;
+        tmp1->addWidget(rating);
+        tmp1->addWidget(genre);
+        tmp1->setAlignment(Qt::AlignRight);
+
+        QHBoxLayout * tmp2 = new QHBoxLayout;
+        tmp2->addWidget(cast);
+        tmp2->addLayout(tmp1);
+        movLayout->addLayout(tmp2);
+
         mainLayout->addLayout(movLayout);
     }
     if(dynamic_cast<TvSerie *>(&(*avPtr)) != nullptr){
@@ -122,11 +129,15 @@ DisplayWidget::DisplayWidget(const DeepPtr<AudioVisual> & a, QWidget * p) :avPtr
         QString endString = (aux->isEnded())? "Yes" : "No";
         end = new QLabel("Ended: " + endString);
 
-        QHBoxLayout * tmp1 = new QHBoxLayout;
-        tmp1->addWidget(cast);
+        QVBoxLayout * tmp1 = new QVBoxLayout;
         tmp1->addWidget(rating);
         tmp1->addWidget(genre);
-        tvsLayout->addLayout(tmp1);
+        tmp1->setAlignment(Qt::AlignRight);
+
+        QHBoxLayout * tmp3 = new QHBoxLayout;
+        tmp3->addWidget(cast);
+        tmp3->addLayout(tmp1);
+        tvsLayout->addLayout(tmp3);
 
         QHBoxLayout * tmp2 = new QHBoxLayout;
         tmp2->addWidget(ep);

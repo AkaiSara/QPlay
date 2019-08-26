@@ -343,6 +343,7 @@ MainWindow::MainWindow(): model(new Model){
     QHBoxLayout * timeLayout = new QHBoxLayout;
     timeLayout->addWidget(imgTime);
     timeLayout->addWidget(totalTime);
+    timeLayout->setAlignment(Qt::AlignRight| Qt::AlignVCenter);
     //----------------[]
 
     //----------------[SearchBar]

@@ -21,7 +21,7 @@
         Il contenitore templetizzato è stato sviluppato secondo la linea del contenitore \texttt{List} della libreria STL. \newline
         Il contenitore fa utilizzo delle classi annidate \texttt{Node} che rappresenta un nodo della lista, con campi dati \textit{info}, il puntatore al nodo precedente \textit{prev} e al nodo successivo \textit{next}, la classe \texttt{Iterator} e \texttt{Const\_Iterator} usate per scorrere gli elementi della lista. \newline
         Come da specifica il contenitore offre metodi per l'inserimento di nodi, quali \texttt{push\_front} e \texttt{push\_back}, la rimozione di nodi tramite \texttt{clear}, \texttt{erase}, \texttt{pop\_front} e \texttt{pop\_back}, e la ricerca di elementi grazie all'uso del metodo \texttt{search} reso disponibile sia costante che non. \newline
-        Sebbene il contenitore venga utilizzato nel progetto istanziandolo con parametro uguale a \texttt{DeepPtr<AudioVisual>}, il parametro T del contenitore può assumere qualsiasi tipo, che sia primitivo o definito dall'utente.
+        Sebbene il contenitore venga utilizzato nel progetto istanziandolo con parametro uguale a \texttt{DeepPtr <AudioVisual>}, il parametro T del contenitore può assumere qualsiasi tipo, che sia primitivo o definito dall'utente.
         %Double linked list per sostenere meglio i costi per la rimozione dei nodi in posizione arbitraria.
 
     \section*{Persistenza delle informazioni}
@@ -29,20 +29,12 @@
         Sono state implementate le funzioni \texttt{load} e \texttt{save} che fanno uso delle classi \texttt{QXmlStreamWriter} e \texttt{QXmlStreamReader} per la codifica e decodifica del file \textsc{xml}, e le classi \texttt{QFile} e \texttt{QSaveFile} per l'apertura e in generale la gestione dei file. \newline
         Entrambe le funzioni devono essere chiamate esplicitamente dall'utente e non avvengono in automatico, tranne all'uscita dell'applicazione in cui tramite un popup apposito viene chiesto se si vuole salvare o meno i dati correnti.
 
-    \section*{GUI}
-        Per lo sviluppo della parte relativa alla GUI è stato adottato il design pattern \textit{Model-View}. \newline
-        La parte grafica è composta da:
-        \begin{itemize}
-            \item \texttt{MainWindow} derivata pubblicamente da \texttt{QMainWindow}, è la finestra principale che viene lanciata all'avvio dell'applicazione.
-            \item \texttt{AddDialog} deriva pubblicamente da \texttt{QDialog} e si occupa di inserire nuovi oggetti nella collezione.
-            \item \texttt{AudioVisualItem} derivato pubblicamente da \texttt{QWidget}, ha lo scopo di mostrare i dettagli principali di ciascun oggetto contenuto nella lista.
-            \item \texttt{EditWidget} derivato anch'esso pubblicamente da \texttt{QWidget}, si occupa di modificare un singolo elemento della lista.
-            \item \texttt{DisplayWidget} deriva pubblicamente da \texttt{QDialog}, si occupa di visualizzare tutti i dettagli relativi ad ogni oggetto.
-        \end{itemize}
         %Sia per la rimozione che per la ricerca non mi è stato necessario creare altre classi e widget all'infuori di quelli sopra descritti.
         %Da qui, nella barra in alto si può scegliere se caricare, salvare od uscire dall'applicazione.
 
         %insert, remove, find, edit
+    \section*{Manuale della GUI}
+        \input{manualeGui.tex}
 
     \section*{Ripartizione ore}
         La realizzazione del progetto è costata circa 50 ore ripartite nel seguente modo:

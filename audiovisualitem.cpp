@@ -38,7 +38,7 @@ AudioVisualItem::AudioVisualItem(const DeepPtr<AudioVisual> & a, QWidget * p, QF
     //----------------[]
 
     //----------------[Time]
-    QLabel * totTime = new QLabel("Total time: " + QString::number(avPtr->getTotalRunningTime()) + "min");
+    QLabel * totTime = new QLabel("Total time: " + (avPtr->getTotalRunningTime() / 60 != 0? QString::number(avPtr->getTotalRunningTime() / 60) + "h " : "") + QString::number(avPtr->getTotalRunningTime() % 60) + "min");
     totTime->setAlignment(Qt::AlignHCenter | Qt::AlignVCenter);
     //----------------[]
 
